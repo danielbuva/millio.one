@@ -103,7 +103,10 @@ function Landing() {
 
   useEffect(() => {
     if (pageIndex === pages.length - 1) {
-      setPageRightFunction(() => navigate("/home"));
+      setPageRightFunction(() => {
+        navigate("/home");
+        localStorage.setItem("pageIndex", "0");
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageIndex]);

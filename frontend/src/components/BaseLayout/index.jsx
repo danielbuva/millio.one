@@ -10,9 +10,13 @@ export default function BaseLayout({
   children,
   pageRightFunction,
   setPageRightFunction,
+  pageLeftFunction,
+  setPageLeftFunction,
 }) {
   const [numberOfPages, setNumberOfPages] = useState(1);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(
+    parseInt(localStorage.getItem("pageIndex") || "0")
+  );
   const [infinitePagination, setInfinitePagination] = useState(false);
 
   const handlePageRight = () => {
@@ -20,22 +24,33 @@ export default function BaseLayout({
       pageRightFunction();
     } else {
       if (pageIndex < numberOfPages - 1) {
-        setPageIndex((previousPage) => previousPage + 1);
+        setPageIndex((previousPage) => {
+          localStorage.setItem("pageIndex", previousPage + 1);
+          return previousPage + 1;
+        });
       } else if (infinitePagination) {
         setPageIndex(0);
+        localStorage.setItem("pageIndex", "0");
       }
     }
   };
 
   const handlePageLeft = () => {
-    if (pageIndex > 0) {
-      setPageIndex((previousPage) => previousPage - 1);
-    } else if (infinitePagination) {
-      setPageIndex(numberOfPages - 1);
+    if (pageLeftFunction) {
+      pageLeftFunction();
+    } else {
+      if (pageIndex > 0) {
+        setPageIndex((previousPage) => {
+          localStorage.setItem("pageIndex", previousPage - 1);
+          return previousPage - 1;
+        });
+      } else if (infinitePagination) {
+        setPageIndex(numberOfPages - 1);
+        localStorage.setItem("pageIndex", numberOfPages - 1);
+      }
     }
   };
 
-  //@TODO add dynamic left and right button functionality
   //@TODO add current pageIndex to localstorge
 
   const value = {

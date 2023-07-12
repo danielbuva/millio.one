@@ -8,6 +8,7 @@ import { useState } from "react";
 
 function App() {
   const [pageRightFunction, setPageRightFunction] = useState(null);
+  const [pageLeftFunction, setPageLeftFunction] = useState(null);
 
   return (
     <BrowserRouter>
@@ -16,6 +17,8 @@ function App() {
           <BaseLayout
             pageRightFunction={pageRightFunction}
             setPageRightFunction={setPageRightFunction}
+            pageLeftFunction={pageLeftFunction}
+            setPageLeftFunction={setPageLeftFunction}
           >
             <Routes>
               <Route path="/" element={<Landing />} />
