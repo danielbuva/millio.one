@@ -1,0 +1,52 @@
+.signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#signup-header {
+  font-size: 31px;
+  margin-top: 0;
+}
+
+.pages {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 300px;
+}
+
+#signup-button {
+  width: 100%;
+  padding: 16px;
+}
+
+#signup-login {
+  cursor: pointer;
+}
+
+#signup-login:hover {
+  text-decoration: underline;
+}
+
+.page-buttons {
+  width: 100%;
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-button {
+  height: fit-content;
+}
+
+#light .has-background {
+  fill: #fff;
+}
+
+#dim .has-background,
+#black .has-background {
+  fill: #000;
+}

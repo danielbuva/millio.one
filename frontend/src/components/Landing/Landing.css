@@ -1,0 +1,52 @@
+#land-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: start;
+  position: relative;
+}
+
+#page {
+  position: absolute;
+  top: 30%;
+  padding: 0 75px;
+}
+
+#land-text-1 {
+  color: #d2d2d2;
+  font-size: 32px;
+}
+
+#land-text-1 > span {
+  color: #707070;
+}
+
+.signup-header {
+  margin-top: 21px;
+  margin-bottom: 5px;
+}
+
+.auth-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-input {
+  background-color: unset;
+  border: unset;
+  outline: none;
+  font-size: 32px;
+  color: #d2d2d2;
+}
+
+#focus-list {
+  color: #707070;
+  user-select: none;
+}
+
+#focus-list > p:hover {
+  cursor: pointer;
+  color: #d2d2d2;
+}
