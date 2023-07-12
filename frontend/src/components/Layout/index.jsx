@@ -1,37 +1,76 @@
-// import useIsLoaded from "../../hooks/useIsLoaded";
-import { Outlet } from "react-router-dom";
-import NavButtons from "./NavButtons";
-import UserMenu from "./UserMenu";
-import Title from "./Title";
+import ArrowRight from "../icons/ArrowRight";
+import ArrowLeft from "../icons/ArrowLeft";
+import { createContext, useState } from "react";
 
-import "./Layout.css";
+import "./index.css";
 
-function Layout() {
-  // const isLoaded = useIsLoaded();
+export const PageContext = createContext(null);
+
+export default function Layout({
+  children,
+  pageRightFunction,
+  setPageRightFunction,
+  pageLeftFunction,
+  setPageLeftFunction,
+}) {
+  const [infinitePagination, setInfinitePagination] = useState(false);
+  const [numberOfPages, setNumberOfPages] = useState(1);
+  const [pageIndex, setPageIndex] = useState(
+    parseInt(localStorage.getItem("pageIndex") || "0")
+  );
+
+  const handlePageRight = () => {
+    if (pageRightFunction) {
+      pageRightFunction();
+    } else {
+      if (pageIndex < numberOfPages - 1) {
+        setPageIndex((previousPage) => {
+          localStorage.setItem("pageIndex", previousPage + 1);
+          return previousPage + 1;
+        });
+      } else if (infinitePagination) {
+        setPageIndex(0);
+        localStorage.setItem("pageIndex", "0");
+      }
+    }
+  };
+
+  const handlePageLeft = () => {
+    if (pageLeftFunction) {
+      pageLeftFunction();
+    } else {
+      if (pageIndex > 0) {
+        setPageIndex((previousPage) => {
+          localStorage.setItem("pageIndex", previousPage - 1);
+          return previousPage - 1;
+        });
+      } else if (infinitePagination) {
+        setPageIndex(numberOfPages - 1);
+        localStorage.setItem("pageIndex", numberOfPages - 1);
+      }
+    }
+  };
+
+  //@TODO add current pageIndex to localstorge
+
+  const value = {
+    pageIndex,
+    setInfinitePagination,
+    setNumberOfPages,
+    setPageIndex,
+    setPageLeftFunction,
+    setPageRightFunction,
+  };
 
   return (
-    <div id="layout">
-      <div id="left">
-        <div id="content-left-container">
-          <div id="content-left">
-            <NavButtons />
-          </div>
+    <PageContext.Provider value={value}>
+      <div id="base">
+        <div id="base-container">
+          <ArrowLeft onClick={handlePageLeft} />
+          <div id="base-content">{children}</div>
+          <ArrowRight onClick={handlePageRight} />
         </div>
       </div>
-      <div id="main">
-        <Title />
-        {true && <Outlet />}
-      </div>
-      <div id="right">
-        <div id="content-right-container">
-          <div id="right-cut-off">
-            <UserMenu />
-          </div>
-          <div id="content-right"></div>
-        </div>
-      </div>
-    </div>
+    </PageContext.Provider>
   );
 }
-
-export default Layout;

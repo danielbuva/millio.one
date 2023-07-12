@@ -1,4 +1,4 @@
-import { PageContext } from "../components/BaseLayout";
+import { PageContext } from "../components/Layout";
 import { useContext } from "react";
 
 function usePage() {
