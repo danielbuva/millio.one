@@ -10,12 +10,7 @@ function Landing() {
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
 
-  const {
-    pageIndex,
-    setNumberOfPages,
-    setPageRightFunction,
-    setInfinitePagination,
-  } = usePage();
+  const { pageIndex, setNumberOfPages, setPageRightFunction } = usePage();
 
   const navigate = useNavigate();
 
