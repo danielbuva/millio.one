@@ -1,76 +1,49 @@
-import ArrowRight from "../icons/ArrowRight";
 import ArrowLeft from "../icons/ArrowLeft";
-import { createContext, useState } from "react";
+import ArrowRight from "../icons/ArrowRight";
 
 import "./index.css";
 
-export const PageContext = createContext(null);
-
-export default function Layout({
-  children,
-  pageRightFunction,
-  setPageRightFunction,
-  pageLeftFunction,
-  setPageLeftFunction,
-}) {
-  const [infinitePagination, setInfinitePagination] = useState(false);
-  const [numberOfPages, setNumberOfPages] = useState(1);
-  const [pageIndex, setPageIndex] = useState(
-    parseInt(localStorage.getItem("pageIndex") || "0")
-  );
-
-  const handlePageRight = () => {
-    if (pageRightFunction) {
-      pageRightFunction();
-    } else {
-      if (pageIndex < numberOfPages - 1) {
-        setPageIndex((previousPage) => {
-          localStorage.setItem("pageIndex", previousPage + 1);
-          return previousPage + 1;
-        });
-      } else if (infinitePagination) {
-        setPageIndex(0);
-        localStorage.setItem("pageIndex", "0");
-      }
-    }
-  };
-
-  const handlePageLeft = () => {
-    if (pageLeftFunction) {
-      pageLeftFunction();
-    } else {
-      if (pageIndex > 0) {
-        setPageIndex((previousPage) => {
-          localStorage.setItem("pageIndex", previousPage - 1);
-          return previousPage - 1;
-        });
-      } else if (infinitePagination) {
-        setPageIndex(numberOfPages - 1);
-        localStorage.setItem("pageIndex", numberOfPages - 1);
-      }
-    }
-  };
-
-  //@TODO add current pageIndex to localstorge
-
-  const value = {
-    pageIndex,
-    setInfinitePagination,
-    setNumberOfPages,
-    setPageIndex,
-    setPageLeftFunction,
-    setPageRightFunction,
-  };
-
+export function Layout({ children }) {
   return (
-    <PageContext.Provider value={value}>
-      <div id="base">
-        <div id="base-container">
-          <ArrowLeft onClick={handlePageLeft} />
-          <div id="base-content">{children}</div>
-          <ArrowRight onClick={handlePageRight} />
-        </div>
-      </div>
-    </PageContext.Provider>
+    <div id="base">
+      <div id="base-container">{children}</div>
+    </div>
   );
 }
+
+export function PageWrapper({ onPageLeft, onPageRight, children }) {
+  return (
+    <>
+      <ArrowLeft onClick={onPageLeft} />
+      <div className="base-content">{children}</div>
+      <ArrowRight onClick={onPageRight} />
+    </>
+  );
+}
+
+export default Layout;
+
+// example pagination
+//   const handlePageRight = () => {
+//     if (pageIndex < numberOfPages - 1) {
+//       setPageIndex((previousPage) => {
+//         localStorage.setItem("landingPageIndex", previousPage + 1);
+//         return previousPage + 1;
+//       });
+//     } else {
+//       setPageIndex(0);
+//       localStorage.setItem("landingPageIndex", "0");
+//     }
+//   };
+
+//   const handlePageLeft = () => {
+//     if (pageIndex > 0) {
+//       setPageIndex((previousPage) => {
+//         localStorage.setItem("landingPageIndex", previousPage - 1);
+//         return previousPage - 1;
+//       });
+//     } else {
+//       setPageIndex(numberOfPages - 1);
+//       localStorage.setItem("landingPageIndex", numberOfPages - 1);
+//     }
+//   };

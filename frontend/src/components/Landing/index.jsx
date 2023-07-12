@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import usePage from "../../hooks/usePage";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+
+import { PageWrapper } from "../Layout";
 
 import "./Landing.css";
-import { useNavigate } from "react-router-dom";
 
 function Landing() {
   const [email, setEmail] = useState("");
@@ -10,7 +11,9 @@ function Landing() {
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
 
-  const { pageIndex, setNumberOfPages, setPageRightFunction } = usePage();
+  const [pageIndex, setPageIndex] = useState(
+    parseInt(localStorage.getItem("lpIndex") || "0")
+  );
 
   const navigate = useNavigate();
 
@@ -97,24 +100,33 @@ function Landing() {
 
   const pages = [page1, page2, page3, page4];
 
-  useEffect(() => {
-    setNumberOfPages(pages.length + 1); // +1 because the last page is navigation
-  }, [setNumberOfPages, pages.length]);
+  const handlePageRight = () => {
+    if (pageIndex < pages.length - 1) {
+      setPageIndex((previousPage) => {
+        localStorage.setItem("lpIndex", previousPage + 1);
+        return previousPage + 1;
+      });
+    } else {
+      navigate("/home");
+      localStorage.setItem("lpIndex", "0");
+    }
+  };
 
-  useEffect(() => {
-    if (pageIndex === pages.length) {
-      setPageRightFunction(() => {
-        navigate("/home");
-        localStorage.setItem("pageIndex", "0");
+  const handlePageLeft = () => {
+    if (pageIndex > 0) {
+      setPageIndex((previousPage) => {
+        localStorage.setItem("lpIndex", previousPage - 1);
+        return previousPage - 1;
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageIndex]);
+  };
 
   return (
-    <div id="land-container">
-      <div id="page">{pages[pageIndex]}</div>
-    </div>
+    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
+      <div id="land-container">
+        <div id="page">{pages[pageIndex]}</div>
+      </div>
+    </PageWrapper>
   );
 }
 

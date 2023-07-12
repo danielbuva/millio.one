@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-#base-content {
+.base-content {
   height: 100%;
   width: 600px;
 }
