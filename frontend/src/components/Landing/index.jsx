@@ -10,7 +10,12 @@ function Landing() {
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
 
-  const { pageIndex, setNumberOfPages, setPageRightFunction } = usePage();
+  const {
+    pageIndex,
+    setNumberOfPages,
+    setPageRightFunction,
+    setInfinitePagination,
+  } = usePage();
 
   const navigate = useNavigate();
 
@@ -98,11 +103,11 @@ function Landing() {
   const pages = [page1, page2, page3, page4];
 
   useEffect(() => {
-    setNumberOfPages(pages.length);
+    setNumberOfPages(pages.length + 1); // +1 because the last page is navigation
   }, [setNumberOfPages, pages.length]);
 
   useEffect(() => {
-    if (pageIndex === pages.length - 1) {
+    if (pageIndex === pages.length) {
       setPageRightFunction(() => {
         navigate("/home");
         localStorage.setItem("pageIndex", "0");

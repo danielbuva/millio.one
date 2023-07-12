@@ -13,11 +13,11 @@ export default function BaseLayout({
   pageLeftFunction,
   setPageLeftFunction,
 }) {
+  const [infinitePagination, setInfinitePagination] = useState(false);
   const [numberOfPages, setNumberOfPages] = useState(1);
   const [pageIndex, setPageIndex] = useState(
     parseInt(localStorage.getItem("pageIndex") || "0")
   );
-  const [infinitePagination, setInfinitePagination] = useState(false);
 
   const handlePageRight = () => {
     if (pageRightFunction) {
