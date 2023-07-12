@@ -58,6 +58,7 @@ export default function BaseLayout({
     setInfinitePagination,
     setNumberOfPages,
     setPageIndex,
+    setPageLeftFunction,
     setPageRightFunction,
   };
 
