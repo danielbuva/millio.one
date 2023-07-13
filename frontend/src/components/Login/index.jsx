@@ -2,15 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-import useSessionUser from "../../hooks/useSessionUser";
+// import useSessionUser from "../../hooks/useSessionUser";
 import { login } from "../../store/session";
 import { PageWrapper } from "../Layout";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
-  const currentUser = useSessionUser();
+  // const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +19,10 @@ function Login() {
       .then(() => navigate("/home"))
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.message) setErrors({ email: data.message });
+        if (data && data.message) {
+          // setErrors({ email: data.message });
+          console.log(data.message);
+        }
       });
   };
 
@@ -36,11 +38,9 @@ function Login() {
   //     });
   // };
 
-  console.log({ errors });
-  console.log({ currentUser });
   return (
     <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
-      <div id="land-container">
+      <div className="page-container">
         <Link
           className="auth-link"
           to="/"
@@ -50,7 +50,7 @@ function Login() {
         >
           sign up
         </Link>
-        <div id="page">
+        <div className="page">
           <h1 className="signup-header">login</h1>
           <div className="auth-inputs">
             <input
