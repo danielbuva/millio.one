@@ -3,6 +3,7 @@ import ArrowLeft from "../icons/ArrowLeft";
 import ArrowRight from "../icons/ArrowRight";
 
 import "./index.css";
+import { isAsyncFunction } from "../../utils";
 
 export function Layout({ children }) {
   return (
@@ -48,22 +49,40 @@ export function PageWrapper({ onPageLeft, onPageRight, children }) {
     <>
       <ArrowLeft
         className={`left-arrow ${pageLeft ? "page-turn-left" : ""}`}
-        onClick={() => {
-          setPageLeft(true);
-          localStorage.setItem("pageLeft", ": )");
-          onPageLeft();
-          playSound();
-        }}
+        onClick={
+          isAsyncFunction(onPageLeft)
+            ? async () => {
+                setPageLeft(true);
+                localStorage.setItem("pageLeft", ": )");
+                await onPageLeft();
+                playSound();
+              }
+            : () => {
+                setPageLeft(true);
+                localStorage.setItem("pageLeft", ": )");
+                onPageLeft();
+                playSound();
+              }
+        }
       />
       <div className="base-content">{children}</div>
       <ArrowRight
         className={`right-arrow ${pageRight ? "page-turn-right" : ""}`}
-        onClick={() => {
-          setPageRight(true);
-          localStorage.setItem("pageRight", "( :");
-          onPageRight();
-          playSound();
-        }}
+        onClick={
+          isAsyncFunction(onPageRight)
+            ? async () => {
+                setPageRight(true);
+                localStorage.setItem("pageRight", "( :");
+                await onPageRight();
+                playSound();
+              }
+            : () => {
+                setPageRight(true);
+                localStorage.setItem("pageRight", "( :");
+                onPageRight();
+                playSound();
+              }
+        }
       />
     </>
   );

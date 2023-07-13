@@ -1,20 +1,43 @@
 import { Link, useNavigate } from "react-router-dom";
-import { PageWrapper } from "../Layout";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
+
+import useSessionUser from "../../hooks/useSessionUser";
+import { login } from "../../store/session";
+import { PageWrapper } from "../Layout";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const currentUser = useSessionUser();
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handlePageRight = () => {
-    navigate("/home");
+  const handlePageRight = async () => {
+    return await dispatch(login({ email, password }))
+      .then(() => navigate("/home"))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.message) setErrors({ email: data.message });
+      });
   };
 
   const handlePageLeft = () => {
-    navigate("/");
+    navigate(-1);
   };
 
+  // const handleDemo = async () => {
+  //   await dispatch(login({ email: "demo@user.io", password: "password" }))
+  //     .catch(async (res) => {
+  //       const data = await res.json();
+  //       if (data && data.message) setErrors({ credentials: data.message });
+  //     });
+  // };
+
+  console.log({ errors });
+  console.log({ currentUser });
   return (
     <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
       <div id="land-container">

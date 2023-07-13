@@ -1,4 +1,4 @@
-export const timeSince = (date, type) => {
+export function timeSince(date, type) {
   if (!date) return "";
   const now = new Date().getTime();
   const seconds = Math.floor((now - new Date(date).getTime()) / 1000);
@@ -41,4 +41,8 @@ export const timeSince = (date, type) => {
   }
 
   return "now";
-};
+}
+
+export function isAsyncFunction(fn) {
+  return fn.constructor.name === "AsyncFunction";
+}

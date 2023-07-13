@@ -8,7 +8,6 @@ const { hashSync, compareSync } = require("bcryptjs");
 const { User } = require("../db/models");
 const { secret, expiresIn } = jwtConfig;
 const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize");
 
 const setTokenCookie = (res, user) => {
   const token = jwt.sign(
@@ -75,10 +74,8 @@ const getUser = (req, res) => {
   if (user) {
     const data = {
       id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
       email: user.email,
-      username: user.username,
+      name: user.name,
     };
     return res.json({
       user: data,
@@ -91,34 +88,29 @@ const logout = (_, res) => {
   return res.json({ message: "success" });
 };
 
-const validLogin = ({ credential, password }) => {
+const validLogin = ({ email, password }) => {
   let errorResult = {
-    message: "Invalid credentials",
+    message: "invalid credentials",
     errors: {},
     status: 500,
   };
-  if (!credential) {
-    errorResult.errors.credential = "Email or username is required";
+  if (!email) {
+    console.log("entering email");
+    errorResult.errors.email = "email is required";
   }
   if (!password) {
-    errorResult.errors.password = "Password is required";
+    console.log("entering password");
+    errorResult.errors.password = "password is required";
   }
   throwIfError(errorResult);
-  return { credential, password };
+  return { email, password };
 };
 
 const login = async (req, res) => {
   try {
-    const { credential, password } = validLogin(req.body);
+    const { email, password } = validLogin(req.body);
 
-    const data = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential,
-        },
-      },
-    });
+    const data = await User.unscoped().findOne({ where: { email } });
 
     let passwordMatch;
     if (data) {
@@ -134,10 +126,8 @@ const login = async (req, res) => {
 
     const user = {
       id: data.id,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      name: data.name,
       email: data.email,
-      username: data.username,
     };
 
     setTokenCookie(res, user);
@@ -147,81 +137,57 @@ const login = async (req, res) => {
   }
 };
 
-const checkIfAvailable = async ({ email, username }) => {
+const checkIfAvailable = async (email) => {
   let errorResult = {
-    message: "User already exists",
+    message: "user already exists",
     errors: {},
     status: 500,
   };
-  const [emailExists, usernameExists] = await Promise.all([
-    User.findOne({ where: { email } }),
-    User.findOne({ where: { username } }),
-  ]);
+  const emailExists = await User.findOne({ where: { email } });
 
   if (emailExists) {
     errorResult.errors.email = "User with that email already exists";
   }
 
-  if (usernameExists) {
-    errorResult.errors.username = "User with that username already exists";
-  }
-
   throwIfError(errorResult);
-  return { email, username };
+  return email;
 };
 
-const validSignUp = async ({
-  firstName,
-  lastName,
-  email,
-  password,
-  username,
-}) => {
+const validSignUp = async ({ email, password, name }) => {
   let errorResult = {
     message: "Bad Request",
     errors: {},
     status: 400,
   };
-  if (!firstName) {
-    errorResult.errors.firstName = "First Name is required";
-  }
-  if (!lastName) {
-    errorResult.errors.lastName = "Last Name is required";
-  }
   if (!email) {
-    errorResult.errors.email = "Invalid email";
+    errorResult.errors.email = "invalid email";
   }
   if (!password) {
-    errorResult.errors.password = "Password is required";
+    errorResult.errors.password = "password is required";
   }
-  if (!username) {
-    errorResult.errors.username = "Username is required";
+  if (!name) {
+    errorResult.errors.username = "name is required";
   }
   throwIfError(errorResult);
-  await checkIfAvailable({ email, username });
-  return { firstName, lastName, email, password, username };
+  await checkIfAvailable(email);
+  return { email, password, name };
 };
 
 const signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, username } =
-      await validSignUp(req.body);
+    const { name, email, password } = await validSignUp(req.body);
 
     const hashedPassword = hashSync(password);
     const data = await User.create({
-      firstName,
-      lastName,
+      name,
       email,
-      username,
       hashedPassword,
     });
 
     const user = {
       id: data.id,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      name: data.name,
       email: data.email,
-      username: data.username,
     };
 
     setTokenCookie(res, user);
