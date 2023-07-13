@@ -44,5 +44,5 @@ export function timeSince(date, type) {
 }
 
 export function isAsyncFunction(fn) {
-  return fn.constructor.name === "AsyncFunction";
+  return fn && fn.constructor.name === "AsyncFunction";
 }
