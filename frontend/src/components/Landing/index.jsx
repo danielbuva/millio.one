@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { signup } from "../../store/session";
 
 import { PageWrapper } from "../Layout";
 
@@ -15,6 +18,7 @@ function Landing() {
     parseInt(localStorage.getItem("lpIndex") || "0")
   );
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const page1 = (
@@ -107,8 +111,31 @@ function Landing() {
         return previousPage + 1;
       });
     } else {
-      navigate("/home");
-      localStorage.setItem("lpIndex", "0");
+      // if (password !== confirmPassword) {
+      //   return setErrors({
+      //     confirmPassword:
+      //       "Confirm password field must be the same as the Password field",
+      //   });
+      // }
+
+      dispatch(
+        signup({
+          email,
+          name,
+          password,
+        })
+      )
+        .then(() => {
+          navigate("/home");
+          localStorage.setItem("lpIndex", "0");
+        })
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            // setErrors(data.errors);
+            console.log(data.errors);
+          }
+        });
     }
   };
 

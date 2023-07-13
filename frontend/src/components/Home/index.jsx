@@ -1,7 +1,10 @@
+import useSessionUser from "../../hooks/useSessionUser";
+
 import { PageWrapper } from "../Layout";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const user = useSessionUser();
   const navigate = useNavigate();
 
   const handlePageRight = () => navigate("/mood");
@@ -10,6 +13,7 @@ function Home() {
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       homeeeeeeeee
+      {user?.name}
     </PageWrapper>
   );
 }
