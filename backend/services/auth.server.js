@@ -70,11 +70,6 @@ const restoreCsrf = (req, res) => {
   res.json({ "XSRF-Token": csrfToken });
 };
 
-const getAllUsers = async (_, res) => {
-  const users = await User.findAll();
-  res.json(users);
-};
-
 const getUser = (req, res) => {
   const { user } = req;
   if (user) {
@@ -244,6 +239,6 @@ module.exports = {
     login,
     logout,
   },
-  user: { getAllUsers, signup },
+  user: { signup },
   verifyAuth,
 };
