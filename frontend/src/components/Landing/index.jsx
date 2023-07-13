@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 import { PageWrapper } from "../Layout";
@@ -124,6 +124,11 @@ function Landing() {
   return (
     <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
       <div id="land-container">
+        {pageIndex !== 0 && (
+          <Link className="auth-link" to="/login">
+            log in
+          </Link>
+        )}
         <div id="page">{pages[pageIndex]}</div>
       </div>
     </PageWrapper>

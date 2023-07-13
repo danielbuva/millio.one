@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../Layout";
 import { useState } from "react";
 
@@ -18,6 +18,15 @@ function Login() {
   return (
     <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
       <div id="land-container">
+        <Link
+          className="auth-link"
+          to="/"
+          onClick={() => {
+            localStorage.setItem("lpIndex", "1");
+          }}
+        >
+          sign up
+        </Link>
         <div id="page">
           <h1 className="signup-header">login</h1>
           <div className="auth-inputs">

@@ -171,114 +171,13 @@ button {
   background-color: #181818;
 }
 
-#red button:hover {
-  border-color: #ef3e2e;
+.auth-link {
+  color: #707070;
+  position: absolute;
+  top: 2%;
+  right: 5%;
 }
 
-#orange button:hover {
-  border-color: #ff7a00;
-}
-
-#yellow button:hover {
-  border-color: #ffd400;
-}
-
-#green button:hover {
-  border-color: #acfc3c;
-}
-
-#blue button:hover {
-  border-color: #222da1;
-}
-
-#purple button:hover {
-  border-color: #7856ff;
-}
-
-#pink button:hover {
-  border-color: #ff86e0;
-}
-
-#red .theme-icon {
-  fill: #ef3e2e;
-}
-
-#orange .theme-icon {
-  fill: #ff7a00;
-}
-
-#yellow .theme-icon {
-  fill: #ffd400;
-}
-
-#green .theme-icon {
-  fill: #acfc3c;
-}
-
-#blue .theme-icon {
-  fill: #222da1;
-}
-
-#purple .theme-icon {
-  fill: #7856ff;
-}
-
-#pink .theme-icon {
-  fill: #ff86e0;
-}
-
-#red a {
-  color: #ef3e2e;
-}
-
-#orange a {
-  color: #ff7a00;
-}
-
-#yellow a {
-  color: #ffd400;
-}
-
-#green a {
-  color: #acfc3c;
-}
-
-#blue a {
-  color: #222da1;
-}
-
-#purple a {
-  color: #7856ff;
-}
-
-#pink a {
-  color: #ff86e0;
-}
-
-#red a:hover {
-  color: #fb4c3c;
-}
-
-#orange a:hover {
-  color: #ff740c;
-}
-
-#yellow a:hover {
-  color: #ffc40d;
-}
-
-#green a:hover {
-  color: #a5ff4a;
-}
-
-#blue a:hover {
-  color: #2d38ad;
-}
-
-#purple a:hover {
-  color: #8c62ff;
-}
-
-#pink a:hover {
-  color: #ff93d8;
+.auth-link:hover {
+  color: #d2d2d2;
 }
