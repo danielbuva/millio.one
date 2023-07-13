@@ -282,8 +282,3 @@ button {
 #pink a:hover {
   color: #ff93d8;
 }
-
-.arrow {
-  cursor: pointer;
-  user-select: none;
-}

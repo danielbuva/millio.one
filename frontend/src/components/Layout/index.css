@@ -21,3 +21,23 @@
   height: 100%;
   width: 600px;
 }
+
+.left-arrow {
+  transition: transform 0.2s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.right-arrow {
+  transition: transform 0.15s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.page-turn-right {
+  transform: translateX(8px);
+}
+
+.page-turn-left {
+  transform: translateX(-8px);
+}
