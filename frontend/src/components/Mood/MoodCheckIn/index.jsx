@@ -1,5 +1,8 @@
+import { toCapitalCamelCase } from "../../../utils";
+
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { PageWrapper } from "../../Layout";
 
 import Feeling0 from "../../icons/Moods/Feeling0";
@@ -40,9 +43,11 @@ function MoodCheckIn() {
 
   const [origin, setOrigin] = useState([]);
   const [prompt1, setPrompt1] = useState("");
+  const [response, setResponse] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(
-    parseInt(localStorage.getItem("mIndex") || "0")
+    0
+    // parseInt(localStorage.getItexm("mIndex") || "0")
   );
 
   const navigate = useNavigate();
@@ -67,6 +72,8 @@ function MoodCheckIn() {
           desc.scrollTo(0, 0);
           return;
       }
+    } else if (pageIndex !== 1 && desc) {
+      desc.scrollTo(0, 0);
     }
   }, [feeling, pageIndex]);
 
@@ -87,9 +94,20 @@ function MoodCheckIn() {
     setDescription((state) => {
       const description = e.target.innerText;
       if (description.length > 14) return state;
+
       if (state.includes(description)) {
         return state.filter((s) => s !== description);
       }
+
+      import(`./Responses/${toCapitalCamelCase(description)}`)
+        .then((module) => {
+          const Response = module.default;
+          setResponse(<Response />);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
       return [...state, description];
     });
   };
@@ -328,12 +346,29 @@ function MoodCheckIn() {
     </div>
   );
 
-  const pages = [page1, page2, page3, page4];
+  const page5 = <div>{response}</div>;
+
+  const page6 = (
+    <div>
+      <h1>would you like to do a breathing exercise?</h1>
+      <p>no</p>
+      <p>yes</p>
+    </div>
+  );
+
+  const page7 = (
+    <div>
+      <h1>good job!</h1>
+      <p>you completed a mood check-in</p>
+    </div>
+  );
+
+  const pages = [page1, page2, page3, page4, page5, page6, page7];
 
   const handlePageRight = () => {
     if (pageIndex < pages.length - 1) {
       setPageIndex((previousPage) => {
-        localStorage.setItem("mIndex", previousPage + 1);
+        // localStorage.setItem("mIndex", previousPage + 1);
         return previousPage + 1;
       });
     }
@@ -342,7 +377,7 @@ function MoodCheckIn() {
   const handlePageLeft = () => {
     if (pageIndex > 0) {
       setPageIndex((previousPage) => {
-        localStorage.setItem("mIndex", previousPage - 1);
+        // localStorage.setItem("mIndex", previousPage - 1);
         return previousPage - 1;
       });
     } else {
