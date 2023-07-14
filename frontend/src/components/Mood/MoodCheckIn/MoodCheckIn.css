@@ -13,6 +13,10 @@
   overflow-y: scroll;
 }
 
+.desc-options::-webkit-scrollbar {
+  display: none;
+}
+
 .desc-container {
   padding: 20px 0;
   display: flex;
@@ -56,6 +60,10 @@
   display: grid;
   grid-template-columns: 80px 80px 80px;
   gap: 102px;
+}
+
+#origin-options::-webkit-scrollbar {
+  display: none;
 }
 
 .origin-option {
