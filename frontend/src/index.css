@@ -16,6 +16,8 @@
 textarea {
   line-height: 1.5;
   font-weight: 400;
+  font-size: 16px;
+  font-family: "DM Sans", sans-serif;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,6 +25,12 @@ textarea {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   resize: none;
+  background-color: unset;
+  border: none;
+  outline: none;
+  color: #fff;
+  height: 500px;
+  width: 100%;
 }
 
 textarea::-webkit-scrollbar {
@@ -180,4 +188,15 @@ button {
 
 .auth-link:hover {
   color: #d2d2d2;
+}
+
+.icon-selection {
+  cursor: pointer;
+}
+
+.selection {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
