@@ -45,10 +45,8 @@ function MoodCheckIn() {
   const [prompt1, setPrompt1] = useState("");
   const [response, setResponse] = useState(null);
 
-  const [pageIndex, setPageIndex] = useState(
-    0
-    // parseInt(localStorage.getItexm("mIndex") || "0")
-  );
+  const [pageIndex, setPageIndex] = useState(0);
+  const disabledRight = useRef(true);
 
   const navigate = useNavigate();
 
@@ -79,11 +77,41 @@ function MoodCheckIn() {
     <div>
       <h1>how are you feeling?</h1>
       <div className="selection">
-        <Feeling0 active={feeling === 0} onClick={() => setFeeling(0)} />
-        <Feeling1 active={feeling === 1} onClick={() => setFeeling(1)} />
-        <Feeling2 active={feeling === 2} onClick={() => setFeeling(2)} />
-        <Feeling3 active={feeling === 3} onClick={() => setFeeling(3)} />
-        <Feeling4 active={feeling === 4} onClick={() => setFeeling(4)} />
+        <Feeling0
+          active={feeling === 0}
+          onClick={() => {
+            disabledRight.current = false;
+            setFeeling(0);
+          }}
+        />
+        <Feeling1
+          active={feeling === 1}
+          onClick={() => {
+            disabledRight.current = false;
+            setFeeling(1);
+          }}
+        />
+        <Feeling2
+          active={feeling === 2}
+          onClick={() => {
+            disabledRight.current = false;
+            setFeeling(2);
+          }}
+        />
+        <Feeling3
+          active={feeling === 3}
+          onClick={() => {
+            disabledRight.current = false;
+            setFeeling(3);
+          }}
+        />
+        <Feeling4
+          active={feeling === 4}
+          onClick={() => {
+            disabledRight.current = false;
+            setFeeling(4);
+          }}
+        />
       </div>
     </div>
   );
@@ -94,8 +122,11 @@ function MoodCheckIn() {
       if (description.length > 14) return state;
 
       if (state.includes(description)) {
+        disabledRight.current = true;
         return state.filter((s) => s !== description);
       }
+
+      disabledRight.current = false;
 
       import(`./Responses/${toCapitalCamelCase(description)}`)
         .then((module) => {
@@ -316,8 +347,10 @@ function MoodCheckIn() {
                   setOrigin((state) => {
                     if (name.length > 14) return state;
                     if (state.includes(name)) {
+                      disabledRight.current = true;
                       return state.filter((s) => s !== name);
                     }
+                    disabledRight.current = false;
                     return [...state, name];
                   })
                 }
@@ -339,7 +372,14 @@ function MoodCheckIn() {
       <textarea
         value={prompt1}
         placeholder="start writing..."
-        onChange={(e) => setPrompt1(e.currentTarget.value)}
+        onChange={(e) => {
+          setPrompt1(e.currentTarget.value);
+          if (prompt1.trim().length <= 1) {
+            disabledRight.current = true;
+          } else {
+            disabledRight.current = false;
+          }
+        }}
       />
     </div>
   );
@@ -367,27 +407,55 @@ function MoodCheckIn() {
     if (pageIndex === 1 && descRef.current) {
       descRef.current.scrollTo(0, 0);
     }
+
     if (pageIndex < pages.length - 1) {
       setPageIndex((previousPage) => {
-        // localStorage.setItem("mIndex", previousPage + 1);
         return previousPage + 1;
       });
+    } else {
+      navigate("/journey");
+    }
+
+    switch (pageIndex) {
+      case 0:
+        console.log("entering0", description);
+        if (description.length < 1) {
+          console.log("entering1");
+          disabledRight.current = true;
+        }
+        break;
+      case 1:
+        if (origin.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      case 2:
+        if (!prompt1) {
+          disabledRight.current = true;
+        }
+        break;
+      default:
+        return;
     }
   };
 
   const handlePageLeft = () => {
     if (pageIndex > 0) {
       setPageIndex((previousPage) => {
-        // localStorage.setItem("mIndex", previousPage - 1);
         return previousPage - 1;
       });
     } else {
       navigate(-1);
     }
+    disabledRight.current = false;
   };
 
   return (
-    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
+    <PageWrapper
+      onPageLeft={handlePageLeft}
+      onPageRight={handlePageRight}
+      disabledRight={disabledRight.current}
+    >
       mood check in
       <div className="check-in-wrapper">
         <div className="page-container">{pages[pageIndex]}</div>
