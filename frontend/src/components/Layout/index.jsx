@@ -16,8 +16,8 @@ export function Layout({ children }) {
 
 export function PageWrapper({
   children,
-  disableLeft,
-  disableRight,
+  disabledLeft,
+  disabledRight,
   onPageLeft,
   onPageRight,
 }) {
@@ -85,13 +85,13 @@ export function PageWrapper({
       <ArrowLeft
         className={`left-arrow ${pageLeft ? "page-turn-left" : ""}`}
         onClick={handlePageLeft}
-        disabled={disableLeft}
+        disabled={disabledLeft}
       />
       <div className="base-content">{children}</div>
       <ArrowRight
         className={`right-arrow ${pageRight ? "page-turn-right" : ""}`}
         onClick={handlePageRight}
-        disabled={disableRight}
+        disabled={disabledRight}
       />
     </>
   );
