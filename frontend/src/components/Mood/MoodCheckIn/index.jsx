@@ -322,7 +322,7 @@ function MoodCheckIn() {
                   })
                 }
               />
-              <p>{name}</p>
+              <p className="origin-name">{name}</p>
             </div>
           );
         })}
