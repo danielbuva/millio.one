@@ -46,3 +46,21 @@ export function timeSince(date, type) {
 export function isAsyncFunction(fn) {
   return fn && fn.constructor.name === "AsyncFunction";
 }
+
+export function toCapitalCamelCase(str) {
+  if (typeof str !== "string" || str.length === 0) {
+    return str; // Return the input as is if it's not a non-empty string
+  }
+
+  const words = str.split(" ");
+
+  const capitalCamelCased = words
+    .map((word) => {
+      const capitalized =
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      return capitalized;
+    })
+    .join("");
+
+  return capitalCamelCased;
+}
