@@ -1,7 +1,7 @@
 function Feeling1({ active, onClick, noStroke }) {
-  const circleFill = active ? "#d2d2d2" : "#000000";
-  const pathFill = active ? "#000000" : "#d2d2d2";
-  const stroke = noStroke ? "000000" : "#d2d2d2";
+  const circleFill = active ? "#ffffff" : "#000000";
+  const pathFill = active ? "#000000" : "#ffffff";
+  const stroke = noStroke ? "000000" : "#ffffff";
 
   return (
     <svg
