@@ -1,9 +1,10 @@
+import { isAsyncFunction } from "../../utils";
+
 import { useEffect, useState } from "react";
 import ArrowLeft from "../icons/ArrowLeft";
 import ArrowRight from "../icons/ArrowRight";
 
 import "./index.css";
-import { isAsyncFunction } from "../../utils";
 
 export function Layout({ children }) {
   return (
@@ -13,7 +14,13 @@ export function Layout({ children }) {
   );
 }
 
-export function PageWrapper({ onPageLeft, onPageRight, children }) {
+export function PageWrapper({
+  children,
+  disableLeft,
+  disableRight,
+  onPageLeft,
+  onPageRight,
+}) {
   const [pageLeft, setPageLeft] = useState(
     Boolean(localStorage.getItem("pageLeft")) || false
   );
@@ -45,44 +52,46 @@ export function PageWrapper({ onPageLeft, onPageRight, children }) {
     return () => clearTimeout(pageTurnRight);
   }, [pageRight]);
 
+  const handlePageLeft = isAsyncFunction(onPageLeft)
+    ? async () => {
+        setPageLeft(true);
+        localStorage.setItem("pageLeft", ": )");
+        await onPageLeft();
+        playSound();
+      }
+    : () => {
+        setPageLeft(true);
+        localStorage.setItem("pageLeft", ": )");
+        onPageLeft();
+        playSound();
+      };
+
+  const handlePageRight = isAsyncFunction(onPageRight)
+    ? async () => {
+        setPageRight(true);
+        localStorage.setItem("pageRight", "( :");
+        await onPageRight();
+        playSound();
+      }
+    : () => {
+        setPageRight(true);
+        localStorage.setItem("pageRight", "( :");
+        onPageRight();
+        playSound();
+      };
+
   return (
     <>
       <ArrowLeft
         className={`left-arrow ${pageLeft ? "page-turn-left" : ""}`}
-        onClick={
-          isAsyncFunction(onPageLeft)
-            ? async () => {
-                setPageLeft(true);
-                localStorage.setItem("pageLeft", ": )");
-                await onPageLeft();
-                playSound();
-              }
-            : () => {
-                setPageLeft(true);
-                localStorage.setItem("pageLeft", ": )");
-                onPageLeft();
-                playSound();
-              }
-        }
+        onClick={handlePageLeft}
+        disabled={disableLeft}
       />
       <div className="base-content">{children}</div>
       <ArrowRight
         className={`right-arrow ${pageRight ? "page-turn-right" : ""}`}
-        onClick={
-          isAsyncFunction(onPageRight)
-            ? async () => {
-                setPageRight(true);
-                localStorage.setItem("pageRight", "( :");
-                await onPageRight();
-                playSound();
-              }
-            : () => {
-                setPageRight(true);
-                localStorage.setItem("pageRight", "( :");
-                onPageRight();
-                playSound();
-              }
-        }
+        onClick={handlePageRight}
+        disabled={disableRight}
       />
     </>
   );
