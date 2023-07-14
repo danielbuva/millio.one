@@ -150,13 +150,13 @@ function Landing() {
 
   return (
     <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
-      <div id="land-container">
+      <div className="page-container">
         {pageIndex !== 0 && (
           <Link className="auth-link" to="/login">
             log in
           </Link>
         )}
-        <div id="page">{pages[pageIndex]}</div>
+        <div className="page">{pages[pageIndex]}</div>
       </div>
     </PageWrapper>
   );

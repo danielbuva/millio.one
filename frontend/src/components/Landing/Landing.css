@@ -1,4 +1,4 @@
-#land-container {
+.page-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   position: relative;
 }
 
-#page {
+.page {
   position: absolute;
   top: 30%;
   padding: 0 75px;
