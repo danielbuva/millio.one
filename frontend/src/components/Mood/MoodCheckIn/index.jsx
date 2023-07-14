@@ -418,9 +418,7 @@ function MoodCheckIn() {
 
     switch (pageIndex) {
       case 0:
-        console.log("entering0", description);
         if (description.length < 1) {
-          console.log("entering1");
           disabledRight.current = true;
         }
         break;
