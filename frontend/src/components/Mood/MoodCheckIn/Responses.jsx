@@ -664,7 +664,7 @@ export function Confused() {
   );
 }
 
-export function Critiqued() {
+export function Distracted() {
   return (
     <>
       <h1>stay on target.</h1>
@@ -700,7 +700,7 @@ export function Desire() {
   );
 }
 
-export function Distracted() {
+export function Impatient() {
   return (
     <>
       <h1>need a little patience.</h1>
@@ -719,7 +719,7 @@ export function Distracted() {
   );
 }
 
-export function Impatient() {
+export function Suspicious() {
   return (
     <>
       <h1>amongus.</h1>
@@ -740,11 +740,23 @@ export function Impatient() {
   );
 }
 
-export function Suspicious() {
+export function Critiqued() {
   return (
     <>
-      <h1></h1>
-      <p></p>
+      <h1>everyone's a critic.</h1>
+      <p>
+        Criticism comes in two flavors; criticism of self and criticism of
+        others.
+      </p>
+      <p>
+        Self critique, if done constructively and with kindness, helps you
+        learn from your mistakes and improve.
+      </p>
+      <p>But negative self talk can be defeating and demoralizing.</p>
+      <p>
+        Always remember to be impeccable with your words to yourself and
+        others.
+      </p>
     </>
   );
 }
@@ -931,6 +943,7 @@ export function Nostalgic() {
     </>
   );
 }
+
 export function Optimistic() {
   return (
     <>
@@ -985,6 +998,7 @@ export function Satisfied() {
     </>
   );
 }
+
 export function Surprised() {
   return (
     <>
@@ -1038,6 +1052,7 @@ export function Confident() {
     </>
   );
 }
+
 export function Creative() {
   return (
     <>
@@ -1078,6 +1093,7 @@ export function Free() {
     </>
   );
 }
+
 export function Happy() {
   return (
     <>
@@ -1139,6 +1155,7 @@ export function Proud() {
     </>
   );
 }
+
 export function Respected() {
   return (
     <>
