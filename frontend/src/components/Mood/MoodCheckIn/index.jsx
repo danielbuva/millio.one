@@ -72,8 +72,6 @@ function MoodCheckIn() {
           desc.scrollTo(0, 0);
           return;
       }
-    } else if (pageIndex !== 1 && desc) {
-      desc.scrollTo(0, 0);
     }
   }, [feeling, pageIndex]);
 
@@ -366,6 +364,9 @@ function MoodCheckIn() {
   const pages = [page1, page2, page3, page4, page5, page6, page7];
 
   const handlePageRight = () => {
+    if (pageIndex === 1 && descRef.current) {
+      descRef.current.scrollTo(0, 0);
+    }
     if (pageIndex < pages.length - 1) {
       setPageIndex((previousPage) => {
         // localStorage.setItem("mIndex", previousPage + 1);
