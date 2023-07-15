@@ -1,7 +1,10 @@
 import useSessionUser from "../../hooks/useSessionUser";
+import { DayCheckIn, NightCheckIn } from "../CheckInTile";
 
 import { PageWrapper } from "../Layout";
 import { useNavigate } from "react-router-dom";
+
+import "./Home.css";
 
 function Home() {
   const user = useSessionUser();
@@ -30,6 +33,10 @@ function Home() {
         {greeting} {user?.name}
       </h1>
       <p>{time.toDateString()}</p>
+      <div id="check-ins">
+        <DayCheckIn />
+        <NightCheckIn />
+      </div>
     </PageWrapper>
   );
 }

@@ -2,6 +2,8 @@ import { toCapitalCamelCase } from "../../../utils";
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createMood } from "../../../store/joruney";
 
 import { PageWrapper } from "../../Layout";
 
@@ -13,7 +15,7 @@ import Feeling4 from "../../icons/Moods/Feeling4";
 
 import Cleaning from "../../icons/origin/Cleaning";
 import Creativity from "../../icons/origin/Creativity";
-import Date from "../../icons/origin/Date";
+import Dating from "../../icons/origin/Dating";
 import Family from "../../icons/origin/Family";
 import Friends from "../../icons/origin/Friends";
 import Fitness from "../../icons/origin/Fitness";
@@ -25,7 +27,7 @@ import Nature from "../../icons/origin/Nature";
 import Partner from "../../icons/origin/Partner";
 import Party from "../../icons/origin/Party";
 import Pet from "../../icons/origin/Pet";
-import Relax from "../../icons/origin/Relax";
+import Relaxing from "../../icons/origin/Relaxing";
 import SelfCare from "../../icons/origin/SelfCare";
 import Spirituality from "../../icons/origin/Spirituality";
 import TimeAlone from "../../icons/origin/TimeAlone";
@@ -35,6 +37,7 @@ import Work from "../../icons/origin/Work";
 import "./MoodCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
+//@TODO make db enums and origin names match or parse them to match
 
 function MoodCheckIn() {
   const [feeling, setFeeling] = useState(null);
@@ -48,7 +51,10 @@ function MoodCheckIn() {
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(true);
 
+  const createdAt = new Date();
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const desc = descRef.current;
@@ -312,10 +318,10 @@ function MoodCheckIn() {
 
   const origins = [
     Work,
-    Relax,
+    Relaxing,
     Family,
     Friends,
-    Date,
+    Dating,
     Pet,
     Fitness,
     SelfCare,
@@ -413,7 +419,16 @@ function MoodCheckIn() {
         return previousPage + 1;
       });
     } else {
-      navigate("/journey");
+      dispatch(
+        createMood({
+          body: prompt1,
+          createdAt,
+          description,
+          feeling,
+          origin,
+        })
+      ).then(() => navigate("/journey"));
+      // navigate("/journey");
     }
 
     switch (pageIndex) {
