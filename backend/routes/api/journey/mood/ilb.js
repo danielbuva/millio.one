@@ -1,5 +1,5 @@
 const { returnError } = require("../../../services/error.server");
-const { Mood, Origin } = require("../../../../db/models");
+const { Description, Mood, Origin } = require("../../../../db/models");
 const { validBody } = require("./validation");
 
 async function createEntry(req, res) {
@@ -36,6 +36,14 @@ async function createEntry(req, res) {
   }
 }
 
+async function getEntry(req, res) {
+  const data = await Mood.findOne({
+    where: { id: req.params.id },
+    include: [Description, Origin],
+  });
+  res.json(data);
+}
+
 module.exports = {
-  mood: { createEntry },
+  mood: { createEntry, getEntry },
 };

@@ -17,7 +17,7 @@ const validBody = ({
     errorResult.errors.description = "Description is required";
   }
 
-  if (!feeling || isNaN(feeling)) {
+  if (isNaN(feeling)) {
     errorResult.errors.feeling = "feeling is required";
   }
 
@@ -25,7 +25,7 @@ const validBody = ({
     errorResult.errors.origin = "origin is required";
   }
 
-  if (!prompt1 || promp1.length < 1) {
+  if (!prompt1 || prompt1.length < 1) {
     errorResult.errors.prompt1 = "prompt1 is required";
   }
 
