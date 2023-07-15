@@ -17,6 +17,16 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
+        nightId: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: "NightCheckIn",
+            key: "id",
+          },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
         moodId: {
           type: Sequelize.INTEGER,
           allowNull: true,

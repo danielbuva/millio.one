@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production" && process.env.SCHEMA) {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Moods",
+      "DayCheckIns",
       {
         id: {
           allowNull: false,
@@ -29,16 +29,28 @@ module.exports = {
         },
         entryType: {
           allowNull: false,
-          defaultValue: 2,
+          defaultValue: 0,
           type: Sequelize.INTEGER,
         },
-        feeling: {
+        sleep: {
+          allowNull: false,
+          type: Sequelize.ENUM(0, 1, 2, 3, 4),
+        },
+        motivation: {
           allowNull: false,
           type: Sequelize.ENUM(0, 1, 2, 3, 4),
         },
         prompt1: {
           allowNull: false,
           type: Sequelize.STRING(600),
+        },
+        prompt2: {
+          allowNull: false,
+          type: Sequelize.STRING(600),
+        },
+        prepared: {
+          allowNull: false,
+          type: Sequelize.BOOLEAN,
         },
         createdAt: {
           allowNull: false,
@@ -54,7 +66,7 @@ module.exports = {
     );
   },
   async down(queryInterface) {
-    options.tableName = "Moods";
+    options.tableName = "DayCheckIns";
     await queryInterface.dropTable(options);
   },
 };

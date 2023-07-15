@@ -17,26 +17,26 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        // dayId: {
-        //   type: Sequelize.INTEGER,
-        //   allowNull: true,
-        //   references: {
-        //     model: "DayCheckIns",
-        //     key: "id",
-        //   },
-        //   onUpdate: "CASCADE",
-        //   onDelete: "CASCADE",
-        // },
-        // nightId: {
-        //   type: Sequelize.INTEGER,
-        //   allowNull: true,
-        //   references: {
-        //     model: "NightCheckIn",
-        //     key: "id",
-        //   },
-        //   onUpdate: "CASCADE",
-        //   onDelete: "CASCADE",
-        // },
+        dayId: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: "DayCheckIns",
+            key: "id",
+          },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
+        nightId: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: "NightCheckIn",
+            key: "id",
+          },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
         moodId: {
           type: Sequelize.INTEGER,
           allowNull: true,
