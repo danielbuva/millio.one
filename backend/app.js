@@ -2,7 +2,7 @@ const {
   notFoundHandler,
   sqlValidationHandler,
   errorFormatter,
-} = require("./services/error.server.js");
+} = require("./routes/services/error.server.js");
 const cookieParser = require("cookie-parser");
 const { isProduction } = require("./config");
 const express = require("express");

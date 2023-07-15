@@ -1,4 +1,4 @@
-const { session } = require("../../../services/auth.server");
+const { session } = require("../../services/auth.server");
 const express = require("express");
 const router = express.Router();
 

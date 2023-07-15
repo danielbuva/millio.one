@@ -3,9 +3,9 @@ const {
   throwError,
   returnError,
 } = require("./error.server");
-const { jwtConfig, isProduction } = require("../config");
+const { jwtConfig, isProduction } = require("../../config");
 const { hashSync, compareSync } = require("bcryptjs");
-const { User } = require("../db/models");
+const { User } = require("../../db/models");
 const { secret, expiresIn } = jwtConfig;
 const jwt = require("jsonwebtoken");
 
@@ -54,6 +54,7 @@ const restoreSession = (req, res, next) => {
 };
 
 const verifyAuth = (req, _, next) => {
+  console.log("[entering]");
   if (req.user) return next();
 
   const err = new Error("Authentication required");

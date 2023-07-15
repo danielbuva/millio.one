@@ -1,5 +1,5 @@
 const { ValidationError } = require("sequelize");
-const { isProduction } = require("../config");
+const { isProduction } = require("../../config");
 
 const invariant = (condition, message = "Spot couldn't be found") => {
   if (!condition) {
