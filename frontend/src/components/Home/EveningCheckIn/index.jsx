@@ -32,7 +32,7 @@ import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
 import "./EveningCheckIn.css";
-import { createEntry } from "../../../store/joruney";
+import { createEntry } from "../../../store/journey";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
@@ -40,13 +40,13 @@ import { createEntry } from "../../../store/joruney";
 function EveningCheckIn() {
   const [rest, setRest] = useState(null);
   const [stress, setStress] = useState(null);
-  const [productivity, setProductivity] = useState(null);
+  const [productive, setProductive] = useState(null);
   const [description, setDescription] = useState([]);
   const descRef = useRef(null);
 
   const [origin, setOrigin] = useState([]);
   const [prompt1, setPrompt1] = useState("");
-  const [summary, setSummary] = useState("");
+  const [prompt2, setPrompt2] = useState("");
   // const [response, setResponse] = useState(null);
   // const [prepared, setPrepared] = useState(null);
 
@@ -159,38 +159,38 @@ function EveningCheckIn() {
       <h1>how productive did you feel today?</h1>
       <div className="selection">
         <Level0
-          active={productivity === 0}
+          active={productive === 0}
           onClick={() => {
             disabledRight.current = false;
-            setProductivity(0);
+            setProductive(0);
           }}
         />
         <Level1
-          active={productivity === 1}
+          active={productive === 1}
           onClick={() => {
             disabledRight.current = false;
-            setProductivity(1);
+            setProductive(1);
           }}
         />
         <Level2
-          active={productivity === 2}
+          active={productive === 2}
           onClick={() => {
             disabledRight.current = false;
-            setProductivity(2);
+            setProductive(2);
           }}
         />
         <Level3
-          active={productivity === 3}
+          active={productive === 3}
           onClick={() => {
             disabledRight.current = false;
-            setProductivity(3);
+            setProductive(3);
           }}
         />
         <Level4
-          active={productivity === 4}
+          active={productive === 4}
           onClick={() => {
             disabledRight.current = false;
-            setProductivity(4);
+            setProductive(4);
           }}
         />
       </div>
@@ -439,10 +439,10 @@ function EveningCheckIn() {
     <div>
       <h1>summarize your day.</h1>
       <textarea
-        value={summary}
+        value={prompt1}
         placeholder="start writing..."
         onChange={(e) => {
-          setSummary(e.currentTarget.value);
+          setPrompt1(e.currentTarget.value);
           if (prompt1.trim().length <= 1) {
             disabledRight.current = true;
           } else {
@@ -455,13 +455,13 @@ function EveningCheckIn() {
 
   const page7 = (
     <div>
-      <h1>generate promps here</h1>
+      <h1>generate prompt 2 here</h1>
       <textarea
-        value={prompt1}
+        value={prompt2}
         placeholder="start writing..."
         onChange={(e) => {
-          setPrompt1(e.currentTarget.value);
-          if (prompt1.trim().length <= 1) {
+          setPrompt2(e.currentTarget.value);
+          if (prompt2.trim().length <= 1) {
             disabledRight.current = true;
           } else {
             disabledRight.current = false;
@@ -488,7 +488,7 @@ function EveningCheckIn() {
         }
         break;
       case 1:
-        if (!productivity) {
+        if (!productive) {
           disabledRight.current = true;
         }
         break;
@@ -518,12 +518,15 @@ function EveningCheckIn() {
       dispatch(
         createEntry(
           {
-            prompt1,
             createdAt,
+            description,
             stress,
             rest,
             origin,
-            // prepared,
+            prepared: false,
+            productive,
+            prompt1,
+            prompt2,
           },
           "night"
         )
