@@ -1,0 +1,23 @@
+#check-ins {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.check-in-tile {
+  border: solid 3px #fff;
+  width: 200px;
+  height: 200px;
+  border-radius: 16px;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.check-in-tile > span {
+  color: #707070;
+}

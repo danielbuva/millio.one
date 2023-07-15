@@ -1,0 +1,78 @@
+.check-in-wrapper {
+  padding-left: 75px;
+  padding-right: 75px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.desc-options {
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+  overflow-y: scroll;
+}
+
+.desc-options::-webkit-scrollbar {
+  display: none;
+}
+
+.desc-container {
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#last {
+  padding-bottom: 120px;
+}
+
+.desc-option {
+  width: 130px;
+  height: 60px;
+  border: solid 2px #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+}
+
+#origin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#origin-options {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 680px;
+  overflow-y: scroll;
+  user-select: none;
+  display: grid;
+  grid-template-columns: 80px 80px 80px;
+  gap: 102px;
+}
+
+#origin-options::-webkit-scrollbar {
+  display: none;
+}
+
+.origin-option {
+  text-align: center;
+  height: 20px;
+  width: fit-content;
+}
+
+.origin-name {
+  padding: 0;
+  margin: 0;
+}

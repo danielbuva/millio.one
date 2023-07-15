@@ -8,6 +8,8 @@ import Mood from "./components/Mood";
 import Journey from "./components/Journey";
 import Login from "./components/Login";
 import MoodCheckIn from "./components/Mood/MoodCheckIn";
+import MorningCheckIn from "./components/Home/MorningCheckIn";
+import EveningCheckIn from "./components/Home/EveningCheckIn";
 
 function App() {
   return (
@@ -19,8 +21,8 @@ function App() {
         <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
         <Route path="/journey" element={<Journey />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/day" element={<>hi</>} />
-        <Route path="/evening" element={<>hi</>} />
+        <Route path="/morning/check-in" element={<MorningCheckIn />} />
+        <Route path="/evening/check-in" element={<EveningCheckIn />} />
       </Routes>
     </ClientWrapper>
   );

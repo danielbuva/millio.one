@@ -1,17 +1,14 @@
-import { toCapitalCamelCase } from "../../../utils";
-
-import { createEntry } from "../../../store/joruney";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { PageWrapper } from "../../Layout";
 
-import Feeling0 from "../../icons/Moods/Feeling0";
-import Feeling1 from "../../icons/Moods/Feeling1";
-import Feeling2 from "../../icons/Moods/Feeling2";
-import Feeling3 from "../../icons/Moods/Feeling3";
-import Feeling4 from "../../icons/Moods/Feeling4";
+import Level0 from "../../icons/Levels/Level0";
+import Level1 from "../../icons/Levels/Level1";
+import Level2 from "../../icons/Levels/Level2";
+import Level3 from "../../icons/Levels/Level3";
+import Level4 from "../../icons/Levels/Level4";
 
 import Cleaning from "../../icons/origin/Cleaning";
 import Creativity from "../../icons/origin/Creativity";
@@ -34,19 +31,24 @@ import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
-import "./MoodCheckIn.css";
+import "./EveningCheckIn.css";
+import { createEntry } from "../../../store/joruney";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
 
-function MoodCheckIn() {
-  const [feeling, setFeeling] = useState(null);
+function EveningCheckIn() {
+  const [rest, setRest] = useState(null);
+  const [stress, setStress] = useState(null);
+  const [productivity, setProductivity] = useState(null);
   const [description, setDescription] = useState([]);
   const descRef = useRef(null);
 
   const [origin, setOrigin] = useState([]);
   const [prompt1, setPrompt1] = useState("");
-  const [response, setResponse] = useState(null);
+  const [summary, setSummary] = useState("");
+  // const [response, setResponse] = useState(null);
+  // const [prepared, setPrepared] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(true);
@@ -56,66 +58,139 @@ function MoodCheckIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const desc = descRef.current;
-    if (pageIndex === 1 && desc) {
-      switch (feeling) {
-        case 1:
-          desc.scrollTo(0, 424);
-          break;
-        case 2:
-          desc.scrollTo(0, 944);
-          break;
-        case 3:
-          desc.scrollTo(0, 1368);
-          break;
-        case 4:
-          desc.scrollTo(0, 1740);
-          break;
-        default:
-          desc.scrollTo(0, 0);
-          return;
-      }
-    }
-  }, [feeling, pageIndex]);
-
   const page1 = (
     <div>
-      <h1>how are you feeling?</h1>
+      <h1>how well rested did you feel today?</h1>
       <div className="selection">
-        <Feeling0
-          active={feeling === 0}
+        <Level0
+          active={rest === 0}
           onClick={() => {
             disabledRight.current = false;
-            setFeeling(0);
+            setRest(0);
+            setRest(0);
+            setRest(0);
           }}
         />
-        <Feeling1
-          active={feeling === 1}
+        <Level1
+          active={rest === 1}
           onClick={() => {
             disabledRight.current = false;
-            setFeeling(1);
+            setRest(1);
+            setRest(1);
+            setRest(1);
           }}
         />
-        <Feeling2
-          active={feeling === 2}
+        <Level2
+          active={rest === 2}
           onClick={() => {
             disabledRight.current = false;
-            setFeeling(2);
+            setRest(2);
+            setRest(2);
+            setRest(2);
           }}
         />
-        <Feeling3
-          active={feeling === 3}
+        <Level3
+          active={rest === 3}
           onClick={() => {
             disabledRight.current = false;
-            setFeeling(3);
+            setRest(3);
+            setRest(3);
+            setRest(3);
           }}
         />
-        <Feeling4
-          active={feeling === 4}
+        <Level4
+          active={rest === 4}
           onClick={() => {
             disabledRight.current = false;
-            setFeeling(4);
+            setRest(4);
+            setRest(4);
+            setRest(4);
+          }}
+        />
+      </div>
+    </div>
+  );
+
+  const page2 = (
+    <div>
+      <h1>how stressful was your day?</h1>
+      <div className="selection">
+        <Level0
+          active={stress === 0}
+          onClick={() => {
+            disabledRight.current = false;
+            setStress(0);
+          }}
+        />
+        <Level1
+          active={stress === 1}
+          onClick={() => {
+            disabledRight.current = false;
+            setStress(1);
+          }}
+        />
+        <Level2
+          active={stress === 2}
+          onClick={() => {
+            disabledRight.current = false;
+            setStress(2);
+          }}
+        />
+        <Level3
+          active={stress === 3}
+          onClick={() => {
+            disabledRight.current = false;
+            setStress(3);
+          }}
+        />
+        <Level4
+          active={stress === 4}
+          onClick={() => {
+            disabledRight.current = false;
+            setStress(4);
+          }}
+        />
+      </div>
+    </div>
+  );
+
+  const page3 = (
+    <div>
+      <h1>how productive did you feel today?</h1>
+      <div className="selection">
+        <Level0
+          active={productivity === 0}
+          onClick={() => {
+            disabledRight.current = false;
+            setProductivity(0);
+          }}
+        />
+        <Level1
+          active={productivity === 1}
+          onClick={() => {
+            disabledRight.current = false;
+            setProductivity(1);
+          }}
+        />
+        <Level2
+          active={productivity === 2}
+          onClick={() => {
+            disabledRight.current = false;
+            setProductivity(2);
+          }}
+        />
+        <Level3
+          active={productivity === 3}
+          onClick={() => {
+            disabledRight.current = false;
+            setProductivity(3);
+          }}
+        />
+        <Level4
+          active={productivity === 4}
+          onClick={() => {
+            disabledRight.current = false;
+            setProductivity(4);
           }}
         />
       </div>
@@ -134,15 +209,6 @@ function MoodCheckIn() {
 
       disabledRight.current = false;
 
-      import(`./Responses/${toCapitalCamelCase(description)}`)
-        .then((module) => {
-          const Response = module.default;
-          setResponse(<Response />);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
       return [...state, description];
     });
   };
@@ -152,10 +218,9 @@ function MoodCheckIn() {
     "anxious",
     "despairful",
     "disgusted",
-    "disrespected",
+    "disrespectful",
     "embarrassed",
     "fearful",
-    "frustrated",
     "grieved",
     "rejected",
     "shameful",
@@ -220,7 +285,7 @@ function MoodCheckIn() {
     "respected",
   ];
 
-  const page2 = (
+  const page4 = (
     <div>
       <h1>how would you describe how you are feeling?</h1>
       <div
@@ -340,9 +405,9 @@ function MoodCheckIn() {
     Health,
   ];
 
-  const page3 = (
+  const page5 = (
     <div id="origin">
-      <h1>what's going on, what's making you feel {description[0]}?</h1>
+      <h1>which of these things is influencing your feelings today?</h1>
       <div id="origin-options">
         {origins.map((Option, i) => {
           const name = Option.name.toLowerCase();
@@ -370,12 +435,27 @@ function MoodCheckIn() {
     </div>
   );
 
-  const page4 = (
+  const page6 = (
     <div>
-      <h1>
-        Think how {origin[0]} is bringing the feeling of being{" "}
-        {description[0]}
-      </h1>
+      <h1>summarize your day.</h1>
+      <textarea
+        value={summary}
+        placeholder="start writing..."
+        onChange={(e) => {
+          setSummary(e.currentTarget.value);
+          if (prompt1.trim().length <= 1) {
+            disabledRight.current = true;
+          } else {
+            disabledRight.current = false;
+          }
+        }}
+      />
+    </div>
+  );
+
+  const page7 = (
+    <div>
+      <h1>generate promps here</h1>
       <textarea
         value={prompt1}
         placeholder="start writing..."
@@ -391,26 +471,41 @@ function MoodCheckIn() {
     </div>
   );
 
-  const page5 = <div>{response}</div>;
-
-  const page6 = (
-    <div>
-      <h1>would you like to do a breathing exercise?</h1>
-      <p>no</p>
-      <p>yes</p>
-    </div>
-  );
-
-  const page7 = (
+  const page8 = (
     <div>
       <h1>good job!</h1>
-      <p>you completed a mood check-in</p>
+      <p>you completed your evening reflection</p>
     </div>
   );
 
-  const pages = [page1, page2, page3, page4, page5, page6, page7];
+  const pages = [page1, page2, page3, page4, page5, page6, page7, page8];
 
   const handlePageRight = () => {
+    switch (pageIndex) {
+      case 0:
+        if (!stress) {
+          disabledRight.current = true;
+        }
+        break;
+      case 1:
+        if (!productivity) {
+          disabledRight.current = true;
+        }
+        break;
+      case 2:
+        if (description.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      case 3:
+        if (origin.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      default:
+        break;
+    }
+
     if (pageIndex === 1 && descRef.current) {
       descRef.current.scrollTo(0, 0);
     }
@@ -423,36 +518,17 @@ function MoodCheckIn() {
       dispatch(
         createEntry(
           {
-            body: prompt1,
+            prompt1,
             createdAt,
-            description,
-            feeling,
+            stress,
+            rest,
             origin,
+            // prepared,
           },
-          "mood"
+          "night"
         )
       ).then(() => navigate("/journey"));
-      // navigate("/journey");
-    }
-
-    switch (pageIndex) {
-      case 0:
-        if (description.length < 1) {
-          disabledRight.current = true;
-        }
-        break;
-      case 1:
-        if (origin.length < 1) {
-          disabledRight.current = true;
-        }
-        break;
-      case 2:
-        if (!prompt1) {
-          disabledRight.current = true;
-        }
-        break;
-      default:
-        return;
+      navigate("/journey");
     }
   };
 
@@ -473,7 +549,6 @@ function MoodCheckIn() {
       onPageRight={handlePageRight}
       disabledRight={disabledRight.current}
     >
-      mood check in
       <div className="check-in-wrapper">
         <div className="page-container">{pages[pageIndex]}</div>
       </div>
@@ -481,4 +556,4 @@ function MoodCheckIn() {
   );
 }
 
-export default MoodCheckIn;
+export default EveningCheckIn;
