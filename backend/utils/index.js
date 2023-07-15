@@ -9,14 +9,21 @@ const returnUser = (req, res) => {
   return res.json(req.user);
 };
 
-function sortByCreatedAt(entries) {
-  return entries.sort(
+function flattenAndSortByCreatedAt(arrays) {
+  const mergedArray = arrays.reduce(
+    (result, array) => result.concat(array),
+    []
+  );
+
+  mergedArray.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
+
+  return mergedArray;
 }
 
 module.exports = {
   returnUser,
-  sortByCreatedAt,
+  flattenAndSortByCreatedAt,
   today,
 };
