@@ -1,4 +1,4 @@
-export default function Anger() {
+export default function Angry() {
   return (
     <>
       <h1>let's look at your Anger.</h1>

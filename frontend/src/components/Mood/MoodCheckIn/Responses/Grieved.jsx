@@ -1,4 +1,4 @@
-export default function Grief() {
+export default function Grieved() {
   return (
     <>
       <h1>overcoming greif.</h1>

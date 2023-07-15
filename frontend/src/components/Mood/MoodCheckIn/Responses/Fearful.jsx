@@ -1,4 +1,4 @@
-export default function Fear() {
+export default function Fearful() {
   return (
     <>
       <h1>tackle your fear.</h1>

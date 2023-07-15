@@ -1,4 +1,4 @@
-export default function Shame() {
+export default function Shameful() {
   return (
     <>
       <h1>living without shame.</h1>

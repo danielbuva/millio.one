@@ -1,4 +1,4 @@
-export default function Disgust() {
+export default function Disgusted() {
   return (
     <>
       <h1>working through disgust.</h1>

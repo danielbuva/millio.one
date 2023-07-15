@@ -1,4 +1,4 @@
-export default function Anxiety() {
+export default function Anxious() {
   return (
     <>
       <h1>minimizing anxiety.</h1>

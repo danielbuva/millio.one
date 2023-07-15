@@ -1,4 +1,4 @@
-export default function Despair() {
+export default function Despairful() {
   return (
     <>
       <h1>on despair.</h1>
