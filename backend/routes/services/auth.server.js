@@ -54,7 +54,6 @@ const restoreSession = (req, res, next) => {
 };
 
 const verifyAuth = (req, _, next) => {
-  console.log("[entering]");
   if (req.user) return next();
 
   const err = new Error("Authentication required");
