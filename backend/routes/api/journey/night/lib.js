@@ -1,5 +1,9 @@
 const { returnError } = require("../../../services/error.server");
-const { NightCheckIn, Origin } = require("../../../../db/models");
+const {
+  Description,
+  NightCheckIn,
+  Origin,
+} = require("../../../../db/models");
 const { validBody } = require("./validation");
 
 async function createEntry(req, res) {
@@ -9,7 +13,7 @@ async function createEntry(req, res) {
       description,
       origin,
       prepared,
-      productivity,
+      productive,
       prompt1,
       prompt2,
       rest,
@@ -18,7 +22,8 @@ async function createEntry(req, res) {
 
     const newNight = await NightCheckIn.create({
       createdAt,
-      productivity,
+      prepared,
+      productive,
       prompt1,
       prompt2,
       rest,
@@ -40,7 +45,7 @@ async function createEntry(req, res) {
       entryType: 1,
       origin,
       prepared,
-      productivity,
+      productive,
       prompt1,
       prompt2,
       rest,
@@ -51,6 +56,14 @@ async function createEntry(req, res) {
   }
 }
 
+async function getEntry(req, res) {
+  const data = await NightCheckIn.findOne({
+    where: { id: req.params.id },
+    include: [Description, Origin],
+  });
+  res.json(data);
+}
+
 module.exports = {
-  night: { createEntry },
+  night: { createEntry, getEntry },
 };

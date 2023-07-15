@@ -5,7 +5,7 @@ const validBody = ({
   description,
   origin,
   prepared,
-  productivity,
+  productive,
   prompt1,
   prompt2,
   rest,
@@ -25,12 +25,12 @@ const validBody = ({
     errorResult.errors.origin = "origin is required";
   }
 
-  if (!prepared) {
+  if (prepared == null) {
     errorResult.errors.prepared = "prepared is required";
   }
 
-  if (!productivity || isNaN(productivity)) {
-    errorResult.errors.productivity = "productivity is required";
+  if (isNaN(productive)) {
+    errorResult.errors.productive = "productive is required";
   }
 
   if (!prompt1 || prompt1.length < 1) {
@@ -41,11 +41,11 @@ const validBody = ({
     errorResult.errors.prompt2 = "prompt2 is required";
   }
 
-  if (!rest || isNaN(rest)) {
+  if (isNaN(rest)) {
     errorResult.errors.rest = "rest is required";
   }
 
-  if (!stress || isNaN(stress)) {
+  if (isNaN(stress)) {
     errorResult.errors.stress = "stress is required";
   }
 
@@ -56,7 +56,7 @@ const validBody = ({
     description,
     origin,
     prepared,
-    productivity,
+    productive,
     prompt1,
     prompt2,
     rest,
