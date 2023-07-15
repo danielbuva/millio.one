@@ -1,4 +1,4 @@
-export default function Disrespectful() {
+export default function Disrespected() {
   return (
     <>
       <h1>releasing disrespect.</h1>
