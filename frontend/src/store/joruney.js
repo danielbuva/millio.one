@@ -1,22 +1,22 @@
 import { csrfFetch } from "./utils";
 
-const ADD_MOOD = "journey/mood/add";
+const ADD_ENTRY = "journey/mood/add";
 
-const addMood = (entry) => {
+const addEntry = (entry) => {
   return {
-    type: ADD_MOOD,
+    type: ADD_ENTRY,
     payload: entry,
   };
 };
 
-export const createMood = (mood) => async (dispatch) => {
-  const response = await csrfFetch("/api/journey/mood", {
+export const createEntry = (entry, type) => async (dispatch) => {
+  const response = await csrfFetch(`/api/journey/${type}`, {
     method: "POST",
-    body: JSON.stringify(mood),
+    body: JSON.stringify(entry),
   });
   const data = await response.json();
   console.log(data);
-  dispatch(addMood(data));
+  dispatch(addEntry(data));
 };
 
 const initialState = { entries: [] };
@@ -24,7 +24,7 @@ const initialState = { entries: [] };
 const reducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
-    case ADD_MOOD:
+    case ADD_ENTRY:
       newState = { ...state };
       newState.entries.push(action.payload);
       return newState;
