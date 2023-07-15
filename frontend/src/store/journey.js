@@ -1,6 +1,6 @@
 import { csrfFetch } from "./utils";
 
-const ADD_ENTRY = "journey/mood/add";
+const ADD_ENTRY = "journey/entry/add";
 
 const addEntry = (entry) => {
   return {
@@ -10,6 +10,7 @@ const addEntry = (entry) => {
 };
 
 export const createEntry = (entry, type) => async (dispatch) => {
+  console.log({ entry });
   const response = await csrfFetch(`/api/journey/${type}`, {
     method: "POST",
     body: JSON.stringify(entry),

@@ -1,6 +1,6 @@
 import { toCapitalCamelCase } from "../../../utils";
 
-import { createEntry } from "../../../store/joruney";
+import { createEntry } from "../../../store/journey";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -423,16 +423,15 @@ function MoodCheckIn() {
       dispatch(
         createEntry(
           {
-            body: prompt1,
             createdAt,
             description,
             feeling,
             origin,
+            prompt1,
           },
           "mood"
         )
       ).then(() => navigate("/journey"));
-      // navigate("/journey");
     }
 
     switch (pageIndex) {
