@@ -19,7 +19,7 @@ module.exports = {
         },
         moodId: {
           type: Sequelize.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: "Moods",
             key: "id",
@@ -89,6 +89,11 @@ module.exports = {
             "proud",
             "rejected"
           ),
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {
           allowNull: false,
