@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class Origin extends Model {
     static associate(models) {
       Origin.belongsTo(models.Mood, { foreignKey: "moodId" });
-      // Origin.belongsTo(models.DayCheckIn, { foreignKey: "dayId" });
-      // Origin.belongsTo(models.NightCheckIn, { foreignKey: "nightId" });
+      Origin.belongsTo(models.DayCheckIn, { foreignKey: "dayId" });
+      Origin.belongsTo(models.NightCheckIn, { foreignKey: "nightId" });
     }
   }
 
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM,
         values: [
           "work",
-          "relaxing",
+          "relax",
           "family",
           "friends",
           "date",
@@ -47,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Origin",
+      defaultScope: {
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      },
     }
   );
 

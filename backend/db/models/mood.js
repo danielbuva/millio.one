@@ -24,12 +24,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      entryType: {
+        allowNull: false,
+        defaultValue: 2,
+        type: DataTypes.INTEGER,
+      },
       feeling: {
         allowNull: false,
         type: DataTypes.ENUM,
         values: [0, 1, 2, 3, 4],
       },
-      body: {
+      prompt1: {
         allowNull: false,
         type: DataTypes.STRING,
       },
@@ -41,6 +46,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Mood",
+      defaultScope: {
+        attributes: { exclude: ["updatedAt"] },
+      },
     }
   );
 

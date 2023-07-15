@@ -4,10 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   class Description extends Model {
     static associate(models) {
       Description.belongsTo(models.Mood, { foreignKey: "moodId" });
+      Description.belongsTo(models.NightCheckIn, {
+        foreignKey: "nightId",
+      });
     }
   }
   Description.init(
     {
+      nightId: { type: DataTypes.INTEGER },
       moodId: { type: DataTypes.INTEGER },
       description: {
         allowNull: false,
@@ -77,6 +81,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Description",
+      defaultScope: {
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      },
     }
   );
   return Description;
