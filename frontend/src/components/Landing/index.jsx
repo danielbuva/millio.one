@@ -8,6 +8,8 @@ import { PageWrapper } from "../Layout";
 
 import "./Landing.css";
 
+//@TODO add unique email validation
+
 function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
