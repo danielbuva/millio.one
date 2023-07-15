@@ -3,11 +3,12 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Description extends Model {
     static associate(models) {
-      Description.hasMany(models.Mood, { foreignKey: "moodId" });
+      Description.belongsTo(models.Mood, { foreignKey: "moodId" });
     }
   }
   Description.init(
     {
+      moodId: { type: DataTypes.INTEGER },
       description: {
         allowNull: false,
         type: DataTypes.ENUM,
@@ -16,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
           "anxious",
           "despairful",
           "disgusted",
-          "disrespectfed",
+          "disrespected",
           "embarrassed",
           "fearful",
           "frustrated",
@@ -69,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
           "happy",
           "love",
           "proud",
-          "rejected",
+          "respected",
         ],
       },
     },
