@@ -5,12 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Mood.hasMany(models.Description, {
         foreignKey: "moodId",
+        otherKey: "id",
         onDelete: "CASCADE",
         hooks: true,
       });
-
       Mood.hasMany(models.Origin, {
         foreignKey: "moodId",
+        otherKey: "id",
         onDelete: "CASCADE",
         hooks: true,
       });
