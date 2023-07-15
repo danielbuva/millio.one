@@ -1,7 +1,7 @@
 {
-  "name": "ycshiyp",
+  "name": "millio.one",
   "version": "1.0.0",
-  "description": "air bnb project",
+  "description": "millio one",
   "main": "",
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",
@@ -13,8 +13,9 @@
     "build": "npm run --prefix backend build"
   },
   "keywords": [
-    "air bnb",
-    "ycshiyp"
+    "millio one",
+    "millio",
+    "one"
   ],
   "author": "dani",
   "license": "ISC",
