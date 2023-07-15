@@ -1,4 +1,4 @@
-import { createEntry } from "../../../store/joruney";
+import { createEntry } from "../../../store/journey";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -44,6 +44,7 @@ function MorningCheckIn() {
 
   const [focus, setFocus] = useState([]);
   const [prompt1, setPrompt1] = useState("");
+  const [prompt2, setPrompt2] = useState("");
   // const [response, setResponse] = useState(null);
   // const [prepared, setPrepared] = useState(null);
 
@@ -212,7 +213,23 @@ function MorningCheckIn() {
     </div>
   );
 
-  // const page5 = <div>{response}</div>;
+  const page5 = (
+    <div>
+      <h1>generate promps here</h1>
+      <textarea
+        value={prompt2}
+        placeholder="start writing..."
+        onChange={(e) => {
+          setPrompt2(e.currentTarget.value);
+          if (prompt2.trim().length <= 1) {
+            disabledRight.current = true;
+          } else {
+            disabledRight.current = false;
+          }
+        }}
+      />
+    </div>
+  );
 
   const page6 = (
     <div>
@@ -221,7 +238,7 @@ function MorningCheckIn() {
     </div>
   );
 
-  const pages = [page1, page2, page3, page4, page6];
+  const pages = [page1, page2, page3, page4, page5, page6];
 
   const handlePageRight = () => {
     switch (pageIndex) {
@@ -256,17 +273,17 @@ function MorningCheckIn() {
       dispatch(
         createEntry(
           {
-            prompt1,
             createdAt,
+            origin: focus,
             motivation,
+            prepared: false,
+            prompt1,
+            prompt2,
             sleep,
-            focus,
-            // prepared,
           },
           "day"
         )
       ).then(() => navigate("/journey"));
-      navigate("/journey");
     }
   };
 
