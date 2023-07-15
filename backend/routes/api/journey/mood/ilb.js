@@ -1,16 +1,15 @@
-const { validBody } = require("./validation");
-const { Description, Mood, Origin } = require("../../../../db/models");
 const { returnError } = require("../../../services/error.server");
+const { Mood, Origin } = require("../../../../db/models");
+const { validBody } = require("./validation");
 
-async function createMoodCheckIn(req, res) {
+async function createEntry(req, res) {
   try {
-    console.log("[REQUEST user id]: ", req.user.id);
-    const { body, createdAt, description, feeling, origin } = validBody(
+    const { prompt1, createdAt, description, feeling, origin } = validBody(
       req.body
     );
 
     const newMood = await Mood.create({
-      body,
+      prompt1,
       createdAt,
       feeling,
       userId: req.user.id,
@@ -25,12 +24,12 @@ async function createMoodCheckIn(req, res) {
     });
 
     res.json({
-      body,
+      prompt1,
       createdAt,
       description,
+      entryType: 0,
       feeling,
       origin,
-      type: "mood",
     });
   } catch (err) {
     returnError(err, res);
@@ -38,5 +37,5 @@ async function createMoodCheckIn(req, res) {
 }
 
 module.exports = {
-  mood: { createMoodCheckIn },
+  mood: { createEntry },
 };

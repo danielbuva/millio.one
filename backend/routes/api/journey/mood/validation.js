@@ -1,11 +1,13 @@
 const { throwIfError } = require("../../../services/error.server");
 
-const validBody = ({ body, createdAt, description, feeling, origin }) => {
+const validBody = ({
+  createdAt,
+  description,
+  feeling,
+  origin,
+  prompt1,
+}) => {
   let errorResult = { errors: {}, message: "Bad Request", status: 400 };
-
-  if (!body || body.length < 1) {
-    errorResult.errors.body = "body is required";
-  }
 
   if (!createdAt) {
     errorResult.errors.createdAt = "createdAt is Required";
@@ -23,9 +25,13 @@ const validBody = ({ body, createdAt, description, feeling, origin }) => {
     errorResult.errors.origin = "origin is required";
   }
 
+  if (!prompt1 || promp1.length < 1) {
+    errorResult.errors.prompt1 = "prompt1 is required";
+  }
+
   throwIfError(errorResult);
 
-  return { body, createdAt, description, feeling, origin };
+  return { createdAt, description, feeling, origin, prompt1 };
 };
 
 module.exports = {
