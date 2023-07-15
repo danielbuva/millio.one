@@ -15,11 +15,15 @@ const validBody = ({
     errorResult.errors.createdAt = "createdAt is Required";
   }
 
+  if (isNaN(motivation)) {
+    errorResult.errors.motivation = "motivation is required";
+  }
+
   if (!origin) {
     errorResult.errors.origin = "origin is required";
   }
 
-  if (!prepared) {
+  if (prepared == null) {
     errorResult.errors.prepared = "prepared is required";
   }
 
@@ -31,24 +35,20 @@ const validBody = ({
     errorResult.errors.prompt2 = "prompt2 is required";
   }
 
-  if (!sleep || isNaN(sleep)) {
+  if (isNaN(sleep)) {
     errorResult.errors.sleep = "sleep is required";
-  }
-
-  if (!motivation || isNaN(motivation)) {
-    errorResult.errors.motivation = "motivation is required";
   }
 
   throwIfError(errorResult);
 
   return {
     createdAt,
+    motivation,
     origin,
     prepared,
     prompt1,
     prompt2,
     sleep,
-    motivation,
   };
 };
 

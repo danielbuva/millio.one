@@ -43,6 +43,14 @@ async function createEntry(req, res) {
   }
 }
 
+async function getEntry(req, res) {
+  const data = await DayCheckIn.findOne({
+    where: { id: req.params.id },
+    include: [Origin],
+  });
+  res.json(data);
+}
+
 module.exports = {
-  day: { createEntry },
+  day: { createEntry, getEntry },
 };
