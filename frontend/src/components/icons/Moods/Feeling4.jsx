@@ -1,9 +1,32 @@
-function Feeling4({ active, onClick, noStroke }) {
+function Feeling4({ active, onClick, noStroke, sm }) {
   const circleFill = active ? "#ffffff" : "#000000";
   const pathFill = active ? "#000000" : "#ffffff";
   const stroke = noStroke ? "000000" : "#ffffff";
 
-  return (
+  return sm ? (
+    <svg
+      width="41"
+      height="41"
+      viewBox="0 0 41 41"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="20.8647"
+        cy="20.4053"
+        r="18.5"
+        fill="#000000"
+        stroke="#ffffff"
+        strokeWidth="3"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.15552 19.8054C10.373 25.2979 15.2726 29.4055 21.1315 29.4055C26.9905 29.4055 31.89 25.2979 33.1076 19.8054H30.9215C29.7651 24.1054 25.8201 27.2721 21.1314 27.2721C16.4428 27.2721 12.4978 24.1054 11.3414 19.8054H9.15552Z"
+        fill="#ffffff"
+      />
+    </svg>
+  ) : (
     <svg
       width="75"
       height="75"
