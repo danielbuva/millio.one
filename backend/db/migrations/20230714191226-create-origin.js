@@ -69,7 +69,7 @@ module.exports = {
             "shopping",
             "eating",
             "cleaning",
-            "creativty",
+            "creativity",
             "spirituality",
             "time alone",
             "helping others",
