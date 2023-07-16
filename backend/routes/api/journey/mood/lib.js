@@ -39,6 +39,17 @@ async function createEntry(req, res) {
   }
 }
 
+async function deleteEntry(req, res) {
+  try {
+    await Mood.destroy({
+      where: { userId: req.user.id, id: req.params.id },
+    });
+    res.json({ message: "success" });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 async function getEntry(req, res) {
   try {
     const data = await Mood.findOne({
@@ -54,5 +65,5 @@ async function getEntry(req, res) {
 }
 
 module.exports = {
-  mood: { createEntry, getEntry },
+  mood: { createEntry, deleteEntry, getEntry },
 };

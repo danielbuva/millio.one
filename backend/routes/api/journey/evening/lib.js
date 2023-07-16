@@ -59,6 +59,16 @@ async function createEntry(req, res) {
   }
 }
 
+async function deleteEntry(req, res) {
+  try {
+    await NightCheckIn.destroy({
+      where: { userId: req.user.id, id: req.params.id },
+    });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 async function getEntry(req, res) {
   try {
     const data = await NightCheckIn.findOne({
@@ -73,5 +83,5 @@ async function getEntry(req, res) {
 }
 
 module.exports = {
-  night: { createEntry, getEntry },
+  night: { createEntry, deleteEntry, getEntry },
 };

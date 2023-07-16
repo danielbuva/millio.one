@@ -46,6 +46,17 @@ async function createEntry(req, res) {
   }
 }
 
+async function deleteEntry(req, res) {
+  try {
+    await DayCheckIn.destroy({
+      where: { userId: req.user.id, id: req.params.id },
+    });
+    res.json({ message: "success" });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 async function getEntry(req, res) {
   try {
     const data = await DayCheckIn.findOne({
@@ -61,5 +72,5 @@ async function getEntry(req, res) {
 }
 
 module.exports = {
-  day: { createEntry, getEntry },
+  day: { createEntry, deleteEntry, getEntry },
 };

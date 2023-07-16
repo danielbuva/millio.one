@@ -4,5 +4,6 @@ const { mood } = require("./lib");
 
 router.post("/", verifyAuth, mood.createEntry);
 router.get("/:id", verifyAuth, mood.getEntry);
+router.delete("/:id", verifyAuth, mood.deleteEntry);
 
 module.exports = router;
