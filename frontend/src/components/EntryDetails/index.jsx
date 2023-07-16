@@ -1,5 +1,11 @@
-import { deleteEntry, getEntry, setEntry } from "../../store/journey";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+
+import { deleteEntry, getEntry, readEntries } from "../../store/journey";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
@@ -14,29 +20,65 @@ import "./EntryDetails.css";
 function EntryDetails() {
   const [show, setShow] = useState();
   const entry = useSelector((s) => s.journey.entry);
+  const entries = useSelector((s) => s.journey.entries);
   const { id, type } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getEntry(id, type));
+    dispatch(readEntries());
   }, [dispatch, id, type]);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  console.log("[ENTRY LOG]: ", { entry });
+  if (entry.entryType == null || entries.length < 1) return null;
 
-  if (entry.entryType == null) return null;
+  const currIndex =
+    location.state?.currIndex ??
+    entries.findIndex((e) => e.id === entry.id);
+
+  const leftIndex =
+    currIndex === 0 ? entries.length - 1 : parseInt(currIndex) - 1;
+
+  const rightIndex =
+    currIndex === entries.length - 1 ? 0 : parseInt(currIndex) + 1;
+
+  const leftType =
+    entries[leftIndex].entryType === 0
+      ? "morning"
+      : entries[leftIndex].entryType === 1
+      ? "evening"
+      : entries[leftIndex].entryType === 2
+      ? "mood"
+      : "breath";
+
+  const rightType =
+    entries[rightIndex].entryType === 0
+      ? "morning"
+      : entries[rightIndex].entryType === 1
+      ? "evening"
+      : entries[rightIndex].entryType === 2
+      ? "mood"
+      : "breath";
 
   return (
     <PageWrapper
       onPageLeft={() => {
-        dispatch(setEntry({}));
-        navigate(-1);
+        navigate(`/journey/${leftType}/${entries[leftIndex].id}`, {
+          state: { currIndex: leftIndex },
+        });
+      }}
+      onPageRight={() => {
+        navigate(`/journey/${rightType}/${entries[rightIndex].id}`, {
+          state: { currIndex: rightIndex },
+        });
       }}
     >
       <div className="detail-page">
         <Body />
         <Edit />
+        <Link to="/journey">go back</Link>
         <Delete setShow={setShow} show={show} />
       </div>
     </PageWrapper>
@@ -164,8 +206,6 @@ function Edit() {
   if (entry.entryType == null) return null;
   let state = {};
 
-  console.log("this is entry: ", entry);
-
   switch (entry.entryType) {
     case 0:
       state = {
@@ -202,8 +242,6 @@ function Edit() {
     default:
       break;
   }
-
-  console.log("this my init state", state);
 
   return (
     <Link to={`/${type}/edit/${id}`} state={state}>

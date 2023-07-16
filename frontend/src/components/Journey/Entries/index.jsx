@@ -22,10 +22,11 @@ function Entry({
   subHeader,
   tags,
   type,
+  i,
 }) {
   return (
     <div className="entry">
-      <Link to={`${type}/${id}`}>
+      <Link to={`${type}/${id}`} state={{ currIndex: i }}>
         <div className="entry-header">
           <div className="entry-header-left">
             <div className="entry-icon">{icon}</div>
@@ -76,6 +77,7 @@ function getEntryByType(entry, i) {
         <Entry
           icon={<Sun />}
           id={entry.id}
+          i={i}
           key={i}
           createdAt={createdAt}
           header="reflection"
@@ -90,6 +92,7 @@ function getEntryByType(entry, i) {
         <Entry
           icon={<Moon />}
           id={entry.id}
+          i={i}
           key={i}
           createdAt={createdAt}
           header="reflection"
@@ -104,6 +107,7 @@ function getEntryByType(entry, i) {
         <Entry
           icon={getMoodIcon(entry.feeling)}
           id={entry.id}
+          i={i}
           key={i}
           createdAt={createdAt}
           header="mood check-in"
