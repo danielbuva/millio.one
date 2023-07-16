@@ -288,7 +288,9 @@ function MorningCheckIn() {
             },
             "morning"
           )
-        ).then(() => navigate(`/journey/morning/${state.id}`));
+        );
+        // ).then(() => navigate(`/journey/morning/${state.id}`));
+        navigate(`/journey/morning/${state.id}`);
       } else {
         dispatch(
           createEntry(

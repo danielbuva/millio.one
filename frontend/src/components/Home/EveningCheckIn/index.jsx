@@ -526,7 +526,6 @@ function EveningCheckIn() {
           updateEntry(
             {
               id: state.id,
-              createdAt,
               description,
               stress,
               rest,

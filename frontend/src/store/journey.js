@@ -16,7 +16,6 @@ const removeEntry = (idAndType) => ({
 const editEntry = (entry) => ({ type: EDIT_ENTRY, payload: entry });
 
 export const createEntry = (entry, type) => async (dispatch) => {
-  console.log({ entry });
   const res = await csrfFetch(`/api/journey/${type}`, {
     method: "POST",
     body: JSON.stringify(entry),
@@ -27,7 +26,6 @@ export const createEntry = (entry, type) => async (dispatch) => {
 };
 
 export const deleteEntry = (id, type) => async (dispatch) => {
-  console.log({ id, type });
   const data = await (
     await csrfFetch(`/api/journey/${type}/${id}`, { method: "DELETE" })
   ).json();

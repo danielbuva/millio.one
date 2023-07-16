@@ -436,7 +436,8 @@ function MoodCheckIn() {
             },
             "mood"
           )
-        ).then(() => navigate(`/journey/mood/${state.id}`));
+        );
+        navigate(`/journey/mood/${state.id}`);
       } else {
         dispatch(
           createEntry(
