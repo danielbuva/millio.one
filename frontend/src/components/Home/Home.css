@@ -5,24 +5,50 @@
 }
 
 .check-in-tile {
-  border: solid 3px #fff;
-  width: 200px;
-  height: 200px;
+  border: solid 1px #fff;
+  width: 225px;
   border-radius: 16px;
   cursor: pointer;
   color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
-  transition: transform 0.4 ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
 }
 
 .check-in-tile:hover {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .check-in-tile > span {
   color: #707070;
+}
+
+.daily-reflections {
+  letter-spacing: 5px;
+}
+
+.home-date {
+  font-weight: 700;
+}
+
+.check-in-tile-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+}
+
+.video-container {
+  height: 100px;
+  width: 100%;
+}
+
+.tile-video {
+  object-fit: cover;
+  height: 100px;
+  width: 100%;
 }

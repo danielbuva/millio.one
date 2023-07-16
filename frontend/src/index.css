@@ -216,3 +216,10 @@ button {
 .transition {
   transition: fill, stroke 0.3s ease;
 }
+
+.divider {
+  height: 1px;
+  border-bottom: solid 1px #707070;
+  width: 100%;
+  margin: 16px 0 75px 0;
+}

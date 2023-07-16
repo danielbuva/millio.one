@@ -33,10 +33,28 @@ function Home() {
       <h1>
         {greeting} {user?.name}
       </h1>
-      <p>{time.toDateString()}</p>
+      <p className="home-date">
+        {time.toLocaleDateString("en-us", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+        })}
+      </p>
+      <div className="divider" />
+      <p className="daily-reflections">DAILY REFLECTIONS</p>
       <div id="check-ins">
-        <CheckIn p1="morning" p2="preparation" p3="let's start your day" />
-        <CheckIn p1="evening" p2="reflection" p3="how was your day" />
+        <CheckIn
+          p1="morning"
+          p2="preparation"
+          p3="let's start your day"
+          src="Clouds.mp4"
+        />
+        <CheckIn
+          p1="evening"
+          p2="reflection"
+          p3="how was your day"
+          src="Sparkles.mp4"
+        />
       </div>
       <NavBar
         left={
