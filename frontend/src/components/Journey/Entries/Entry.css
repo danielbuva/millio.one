@@ -2,7 +2,7 @@
   border: solid 1px #ffffff;
   border-radius: 16px;
   width: 468px;
-  height: 100%;
+  height: fit-content;
   padding: 16px;
   font-weight: 400;
   transition: transform 0.5 ease;
