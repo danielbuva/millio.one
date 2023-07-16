@@ -103,6 +103,30 @@ async function updateEntry(req, res) {
   }
 }
 
+async function getAverageMood(req, res) {
+  try {
+    const moods = await Mood.findAll({
+      where: { userId: req.user.id },
+      attributes: ["feeling"],
+    });
+
+    let sum = 0;
+    for (let i = 0; i < moods.length; i++) {
+      sum += parseInt(moods[i].feeling);
+    }
+
+    res.json(sum / moods.length);
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
-  mood: { createEntry, deleteEntry, getEntry, updateEntry },
+  mood: {
+    createEntry,
+    deleteEntry,
+    getAverageMood,
+    getEntry,
+    updateEntry,
+  },
 };

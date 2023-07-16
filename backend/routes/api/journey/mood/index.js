@@ -3,6 +3,7 @@ const router = require("express").Router();
 const { mood } = require("./lib");
 
 router.post("/", verifyAuth, mood.createEntry);
+router.get("/avg", verifyAuth, mood.getAverageMood);
 router.get("/:id", verifyAuth, mood.getEntry);
 router.delete("/:id", verifyAuth, mood.deleteEntry);
 router.put("/:id", verifyAuth, mood.updateEntry);
