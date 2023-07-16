@@ -64,3 +64,11 @@ export function toCapitalCamelCase(str) {
 
   return capitalCamelCased;
 }
+
+export function time(createdAt) {
+  return new Date(createdAt).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
