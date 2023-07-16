@@ -1,0 +1,16 @@
+.entry {
+  border: solid 3px #ffffff;
+  border-radius: 16px;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.entry-header-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
