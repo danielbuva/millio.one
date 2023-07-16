@@ -21,9 +21,19 @@ function Journey() {
   const handlePageRight = () => navigate("/home");
   const handlePageLeft = () => navigate("/mood");
 
+  const now = new Date();
+
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
-      <Entries entries={entries} />
+      {entries.length > 0 &&
+        entries.map((e, i) => {
+          return (
+            <div className="date-entry" key={i}>
+              <h1 className="entry-date">{dateString(now, e.date)}</h1>
+              <Entries entries={e.entries} />
+            </div>
+          );
+        })}
       <NavBar
         left={
           <Link className="nav-link" to="/home" replace>
@@ -42,6 +52,30 @@ function Journey() {
         }
       />
     </PageWrapper>
+  );
+}
+
+function dateString(now, dateStr) {
+  const date = new Date(dateStr);
+  const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
+
+  const prefix =
+    interval < 1
+      ? "today"
+      : interval >= 3
+      ? date.getDay()
+      : interval >= 1
+      ? "yesterday"
+      : "";
+
+  const dateSplit = dateStr.split(" ");
+  const suffix =
+    dateSplit[0] + " " + dateSplit[1].slice(0, dateSplit[1].length - 1);
+
+  return (
+    <>
+      {prefix}, <span>{suffix}</span>
+    </>
   );
 }
 

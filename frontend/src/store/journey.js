@@ -11,7 +11,7 @@ const addEntry = (entry) => ({ type: ADD_ENTRY, payload: entry });
 const getEntries = (entries) => ({ type: GET_ENTRIES, payload: entries });
 export const setEntry = (entry) => ({ type: SET_ENTRY, payload: entry });
 const removeEntry = (idAndType) => ({
-  type: SET_ENTRY,
+  type: DELETE_ENTRY,
   payload: idAndType,
 });
 const editEntry = (entry) => ({ type: EDIT_ENTRY, payload: entry });
@@ -76,6 +76,7 @@ export const readAvgMood = () => async (dispatch) => {
 const initialState = { avgMood: null, entries: [], entry: {} };
 
 const reducer = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
     case GET_ENTRIES:
       return {
@@ -84,17 +85,32 @@ const reducer = (state = initialState, action) => {
         entry: state.entry,
       };
     case ADD_ENTRY:
+      const lastEntryDateStr = state.entries[0]?.date;
+      const today = new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+
+      if (lastEntryDateStr === today) {
+        newState = {
+          date: today,
+          entries: [action.payload, ...state.entries[0].entries],
+        };
+      } else {
+        newState = {
+          date: today,
+          entries: [action.payload],
+        };
+      }
+
       return {
         avgMood: state.avgMood,
-        entries: [action.payload, ...state.entries],
+        entries: newState,
         entry: state.entry,
       };
     case SET_ENTRY:
-      return {
-        avgMood: state.avgMood,
-        entries: [...state.entries],
-        entry: action.payload,
-      };
+      return { ...state, entry: action.payload };
     case DELETE_ENTRY:
       return {
         avgMood: state.avgMood,

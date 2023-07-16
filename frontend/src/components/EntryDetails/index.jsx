@@ -7,7 +7,7 @@ import {
 
 import { deleteEntry, getEntry, readEntries } from "../../store/journey";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { time } from "../../utils";
 
@@ -20,7 +20,7 @@ import "./EntryDetails.css";
 function EntryDetails() {
   const [show, setShow] = useState();
   const entry = useSelector((s) => s.journey.entry);
-  const entries = useSelector((s) => s.journey.entries);
+  const days = useSelector((s) => s.journey.entries);
   const { id, type } = useParams();
   const dispatch = useDispatch();
 
@@ -32,33 +32,38 @@ function EntryDetails() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (entry.entryType == null || entries.length < 1) return null;
+  if (entry.entryType == null || days.length < 1) return null;
 
-  const currIndex =
-    location.state?.currIndex ??
-    entries.findIndex((e) => e.id === entry.id);
+  let dayI = 0;
 
-  const leftIndex =
-    currIndex === 0 ? entries.length - 1 : parseInt(currIndex) - 1;
+  const entryI =
+    location.state?.entryIndex ??
+    days.findIndex((e, i) => {
+      if (e.entries[i].id === entry.id) {
+        dayI = i;
+      }
+      return e.entries[i].id === entry.id;
+    });
 
-  const rightIndex =
-    currIndex === entries.length - 1 ? 0 : parseInt(currIndex) + 1;
+  const leftI = entryI === 0 ? days[dayI].entries.length - 1 : entryI - 1;
+
+  const rightI = entryI === days[dayI].entries.length - 1 ? 0 : entryI + 1;
 
   const leftType =
-    entries[leftIndex].entryType === 0
+    days[dayI].entries[leftI].entryType === 0
       ? "morning"
-      : entries[leftIndex].entryType === 1
+      : days[dayI].entries[leftI].entryType === 1
       ? "evening"
-      : entries[leftIndex].entryType === 2
+      : days[dayI].entries[leftI].entryType === 2
       ? "mood"
       : "breath";
 
   const rightType =
-    entries[rightIndex].entryType === 0
+    days[dayI].entries[rightI].entryType === 0
       ? "morning"
-      : entries[rightIndex].entryType === 1
+      : days[dayI].entries[rightI].entryType === 1
       ? "evening"
-      : entries[rightIndex].entryType === 2
+      : days[dayI].entries[rightI].entryType === 2
       ? "mood"
       : "breath";
 
@@ -66,25 +71,37 @@ function EntryDetails() {
     dispatch(deleteEntry(id, type)).then(() => navigate("/journey"));
   };
 
+  const onlyOneEntry = days.length === 1 && days[0].entries.length === 1;
+
   return (
     <PageWrapper
       onPageLeft={() => {
         if (show) {
           setShow(false);
         } else {
-          navigate(`/journey/${leftType}/${entries[leftIndex].id}`, {
-            state: { currIndex: leftIndex },
-            replace: true,
-          });
+          if (onlyOneEntry) {
+            navigate("/journey");
+          } else {
+            navigate(
+              `/journey/${leftType}/${days[dayI].entries[leftI].id}`,
+              {
+                state: { entryIndex: leftI },
+                replace: true,
+              }
+            );
+          }
         }
       }}
       onPageRight={() => {
-        navigate(`/journey/${rightType}/${entries[rightIndex].id}`, {
-          state: { currIndex: rightIndex },
-          replace: true,
-        });
+        navigate(
+          `/journey/${rightType}/${days[dayI].entries[rightI]?.id}`,
+          {
+            state: { entryIndex: rightI },
+            replace: true,
+          }
+        );
       }}
-      disabledRight={show}
+      disabledRight={show || onlyOneEntry}
     >
       <Body />
       {show && (
@@ -119,7 +136,15 @@ function Body() {
 
   if (entry.entryType == null) return null;
 
-  const createdAt = <p>at {time(entry.createdAt)}</p>;
+  const now = new Date();
+
+  const entryDate = dateString(now, entry.createdAt);
+
+  const createdAt = (
+    <p className="entry-created-at">
+      {entryDate} at {time(entry.createdAt)}
+    </p>
+  );
 
   switch (entry.entryType) {
     case 0:
@@ -130,20 +155,21 @@ function Body() {
           <h1>morning.</h1>
           <div className="entry-detail-body">
             <p>
-              how well you sleept <br /> {parseInt(entry.sleep) + 1}/5
+              how well you sleept <br />{" "}
+              <span>{parseInt(entry.sleep) + 1}/5</span>
             </p>
             <p>
               how motivated you felt <br />{" "}
-              {parseInt(entry.motivation) + 1}/5
+              <span>{parseInt(entry.motivation) + 1}/5</span>
             </p>
             <p>
               what you wanted to focus on <br />{" "}
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value} </React.Fragment>
+                <span key={value}>{value} </span>
               ))}
             </p>
             <p>
-              generated prompt here...? <br /> {entry.prompt1}
+              generated prompt here...? <br /> <span>{entry.prompt1}</span>
             </p>
             <p>
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
@@ -160,28 +186,33 @@ function Body() {
           <h1>evening.</h1>
           <div className="entry-detail-body">
             <p>
-              how well rested you felt <br /> {parseInt(entry.rest) + 1}/5
+              how well rested you felt <br />{" "}
+              <span>{parseInt(entry.rest) + 1}/5</span>
             </p>
             <p>
-              how stressful you felt <br /> {parseInt(entry.stress) + 1}/5
+              {parseInt(entry.stress) + 1}/5 how stressful you felt <br />{" "}
+              <span>{parseInt(entry.stress) + 1}/5</span>
             </p>
             <p>
               how productive you felt <br />{" "}
-              {parseInt(entry.productive) + 1}
-              /5
+              <span>
+                {parseInt(entry.productive) + 1}
+                /5
+              </span>
             </p>
             <p>
               {entry.Origins.length > 1 ? "these" : "this"} influenced your
               feelings <br />
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value} </React.Fragment>
+                <span key={value}>{value} </span>
               ))}
             </p>
             <p>
-              a summary of your day <br /> {entry.prompt1}
+              a summary of your day <br /> <span>{entry.prompt1}</span>
             </p>
             <p>
-              how you answered the generated prompt <br /> {entry.prompt2}
+              how you answered the generated prompt <br />{" "}
+              <span>{entry.prompt2}</span>
             </p>
             <p>
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
@@ -198,21 +229,23 @@ function Body() {
           <h1>{entry.Descriptions[0].value}.</h1>
           <div className="entry-detail-body">
             <p>
-              you were feeling <br /> {parseInt(entry.feeling) + 1}/5
+              you were feeling <br />{" "}
+              <span>{parseInt(entry.feeling) + 1}/5</span>
             </p>
             <p>
               {entry.Origins.length > 1 ? "these" : "this"} influenced your
               feelings <br />
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value} </React.Fragment>
+                <span key={value}>{value} </span>
               ))}
             </p>
             <p>
               why it made you feel that way
-              <br /> {entry.prompt1}
+              <br /> <span>{entry.prompt1}</span>
             </p>
             <p>
-              how you answered the generated prompt <br /> {entry.prompt2}
+              how you answered the generated prompt <br />{" "}
+              <span>{entry.prompt2}</span>
             </p>
             <p>
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
@@ -287,6 +320,19 @@ function Delete({ setShow }) {
       delete
     </button>
   );
+}
+
+function dateString(now, dateStr) {
+  const date = new Date(dateStr);
+  const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
+
+  return interval < 1
+    ? "today"
+    : interval >= 3
+    ? date.getDay()
+    : interval >= 1
+    ? "yesterday"
+    : "";
 }
 
 export default EntryDetails;

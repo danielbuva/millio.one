@@ -5,5 +5,14 @@
   overflow-y: scroll;
   gap: 20px;
   align-items: center;
-  padding-top: 75px;
+}
+
+.entry-date {
+  margin-bottom: 8px;
+  text-align: left;
+  padding: 0 50px;
+}
+
+.entry-date > span {
+  color: #707070;
 }

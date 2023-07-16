@@ -2,11 +2,23 @@
   padding: 75px;
 }
 
+.entry-detail-body-container > h1 {
+  margin-top: 0;
+}
+
 .entry-detail-body {
   display: flex;
   flex-direction: column;
   text-align: left;
   gap: 16px;
+}
+
+.entry-detail-body > p {
+  line-height: 30px;
+}
+
+.entry-detail-body > p > span {
+  color: #707070;
 }
 
 #confirm-delete {
@@ -52,4 +64,10 @@
 
 .delete-button:hover {
   color: #d2d2d2;
+}
+
+.entry-created-at {
+  color: #707070;
+  margin: 0;
+  padding: 0;
 }
