@@ -1,5 +1,3 @@
-const { Op } = require("sequelize");
-
 const today = () => {
   const date = new Date();
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -32,7 +30,32 @@ function flatSortTransform(arrays) {
     };
   });
 
-  return transformed;
+  const finalArray = transformed.reduce((result, item) => {
+    const createdAt = new Date(item.createdAt).toLocaleDateString(
+      "en-US",
+      {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }
+    );
+
+    const existingEntry = result.find((entry) => entry.date === createdAt);
+
+    if (existingEntry) {
+      existingEntry.entries.push(item);
+    } else {
+      result.push({ date: createdAt, entries: [item] });
+    }
+
+    return result;
+  }, []);
+
+  const sortedFinalArray = finalArray.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  return sortedFinalArray;
 }
 
 module.exports = {
