@@ -16,11 +16,11 @@ async function createEntry(req, res) {
     });
 
     description.forEach(async (description) => {
-      await newMood.createDescription({ description });
+      await newMood.createDescription({ value: description });
     });
 
     origin.forEach(async (origin) => {
-      await Origin.create({ moodId: newMood.id, origin });
+      await Origin.create({ moodId: newMood.id, value: origin });
     });
 
     res.json({

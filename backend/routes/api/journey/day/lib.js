@@ -25,7 +25,7 @@ async function createEntry(req, res) {
     });
 
     origin.forEach(async (origin) => {
-      await Origin.create({ dayId: newDay.id, origin });
+      await Origin.create({ dayId: newDay.id, value: origin });
     });
 
     res.json({

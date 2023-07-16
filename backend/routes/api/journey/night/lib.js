@@ -32,11 +32,11 @@ async function createEntry(req, res) {
     });
 
     description.forEach(async (description) => {
-      await newNight.createDescription({ description });
+      await newNight.createDescription({ value: description });
     });
 
     origin.forEach(async (origin) => {
-      await Origin.create({ nightId: newNight.id, origin });
+      await Origin.create({ nightId: newNight.id, value: origin });
     });
 
     res.json({
