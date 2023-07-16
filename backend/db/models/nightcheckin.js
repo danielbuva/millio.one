@@ -7,12 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "nightId",
         otherKey: "id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         hooks: true,
       });
       NightCheckIn.hasMany(models.Origin, {
         foreignKey: "nightId",
         otherKey: "id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         hooks: true,
       });
     }

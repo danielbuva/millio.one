@@ -1,15 +1,12 @@
 const { throwIfError } = require("../../../services/error.server");
 
-const validBody = ({
-  createdAt,
-  description,
-  feeling,
-  origin,
-  prompt1,
-}) => {
+const validBody = (
+  { createdAt, description, feeling, origin, prompt1 },
+  isEditing = false
+) => {
   let errorResult = { errors: {}, message: "Bad Request", status: 400 };
 
-  if (!createdAt) {
+  if (!isEditing && !createdAt) {
     errorResult.errors.createdAt = "createdAt is Required";
   }
 

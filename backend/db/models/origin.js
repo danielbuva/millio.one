@@ -3,9 +3,24 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Origin extends Model {
     static associate(models) {
-      Origin.belongsTo(models.Mood, { foreignKey: "moodId" });
-      Origin.belongsTo(models.DayCheckIn, { foreignKey: "dayId" });
-      Origin.belongsTo(models.NightCheckIn, { foreignKey: "nightId" });
+      Origin.belongsTo(models.Mood, {
+        foreignKey: "moodId",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        hooks: true,
+      });
+      Origin.belongsTo(models.DayCheckIn, {
+        foreignKey: "dayId",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        hooks: true,
+      });
+      Origin.belongsTo(models.NightCheckIn, {
+        foreignKey: "nightId",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        hooks: true,
+      });
     }
   }
 
@@ -36,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
           "shopping",
           "eating",
           "cleaning",
-          "creativty",
+          "creativity",
           "spirituality",
           "time alone",
           "helping others",

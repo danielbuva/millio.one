@@ -69,27 +69,33 @@ async function getEntry(req, res) {
 
 async function updateEntry(req, res) {
   try {
-    const { prompt1, createdAt, description, feeling, origin } = validBody(
-      req.body
+    const { prompt1, description, feeling, origin } = validBody(
+      req.body,
+      true
     );
+
     const entry = await Mood.findOne({
       where: { userId: req.user.id, id: req.params.id },
-      include: [Description, Origin],
     });
 
-    await entry.update({ prompt1, createdAt, feeling });
-    for (let i = 0; i < 3; i++) {
-      if (description[i]) {
-        entry.Description[i].value = description[i];
-        await entry.Description[i].save();
-      }
-      if (origin[i]) {
-        entry.Origin[i].value = origin[i];
-        await entry.Origin[i].save();
-      }
-    }
+    await Promise.all([
+      entry.update({
+        prompt1,
+        feeling,
+      }),
+      Description.destroy({ where: { moodId: req.params.id } }),
+      Origin.destroy({ where: { moodId: req.params.id } }),
+    ]).then(async () => {
+      await entry.save();
 
-    await entry.save();
+      description.forEach(async (description) => {
+        await entry.createDescription({ value: description });
+      });
+
+      origin.forEach(async (origin) => {
+        await entry.createOrigin({ value: origin });
+      });
+    });
   } catch (err) {
     returnError(err, res);
   }

@@ -97,13 +97,10 @@ async function updateEntry(req, res) {
       prompt2,
       rest,
       stress,
-    } = validBody(req.body);
-
-    console.log("[REQUEST BODY]: ", req.body);
+    } = validBody(req.body, true);
 
     const entry = await NightCheckIn.findOne({
       where: { userId: req.user.id, id: req.params.id },
-      include: [Description, Origin],
     });
 
     await Promise.all([
@@ -115,13 +112,12 @@ async function updateEntry(req, res) {
         rest,
         stress,
       }),
-      entry.setDescriptions([]),
-      entry.setOrigins([]),
+      Description.destroy({ where: { nightId: req.params.id } }),
+      Origin.destroy({ where: { nightId: req.params.id } }),
     ]).then(async () => {
       await entry.save();
 
       description.forEach(async (description) => {
-        console.log("[DESCRIPTION]: ", description);
         await entry.createDescription({ value: description });
       });
 

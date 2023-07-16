@@ -3,9 +3,17 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Description extends Model {
     static associate(models) {
-      Description.belongsTo(models.Mood, { foreignKey: "moodId" });
+      Description.belongsTo(models.Mood, {
+        foreignKey: "moodId",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        hooks: true,
+      });
       Description.belongsTo(models.NightCheckIn, {
         foreignKey: "nightId",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        hooks: true,
       });
     }
   }

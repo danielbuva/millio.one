@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "dayId",
         otherKey: "id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         hooks: true,
       });
     }

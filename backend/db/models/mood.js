@@ -7,12 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "moodId",
         otherKey: "id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         hooks: true,
       });
       Mood.hasMany(models.Origin, {
         foreignKey: "moodId",
         otherKey: "id",
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         hooks: true,
       });
     }

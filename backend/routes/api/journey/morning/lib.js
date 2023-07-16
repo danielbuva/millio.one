@@ -73,6 +73,36 @@ async function getEntry(req, res) {
   }
 }
 
+async function updateEntry(req, res) {
+  try {
+    const { motivation, origin, prepared, prompt1, prompt2, sleep } =
+      validBody(req.body, true);
+
+    const entry = await DayCheckIn.findOne({
+      where: { userId: req.user.id, id: req.params.id },
+    });
+
+    await Promise.all([
+      entry.update({
+        motivation,
+        prepared,
+        prompt1,
+        prompt2,
+        sleep,
+      }),
+      Origin.destroy({ where: { dayId: req.params.id } }),
+    ]).then(async () => {
+      await entry.save();
+
+      origin.forEach(async (origin) => {
+        await entry.createOrigin({ value: origin });
+      });
+    });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
-  day: { createEntry, deleteEntry, getEntry },
+  day: { createEntry, deleteEntry, getEntry, updateEntry },
 };
