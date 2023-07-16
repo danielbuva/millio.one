@@ -528,7 +528,7 @@ function EveningCheckIn() {
             prompt1,
             prompt2,
           },
-          "night"
+          "evening"
         )
       ).then(() => navigate("/journey"));
       navigate("/journey");

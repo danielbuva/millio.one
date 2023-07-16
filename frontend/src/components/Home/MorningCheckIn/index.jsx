@@ -281,7 +281,7 @@ function MorningCheckIn() {
             prompt2,
             sleep,
           },
-          "day"
+          "morning"
         )
       ).then(() => navigate("/journey"));
     }

@@ -1,15 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { deleteEntry, getEntry, setEntry } from "../../store/journey";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 
-import { PageWrapper } from "../Layout";
-import { getEntry, setEntry } from "../../store/journey";
 import { time } from "../../utils";
 
-import "./EntryDetails.css";
+import { PageWrapper } from "../Layout";
+
 import YesNo from "../icons/YesNo";
 
+import "./EntryDetails.css";
+
 function EntryDetails() {
+  const [show, setShow] = useState();
   const entry = useSelector((s) => s.journey.entry);
   const { id, type } = useParams();
   const dispatch = useDispatch();
@@ -34,7 +37,7 @@ function EntryDetails() {
       <div className="detail-page">
         <Body />
         <Edit />
-        <Delete />
+        <Delete setShow={setShow} show={show} />
       </div>
     </PageWrapper>
   );
@@ -49,6 +52,7 @@ function Body() {
 
   switch (entry.entryType) {
     case 0:
+      if (!entry.Origins) return null;
       return (
         <>
           {createdAt}
@@ -77,6 +81,7 @@ function Body() {
         </>
       );
     case 1:
+      if (!entry.Origins) return null;
       return (
         <>
           {createdAt}
@@ -113,6 +118,7 @@ function Body() {
         </>
       );
     case 2:
+      if (!entry.Origins) return null;
       return (
         <>
           {createdAt}
@@ -154,13 +160,15 @@ function Edit() {
   return <Link to={`/${type}/edit/${id}`}>edit</Link>;
 }
 
-function Delete() {
-  const [show, setShow] = useState();
+function Delete({ setShow, show }) {
+  const { id, type } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleYes = () => {
-    dispatch();
+    dispatch(deleteEntry(id, type)).then(() => navigate("/journey"));
   };
+
   return (
     <>
       <button onClick={() => setShow(true)}>delete</button>
