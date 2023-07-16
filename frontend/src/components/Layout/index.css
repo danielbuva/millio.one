@@ -52,6 +52,7 @@
   width: 600px;
   position: absolute;
   bottom: 75px;
+  background-color: #000;
 }
 
 .nav-link {
