@@ -1,4 +1,4 @@
-import { createEntry } from "../../../store/journey";
+import { createEntry, updateEntry } from "../../../store/journey";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -32,24 +32,28 @@ import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
+import useEditState from "../../../hooks/useEditState";
+
 import "./MorningCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
 
 function MorningCheckIn() {
-  const [sleep, setSleep] = useState(null);
-  const [motivation, setMotivation] = useState(null);
+  const { isEditing, state } = useEditState();
+
+  const [sleep, setSleep] = useState(state.sleep);
+  const [motivation, setMotivation] = useState(state.motivation);
   const descRef = useRef(null);
 
-  const [focus, setFocus] = useState([]);
-  const [prompt1, setPrompt1] = useState("");
-  const [prompt2, setPrompt2] = useState("");
+  const [focus, setFocus] = useState(state.focus ?? []);
+  const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
+  const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   // const [response, setResponse] = useState(null);
   // const [prepared, setPrepared] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(0);
-  const disabledRight = useRef(true);
+  const disabledRight = useRef(!isEditing);
 
   const createdAt = new Date();
 
@@ -243,7 +247,7 @@ function MorningCheckIn() {
   const handlePageRight = () => {
     switch (pageIndex) {
       case 0:
-        if (!motivation) {
+        if (motivation == null) {
           disabledRight.current = true;
         }
         break;
@@ -270,20 +274,37 @@ function MorningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      dispatch(
-        createEntry(
-          {
-            createdAt,
-            origin: focus,
-            motivation,
-            prepared: false,
-            prompt1,
-            prompt2,
-            sleep,
-          },
-          "morning"
-        )
-      ).then(() => navigate("/journey"));
+      if (isEditing) {
+        dispatch(
+          updateEntry(
+            {
+              id: state.id,
+              origin: focus,
+              motivation,
+              prepared: false,
+              prompt1,
+              prompt2,
+              sleep,
+            },
+            "morning"
+          )
+        ).then(() => navigate(`/journey/morning/${state.id}`));
+      } else {
+        dispatch(
+          createEntry(
+            {
+              createdAt,
+              origin: focus,
+              motivation,
+              prepared: false,
+              prompt1,
+              prompt2,
+              sleep,
+            },
+            "morning"
+          )
+        ).then(() => navigate("/journey"));
+      }
     }
   };
 

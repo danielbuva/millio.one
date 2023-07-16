@@ -1,6 +1,6 @@
 import { toCapitalCamelCase } from "../../../utils";
 
-import { createEntry } from "../../../store/journey";
+import { createEntry, updateEntry } from "../../../store/journey";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -34,22 +34,26 @@ import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
+import useEditState from "../../../hooks/useEditState";
+
 import "./MoodCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
 
 function MoodCheckIn() {
-  const [feeling, setFeeling] = useState(null);
-  const [description, setDescription] = useState([]);
+  const { isEditing, state } = useEditState();
+
+  const [feeling, setFeeling] = useState(state.feeling);
+  const [description, setDescription] = useState(state.description ?? []);
   const descRef = useRef(null);
 
-  const [origin, setOrigin] = useState([]);
-  const [prompt1, setPrompt1] = useState("");
+  const [origin, setOrigin] = useState(state.origin ?? []);
+  const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [response, setResponse] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(0);
-  const disabledRight = useRef(true);
+  const disabledRight = useRef(!isEditing);
 
   const createdAt = new Date();
 
@@ -420,18 +424,33 @@ function MoodCheckIn() {
         return previousPage + 1;
       });
     } else {
-      dispatch(
-        createEntry(
-          {
-            createdAt,
-            description,
-            feeling,
-            origin,
-            prompt1,
-          },
-          "mood"
-        )
-      ).then(() => navigate("/journey"));
+      if (isEditing) {
+        dispatch(
+          updateEntry(
+            {
+              id: state.id,
+              description,
+              feeling,
+              origin,
+              prompt1,
+            },
+            "mood"
+          )
+        ).then(() => navigate(`/journey/mood/${state.id}`));
+      } else {
+        dispatch(
+          createEntry(
+            {
+              createdAt,
+              description,
+              feeling,
+              origin,
+              prompt1,
+            },
+            "mood"
+          )
+        ).then(() => navigate("/journey"));
+      }
     }
 
     switch (pageIndex) {
@@ -444,6 +463,18 @@ function MoodCheckIn() {
         if (origin.length < 1) {
           disabledRight.current = true;
         }
+        import(
+          `./Responses/${toCapitalCamelCase(
+            description[description.length - 1]
+          )}`
+        )
+          .then((module) => {
+            const Response = module.default;
+            setResponse(<Response />);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
         break;
       case 2:
         if (!prompt1) {

@@ -59,10 +59,11 @@ function Body() {
           <h1>morning.</h1>
           <div className="entry-detail-body">
             <p>
-              how well you sleept <br /> {entry.sleep}/5
+              how well you sleept <br /> {parseInt(entry.sleep) + 1}/5
             </p>
             <p>
-              how motivated you felt <br /> {entry.motivation}/5
+              how motivated you felt <br />{" "}
+              {parseInt(entry.motivation) + 1}/5
             </p>
             <p>
               what you wanted to focus on <br />{" "}
@@ -88,13 +89,14 @@ function Body() {
           <h1>evening.</h1>
           <div className="entry-detail-body">
             <p>
-              how well rested you felt <br /> {entry.rest}/5
+              how well rested you felt <br /> {parseInt(entry.rest) + 1}/5
             </p>
             <p>
-              how stressful you felt <br /> {entry.stress}/5
+              how stressful you felt <br /> {parseInt(entry.stress) + 1}/5
             </p>
             <p>
-              how productive you felt <br /> {entry.productive}
+              how productive you felt <br />{" "}
+              {parseInt(entry.productive) + 1}
               /5
             </p>
             <p>
@@ -125,7 +127,7 @@ function Body() {
           <h1>{entry.Descriptions[0].value}.</h1>
           <div className="entry-detail-body">
             <p>
-              you were feeling <br /> {entry.feeling}/5
+              you were feeling <br /> {parseInt(entry.feeling) + 1}/5
             </p>
             <p>
               {entry.Origins.length > 1 ? "these" : "this"} influenced your
@@ -160,18 +162,46 @@ function Edit() {
   const { id, type } = useParams();
 
   if (entry.entryType == null) return null;
+  let state = {};
 
-  const state = {
-    id: entry.id,
-    createAt: entry.createAt,
-    rest: parseInt(entry.rest),
-    stress: parseInt(entry.stress),
-    productive: parseInt(entry.productive),
-    description: entry.Descriptions.map((d) => d.value),
-    origin: entry.Origins.map((o) => o.value),
-    prompt1: entry.prompt1,
-    prompt2: entry.prompt2,
-  };
+  console.log("this is entry: ", entry);
+
+  switch (entry.entryType) {
+    case 0:
+      state = {
+        id: entry.id,
+        sleep: parseInt(entry.sleep),
+        motivation: parseInt(entry.motivation),
+        focus: entry.Origins.map((o) => o.value),
+        prompt1: entry.prompt1,
+        prompt2: entry.prompt2,
+      };
+      break;
+    case 1:
+      state = {
+        id: entry.id,
+        rest: parseInt(entry.rest),
+        stress: parseInt(entry.stress),
+        productive: parseInt(entry.productive),
+        description: entry.Descriptions.map((d) => d.value),
+        origin: entry.Origins.map((o) => o.value),
+        prompt1: entry.prompt1,
+        prompt2: entry.prompt2,
+      };
+      break;
+    case 2:
+      state = {
+        id: entry.id,
+        feeling: parseInt(entry.feeling),
+        description: entry.Descriptions.map((d) => d.value),
+        origin: entry.Origins.map((o) => o.value),
+        prompt1: entry.prompt1,
+        prompt2: entry.prompt2,
+      };
+      break;
+    default:
+      break;
+  }
 
   console.log("this my init state", state);
 

@@ -1,5 +1,5 @@
+import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { PageWrapper } from "../../Layout";
@@ -31,16 +31,16 @@ import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
-import "./EveningCheckIn.css";
 import { createEntry, updateEntry } from "../../../store/journey";
+import useEditState from "../../../hooks/useEditState";
+
+import "./EveningCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
 
 function EveningCheckIn() {
-  const location = useLocation();
-  const state = location.state ?? {};
-  const isEditing = !!state.id;
+  const { isEditing, state } = useEditState();
 
   const [rest, setRest] = useState(state.rest);
   const [stress, setStress] = useState(state.stress);
@@ -57,7 +57,7 @@ function EveningCheckIn() {
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
 
-  const createdAt = state.createdAt ?? new Date();
+  const createdAt = new Date();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -539,7 +539,6 @@ function EveningCheckIn() {
             "evening"
           )
         ).then(() => navigate(`/journey/evening/${state.id}`));
-        navigate("/journey");
       } else {
         dispatch(
           createEntry(
