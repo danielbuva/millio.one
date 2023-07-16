@@ -21,7 +21,6 @@ function Journey() {
   const handlePageRight = () => navigate("/home");
   const handlePageLeft = () => navigate("/mood");
 
-  console.log(entries);
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <Entries entries={entries} />

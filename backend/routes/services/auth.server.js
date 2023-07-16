@@ -95,11 +95,9 @@ const validLogin = ({ email, password }) => {
     status: 500,
   };
   if (!email) {
-    console.log("entering email");
     errorResult.errors.email = "email is required";
   }
   if (!password) {
-    console.log("entering password");
     errorResult.errors.password = "password is required";
   }
   throwIfError(errorResult);

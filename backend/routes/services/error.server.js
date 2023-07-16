@@ -111,7 +111,6 @@ const checkAuthorization = (condition) => {
 
 const throwIfError = (result) => {
   if (Object.keys(result.errors).length > 0) {
-    console.log("entering throw");
     throw result;
   }
 };

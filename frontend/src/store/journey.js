@@ -21,7 +21,6 @@ export const createEntry = (entry, type) => async (dispatch) => {
     body: JSON.stringify(entry),
   });
   const data = await res.json();
-  console.log(data);
   dispatch(addEntry(data));
 };
 

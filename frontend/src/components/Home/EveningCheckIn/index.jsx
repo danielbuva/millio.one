@@ -521,7 +521,6 @@ function EveningCheckIn() {
       });
     } else {
       if (isEditing) {
-        console.log("ENTERING");
         dispatch(
           updateEntry(
             {
