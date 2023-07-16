@@ -25,6 +25,15 @@
   gap: 75px;
 }
 
+#confirm-delete-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 125px;
+  padding-top: 115px;
+}
+
 .delete-button {
   border: none;
   background-color: unset;

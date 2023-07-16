@@ -62,13 +62,21 @@ function EntryDetails() {
       ? "mood"
       : "breath";
 
+  const handleYes = () => {
+    dispatch(deleteEntry(id, type)).then(() => navigate("/journey"));
+  };
+
   return (
     <PageWrapper
       onPageLeft={() => {
-        navigate(`/journey/${leftType}/${entries[leftIndex].id}`, {
-          state: { currIndex: leftIndex },
-          replace: true,
-        });
+        if (show) {
+          setShow(false);
+        } else {
+          navigate(`/journey/${leftType}/${entries[leftIndex].id}`, {
+            state: { currIndex: leftIndex },
+            replace: true,
+          });
+        }
       }}
       onPageRight={() => {
         navigate(`/journey/${rightType}/${entries[rightIndex].id}`, {
@@ -76,8 +84,22 @@ function EntryDetails() {
           replace: true,
         });
       }}
+      disabledRight={show}
     >
       <Body />
+      {show && (
+        <div id="confirm-delete">
+          <div id="confirm-delete-content">
+            <h1>confirm delete.</h1>
+            <YesNo
+              yes="delete"
+              no="go back"
+              onNo={() => setShow(false)}
+              onYes={handleYes}
+            />
+          </div>
+        </div>
+      )}
 
       <NavBar
         left={<Edit />}
@@ -133,7 +155,7 @@ function Body() {
     case 1:
       if (!entry.Origins) return null;
       return (
-        <div className="entry-detail-main">
+        <div className="entry-detail-body-container">
           {createdAt}
           <h1>evening.</h1>
           <div className="entry-detail-body">
@@ -171,7 +193,7 @@ function Body() {
     case 2:
       if (!entry.Origins) return null;
       return (
-        <div style={{ padding: "75px" }}>
+        <div className="entry-detail-body-container">
           {createdAt}
           <h1>{entry.Descriptions[0].value}.</h1>
           <div className="entry-detail-body">
@@ -259,32 +281,11 @@ function Edit() {
   );
 }
 
-function Delete({ setShow, show }) {
-  const { id, type } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleYes = () => {
-    dispatch(deleteEntry(id, type)).then(() => navigate("/journey"));
-  };
-
+function Delete({ setShow }) {
   return (
-    <>
-      <button className="delete-button" onClick={() => setShow(true)}>
-        delete
-      </button>
-      {show && (
-        <div id="confirm-delete">
-          <h1>confirm delete.</h1>
-          <YesNo
-            yes="delete"
-            no="go back"
-            onNo={() => setShow(false)}
-            onYes={handleYes}
-          />
-        </div>
-      )}
-    </>
+    <button className="delete-button" onClick={() => setShow(true)}>
+      delete
+    </button>
   );
 }
 
