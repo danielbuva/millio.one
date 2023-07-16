@@ -60,14 +60,14 @@ async function deleteEntry(req, res) {
 async function getEntry(req, res) {
   const id = req.params.id;
   try {
-    const [entry, Descriptions, Origins] = await Promise.all([
+    const [entry, Origins] = await Promise.all([
       DayCheckIn.findByPk(id),
       Origin.findAll({ where: { dayId: id } }),
     ]);
 
     checkAuthorization(entry.userId === req.user.id);
 
-    res.json({ ...entry.toJSON(), Origins, Descriptions });
+    res.json({ ...entry.toJSON(), Origins });
   } catch (err) {
     returnError(err, res);
   }
