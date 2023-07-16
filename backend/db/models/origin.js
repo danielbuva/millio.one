@@ -48,7 +48,16 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Origin",
       defaultScope: {
-        attributes: { exclude: ["createdAt", "updatedAt"] },
+        attributes: {
+          exclude: [
+            "createdAt",
+            "dayId",
+            "id",
+            "moodId",
+            "nightId",
+            "updatedAt",
+          ],
+        },
       },
     }
   );
