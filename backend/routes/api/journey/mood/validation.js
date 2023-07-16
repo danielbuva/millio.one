@@ -13,16 +13,20 @@ const validBody = ({
     errorResult.errors.createdAt = "createdAt is Required";
   }
 
-  if (!description) {
-    errorResult.errors.description = "Description is required";
+  if (!description || description.length < 1) {
+    errorResult.errors.description = "description is required";
+  } else if (description.length > 3) {
+    errorResult.errors.description = "select up to 3";
   }
 
   if (isNaN(feeling)) {
     errorResult.errors.feeling = "feeling is required";
   }
 
-  if (!origin) {
+  if (!origin || origin.length < 1) {
     errorResult.errors.origin = "origin is required";
+  } else if (origin.length > 3) {
+    errorResult.errors.description = "select up to 3";
   }
 
   if (!prompt1 || prompt1.length < 1) {

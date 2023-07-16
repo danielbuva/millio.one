@@ -19,10 +19,11 @@ const validBody = ({
     errorResult.errors.motivation = "motivation is required";
   }
 
-  if (!origin) {
+  if (!origin || origin.lenght < 1) {
     errorResult.errors.origin = "origin is required";
+  } else if (origin.length > 3) {
+    errorResult.errors.description = "select up to 3";
   }
-
   if (prepared == null) {
     errorResult.errors.prepared = "prepared is required";
   }
