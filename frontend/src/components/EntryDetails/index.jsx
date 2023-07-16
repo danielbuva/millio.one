@@ -220,6 +220,7 @@ function Edit() {
         sleep: parseInt(entry.sleep),
         motivation: parseInt(entry.motivation),
         focus: entry.Origins.map((o) => o.value),
+        prepared: entry.prepared,
         prompt1: entry.prompt1,
         prompt2: entry.prompt2,
       };
@@ -232,6 +233,7 @@ function Edit() {
         productive: parseInt(entry.productive),
         description: entry.Descriptions.map((d) => d.value),
         origin: entry.Origins.map((o) => o.value),
+        prepared: entry.prepared,
         prompt1: entry.prompt1,
         prompt2: entry.prompt2,
       };

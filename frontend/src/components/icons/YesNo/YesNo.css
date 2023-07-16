@@ -3,6 +3,7 @@
   align-items: center;
   text-align: center;
   gap: 25px;
+  width: fit-content;
 }
 
 .yes-no-option {
@@ -17,4 +18,9 @@
   height: 175px;
   cursor: pointer;
   gap: 16px;
+  transition: transform 0.3s ease;
+}
+
+.yes-no-option:hover {
+  transform: scale(0.95);
 }

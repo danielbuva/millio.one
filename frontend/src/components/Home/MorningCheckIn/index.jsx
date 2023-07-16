@@ -1,6 +1,6 @@
 import { createEntry, updateEntry } from "../../../store/journey";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { PageWrapper } from "../../Layout";
@@ -32,6 +32,8 @@ import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
+import YesNo from "../../icons/YesNo";
+
 import useEditState from "../../../hooks/useEditState";
 
 import "./MorningCheckIn.css";
@@ -50,10 +52,12 @@ function MorningCheckIn() {
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   // const [response, setResponse] = useState(null);
-  // const [prepared, setPrepared] = useState(null);
+  const [prepared, setPrepared] = useState(state.prepared);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
+
+  const [show, setShow] = useState();
 
   const createdAt = new Date();
 
@@ -62,7 +66,10 @@ function MorningCheckIn() {
 
   const page1 = (
     <div>
-      <h1>how was your sleep?</h1>
+      <h1>
+        how was your sleep? <br />
+        <span className="hidden">hi</span>
+      </h1>
       <div className="selection">
         <Level0
           active={sleep === 0}
@@ -105,7 +112,10 @@ function MorningCheckIn() {
 
   const page2 = (
     <div>
-      <h1>how motivated are you feeling?</h1>
+      <h1>
+        how motivated are you? <br />
+        <span className="hidden">hi</span>
+      </h1>
       <div className="selection">
         <Level0
           active={motivation === 0}
@@ -171,7 +181,10 @@ function MorningCheckIn() {
 
   const page3 = (
     <div id="origin">
-      <h1>what's your main focus for today?</h1>
+      <h1>
+        what's today's main focus? <br />{" "}
+        <span className="hidden">hi</span>
+      </h1>
       <div id="origin-options">
         {foci.map((Option, i) => {
           const name = Option.name.toLowerCase();
@@ -235,10 +248,33 @@ function MorningCheckIn() {
     </div>
   );
 
+  useEffect(() => {
+    let show;
+    if (pageIndex === 5) {
+      show = setTimeout(() => {
+        setShow(true);
+      }, 50);
+    } else {
+      setShow(false);
+    }
+    return () => clearTimeout(show);
+  }, [pageIndex]);
+
   const page6 = (
-    <div>
+    <div className="last-page">
       <h1>good job!</h1>
       <p>you completed your morning preparation</p>
+      <div className={`prepared-container ${show ? "show" : ""}`}>
+        <p>do you feel prepared for your day?</p>
+
+        <YesNo
+          activeNo={prepared === false}
+          activeYes={prepared === true}
+          center
+          onYes={() => setPrepared(true)}
+          onNo={() => setPrepared(false)}
+        />
+      </div>
     </div>
   );
 
@@ -281,7 +317,7 @@ function MorningCheckIn() {
               id: state.id,
               origin: focus,
               motivation,
-              prepared: false,
+              prepared,
               prompt1,
               prompt2,
               sleep,
@@ -289,7 +325,6 @@ function MorningCheckIn() {
             "morning"
           )
         );
-        // ).then(() => navigate(`/journey/morning/${state.id}`));
         navigate(`/journey/morning/${state.id}`);
       } else {
         dispatch(
@@ -298,7 +333,7 @@ function MorningCheckIn() {
               createdAt,
               origin: focus,
               motivation,
-              prepared: false,
+              prepared,
               prompt1,
               prompt2,
               sleep,
