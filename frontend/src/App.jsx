@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import MoodCheckIn from "./components/Mood/MoodCheckIn";
 import MorningCheckIn from "./components/Home/MorningCheckIn";
 import EveningCheckIn from "./components/Home/EveningCheckIn";
+import EntryDetails from "./components/EntryDetails";
 
 function App() {
   return (
@@ -20,6 +21,11 @@ function App() {
         <Route exact path="/mood" element={<Mood />} />
         <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
         <Route path="/journey" element={<Journey />} />
+        <Route
+          exact
+          path="/journey/:type/:id"
+          element={<EntryDetails />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/morning/check-in" element={<MorningCheckIn />} />
         <Route path="/evening/check-in" element={<EveningCheckIn />} />

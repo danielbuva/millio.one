@@ -25,7 +25,7 @@ function Entry({
 }) {
   return (
     <div className="entry">
-      <Link to={`/${type}/${id}`}>
+      <Link to={`${type}/${id}`}>
         <div className="entry-header">
           <div className="entry-header-left">
             <div className="entry-icon">{icon}</div>
@@ -110,7 +110,7 @@ function getEntryByType(entry, i) {
           prompt1={`why do you think ${entry.origin[0]} is making you feel this way?`}
           prompt1Ans={entry.prompt1}
           subHeader={`you felt ${entry.description[0]}`}
-          type="moon"
+          type="mood"
         />
       );
     default:

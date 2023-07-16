@@ -20,12 +20,14 @@ export const createEntry = (entry, type) => async (dispatch) => {
 };
 
 export const readEntries = () => async (dispatch) => {
-  const data = await (await csrfFetch("api/journey")).json();
+  const data = await (await csrfFetch("/api/journey")).json();
   dispatch(getEntries(data));
 };
 
 export const getEntry = (id, type) => async (dispatch) => {
-  const data = await (await csrfFetch(`api/journey/${type}/${id}`)).json();
+  const data = await (
+    await csrfFetch(`/api/journey/${type}/${id}`)
+  ).json();
 
   dispatch(setEntry(data));
 };
