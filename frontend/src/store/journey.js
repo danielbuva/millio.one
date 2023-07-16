@@ -2,9 +2,11 @@ import { csrfFetch } from "./utils";
 
 const ADD_ENTRY = "journey/entry/add";
 const GET_ENTRIES = "journey/entries/get";
+const SET_ENTRY = "journey/entry/set";
 
 const addEntry = (entry) => ({ type: ADD_ENTRY, payload: entry });
 const getEntries = (entries) => ({ type: GET_ENTRIES, payload: entries });
+export const setEntry = (entry) => ({ type: SET_ENTRY, payload: entry });
 
 export const createEntry = (entry, type) => async (dispatch) => {
   console.log({ entry });
@@ -22,17 +24,25 @@ export const readEntries = () => async (dispatch) => {
   dispatch(getEntries(data));
 };
 
-const initialState = { entries: [] };
+export const getEntry = (id, type) => async (dispatch) => {
+  const data = await (await csrfFetch(`api/journey/${type}/${id}`)).json();
+
+  dispatch(setEntry(data));
+};
+
+const initialState = { entries: [], entry: {} };
 
 const reducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case GET_ENTRIES:
-      return { entries: action.payload };
+      return { entries: action.payload, entry: state.entry };
     case ADD_ENTRY:
-      newState = { ...state };
-      newState.entries.push(action.payload);
-      return newState;
+      return {
+        entries: [action.payload, ...state.entries],
+        entry: state.entry,
+      };
+    case SET_ENTRY:
+      return { entries: [...state.entries], entry: action.payload };
     default:
       return state;
   }
