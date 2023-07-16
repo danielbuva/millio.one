@@ -47,6 +47,7 @@ textarea::-webkit-scrollbar {
 a {
   font-weight: 500;
   text-decoration: inherit;
+  color: #ffffff;
 }
 
 body {

@@ -1,0 +1,8 @@
+.entries {
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  overflow-y: scroll;
+  gap: 20px;
+  align-items: center;
+}

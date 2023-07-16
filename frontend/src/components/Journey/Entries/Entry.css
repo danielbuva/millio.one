@@ -1,0 +1,51 @@
+.entry {
+  border: solid 1px #ffffff;
+  border-radius: 16px;
+  width: 468px;
+  height: 100%;
+  padding: 16px;
+  font-weight: 400;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.entry-header > span {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.entry-header-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 16px;
+}
+
+.entry-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.entry-header-text {
+  margin: 0;
+  letter-spacing: 3px;
+}
+
+.entry-header-text > span {
+  font-weight: 700;
+  letter-spacing: 0px;
+}
+
+.entry-prompt-one {
+  text-align: left;
+  font-weight: 400;
+}
+
+.entry-prompt-one-ans {
+  text-align: left;
+  font-weight: 400;
+}
