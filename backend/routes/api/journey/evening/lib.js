@@ -1,4 +1,7 @@
-const { returnError } = require("../../../services/error.server");
+const {
+  returnError,
+  checkAuthorization,
+} = require("../../../services/error.server");
 const {
   Description,
   NightCheckIn,
@@ -57,11 +60,16 @@ async function createEntry(req, res) {
 }
 
 async function getEntry(req, res) {
-  const data = await NightCheckIn.findOne({
-    where: { id: req.params.id },
-    include: [Description, Origin],
-  });
-  res.json(data);
+  try {
+    const data = await NightCheckIn.findOne({
+      where: { id: req.params.id },
+      include: [Description, Origin],
+    });
+    checkAuthorization(data.userId === req.user.id);
+    res.json(data);
+  } catch (err) {
+    returnError(err, res);
+  }
 }
 
 module.exports = {

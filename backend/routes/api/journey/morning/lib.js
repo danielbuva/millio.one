@@ -1,4 +1,7 @@
-const { returnError } = require("../../../services/error.server");
+const {
+  returnError,
+  checkAuthorization,
+} = require("../../../services/error.server");
 const { DayCheckIn, Origin } = require("../../../../db/models");
 const { validBody } = require("./validation");
 
@@ -44,11 +47,17 @@ async function createEntry(req, res) {
 }
 
 async function getEntry(req, res) {
-  const data = await DayCheckIn.findOne({
-    where: { id: req.params.id },
-    include: [Origin],
-  });
-  res.json(data);
+  try {
+    const data = await DayCheckIn.findOne({
+      where: { id: req.params.id },
+      include: [Origin],
+    });
+
+    checkAuthorization(data.userId === req.user.id);
+    res.json(data);
+  } catch (err) {
+    returnError(err, res);
+  }
 }
 
 module.exports = {
