@@ -25,26 +25,24 @@ function Entry({
   i,
 }) {
   return (
-    <div className="entry">
-      <Link to={`${type}/${id}`} state={{ currIndex: i }}>
-        <div className="entry-header">
-          <div className="entry-header-left">
-            <div className="entry-icon">{icon}</div>
-            <p className="entry-header-text">
-              {header} <br /> <span>{subHeader}</span>
-            </p>
-          </div>
-          <span>{createdAt}</span>
+    <Link to={`${type}/${id}`} state={{ entryIndex: i }} className="entry">
+      <div className="entry-header">
+        <div className="entry-header-left">
+          <div className="entry-icon">{icon}</div>
+          <p className="entry-header-text">
+            {header} <br /> <span>{subHeader}</span>
+          </p>
         </div>
-        <p className="entry-prompt-one">{prompt1}</p>
-        <p className="entry-prompt-one-ans">{prompt1Ans}</p>
-        <div>
-          {tags?.map((tag) => (
-            <div>{tag}</div>
-          ))}
-        </div>
-      </Link>
-    </div>
+        <span>{createdAt}</span>
+      </div>
+      <p className="entry-prompt-one">{prompt1}</p>
+      <p className="entry-prompt-one-ans">{prompt1Ans}</p>
+      <div>
+        {tags?.map((tag) => (
+          <div>{tag}</div>
+        ))}
+      </div>
+    </Link>
   );
 }
 
