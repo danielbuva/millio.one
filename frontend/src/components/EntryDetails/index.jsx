@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 
 import { time } from "../../utils";
 
-import { PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../Layout";
 
 import YesNo from "../icons/YesNo";
 
@@ -67,20 +67,27 @@ function EntryDetails() {
       onPageLeft={() => {
         navigate(`/journey/${leftType}/${entries[leftIndex].id}`, {
           state: { currIndex: leftIndex },
+          replace: true,
         });
       }}
       onPageRight={() => {
         navigate(`/journey/${rightType}/${entries[rightIndex].id}`, {
           state: { currIndex: rightIndex },
+          replace: true,
         });
       }}
     >
-      <div className="detail-page">
-        <Body />
-        <Edit />
-        <Link to="/journey">go back</Link>
-        <Delete setShow={setShow} show={show} />
-      </div>
+      <Body />
+
+      <NavBar
+        left={<Edit />}
+        middle={
+          <Link className="nav-link" to="/journey" replace>
+            go back
+          </Link>
+        }
+        right={<Delete setShow={setShow} show={show} />}
+      />
     </PageWrapper>
   );
 }
@@ -96,7 +103,7 @@ function Body() {
     case 0:
       if (!entry.Origins) return null;
       return (
-        <>
+        <div className="entry-detail-body-container">
           {createdAt}
           <h1>morning.</h1>
           <div className="entry-detail-body">
@@ -121,12 +128,12 @@ function Body() {
               the day.
             </p>
           </div>
-        </>
+        </div>
       );
     case 1:
       if (!entry.Origins) return null;
       return (
-        <>
+        <div className="entry-detail-main">
           {createdAt}
           <h1>evening.</h1>
           <div className="entry-detail-body">
@@ -159,12 +166,12 @@ function Body() {
               the night.
             </p>
           </div>
-        </>
+        </div>
       );
     case 2:
       if (!entry.Origins) return null;
       return (
-        <>
+        <div style={{ padding: "75px" }}>
           {createdAt}
           <h1>{entry.Descriptions[0].value}.</h1>
           <div className="entry-detail-body">
@@ -190,7 +197,7 @@ function Body() {
               the night.
             </p>
           </div>
-        </>
+        </div>
       );
     case 3:
       return <>3</>;
@@ -244,7 +251,7 @@ function Edit() {
   }
 
   return (
-    <Link to={`/${type}/edit/${id}`} state={state}>
+    <Link className="nav-link" to={`/${type}/edit/${id}`} state={state}>
       edit
     </Link>
   );
@@ -261,7 +268,9 @@ function Delete({ setShow, show }) {
 
   return (
     <>
-      <button onClick={() => setShow(true)}>delete</button>
+      <button className="delete-button" onClick={() => setShow(true)}>
+        delete
+      </button>
       {show && (
         <div id="confirm-delete">
           <h1>confirm delete.</h1>

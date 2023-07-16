@@ -1,7 +1,7 @@
 import useSessionUser from "../../hooks/useSessionUser";
 
-import { PageWrapper } from "../Layout";
-import { useNavigate } from "react-router-dom";
+import { NavBar, PageWrapper } from "../Layout";
+import { Link, useNavigate } from "react-router-dom";
 
 import CheckIn from "./CheckIn";
 
@@ -38,6 +38,23 @@ function Home() {
         <CheckIn p1="morning" p2="preparation" p3="let's start your day" />
         <CheckIn p1="evening" p2="reflection" p3="how was your day" />
       </div>
+      <NavBar
+        left={
+          <Link className="nav-link-active" replace>
+            home
+          </Link>
+        }
+        middle={
+          <Link className="nav-link" to="/mood" replace>
+            mood
+          </Link>
+        }
+        right={
+          <Link className="nav-link" to="/journey" replace>
+            journey
+          </Link>
+        }
+      />
     </PageWrapper>
   );
 }

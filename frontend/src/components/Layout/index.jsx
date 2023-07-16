@@ -97,4 +97,12 @@ export function PageWrapper({
   );
 }
 
+export function NavBar({ left, middle, right }) {
+  return (
+    <div className="nav-bar">
+      {left} {middle} {right}
+    </div>
+  );
+}
+
 export default Layout;

@@ -1,6 +1,5 @@
-.detail-page {
+.entry-detail-body-container {
   padding: 75px;
-  position: relative;
 }
 
 .entry-detail-body {
@@ -24,4 +23,24 @@
   align-items: center;
   justify-content: center;
   gap: 75px;
+}
+
+.delete-button {
+  border: none;
+  background-color: unset;
+  padding: 0;
+  margin: 0;
+  color: #707070;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+}
+
+.delete-button:hover {
+  color: #d2d2d2;
 }

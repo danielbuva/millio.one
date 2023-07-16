@@ -1,9 +1,9 @@
 import { readEntries } from "../../store/journey";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-import { PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../Layout";
 import Entries from "./Entries";
 
 import "./Journey.css";
@@ -24,6 +24,23 @@ function Journey() {
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <Entries entries={entries} />
+      <NavBar
+        left={
+          <Link className="nav-link" to="/home" replace>
+            home
+          </Link>
+        }
+        middle={
+          <Link className="nav-link" to="/mood" replace>
+            mood
+          </Link>
+        }
+        right={
+          <Link className="nav-link-active" replace>
+            journey
+          </Link>
+        }
+      />
     </PageWrapper>
   );
 }
