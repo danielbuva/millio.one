@@ -70,18 +70,70 @@ async function deleteEntry(req, res) {
 }
 
 async function getEntry(req, res) {
+  const id = req.params.id;
   try {
-    const data = await NightCheckIn.findOne({
-      where: { id: req.params.id },
+    const [entry, Descriptions, Origins] = await Promise.all([
+      NightCheckIn.findByPk(id),
+      Description.findAll({ where: { nightId: id } }),
+      Origin.findAll({ where: { nightId: id } }),
+    ]);
+
+    checkAuthorization(entry.userId === req.user.id);
+
+    res.json({ ...entry.toJSON(), Origins, Descriptions });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
+async function updateEntry(req, res) {
+  try {
+    const {
+      description,
+      origin,
+      prepared,
+      productive,
+      prompt1,
+      prompt2,
+      rest,
+      stress,
+    } = validBody(req.body);
+
+    console.log("[REQUEST BODY]: ", req.body);
+
+    const entry = await NightCheckIn.findOne({
+      where: { userId: req.user.id, id: req.params.id },
       include: [Description, Origin],
     });
-    checkAuthorization(data.userId === req.user.id);
-    res.json(data);
+
+    await Promise.all([
+      entry.update({
+        prepared,
+        productive,
+        prompt1,
+        prompt2,
+        rest,
+        stress,
+      }),
+      entry.setDescriptions([]),
+      entry.setOrigins([]),
+    ]).then(async () => {
+      await entry.save();
+
+      description.forEach(async (description) => {
+        console.log("[DESCRIPTION]: ", description);
+        await entry.createDescription({ value: description });
+      });
+
+      origin.forEach(async (origin) => {
+        await entry.createOrigin({ value: origin });
+      });
+    });
   } catch (err) {
     returnError(err, res);
   }
 }
 
 module.exports = {
-  night: { createEntry, deleteEntry, getEntry },
+  night: { createEntry, deleteEntry, getEntry, updateEntry },
 };

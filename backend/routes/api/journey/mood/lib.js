@@ -51,19 +51,50 @@ async function deleteEntry(req, res) {
 }
 
 async function getEntry(req, res) {
+  const id = req.params.id;
   try {
-    const data = await Mood.findOne({
-      where: { id: req.params.id },
+    const [entry, Descriptions, Origins] = await Promise.all([
+      Mood.findByPk(id),
+      Description.findAll({ where: { moodId: id } }),
+      Origin.findAll({ where: { moodId: id } }),
+    ]);
+
+    checkAuthorization(entry.userId === req.user.id);
+
+    res.json({ ...entry.toJSON(), Origins, Descriptions });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
+async function updateEntry(req, res) {
+  try {
+    const { prompt1, createdAt, description, feeling, origin } = validBody(
+      req.body
+    );
+    const entry = await Mood.findOne({
+      where: { userId: req.user.id, id: req.params.id },
       include: [Description, Origin],
     });
 
-    checkAuthorization(data.userId === req.user.id);
-    res.json(data);
+    await entry.update({ prompt1, createdAt, feeling });
+    for (let i = 0; i < 3; i++) {
+      if (description[i]) {
+        entry.Description[i].value = description[i];
+        await entry.Description[i].save();
+      }
+      if (origin[i]) {
+        entry.Origin[i].value = origin[i];
+        await entry.Origin[i].save();
+      }
+    }
+
+    await entry.save();
   } catch (err) {
     returnError(err, res);
   }
 }
 
 module.exports = {
-  mood: { createEntry, deleteEntry, getEntry },
+  mood: { createEntry, deleteEntry, getEntry, updateEntry },
 };

@@ -26,6 +26,17 @@ function App() {
           path="/journey/:type/:id"
           element={<EntryDetails />}
         />
+        <Route
+          exact
+          path="/morning/edit/:id"
+          element={<MorningCheckIn />}
+        />
+        <Route
+          exact
+          path="/evening/edit/:id"
+          element={<EveningCheckIn />}
+        />
+        <Route exact path="/mood/edit/:id" element={<MoodCheckIn />} />
         <Route path="/login" element={<Login />} />
         <Route path="/morning/check-in" element={<MorningCheckIn />} />
         <Route path="/evening/check-in" element={<EveningCheckIn />} />

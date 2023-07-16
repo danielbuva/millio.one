@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { PageWrapper } from "../../Layout";
@@ -32,28 +32,32 @@ import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
 
 import "./EveningCheckIn.css";
-import { createEntry } from "../../../store/journey";
+import { createEntry, updateEntry } from "../../../store/journey";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 //@TODO make db enums and origin names match or parse them to match
 
 function EveningCheckIn() {
-  const [rest, setRest] = useState(null);
-  const [stress, setStress] = useState(null);
-  const [productive, setProductive] = useState(null);
-  const [description, setDescription] = useState([]);
+  const location = useLocation();
+  const state = location.state ?? {};
+  const isEditing = !!state.id;
+
+  const [rest, setRest] = useState(state.rest);
+  const [stress, setStress] = useState(state.stress);
+  const [productive, setProductive] = useState(state.productive);
+  const [description, setDescription] = useState(state.description ?? []);
   const descRef = useRef(null);
 
-  const [origin, setOrigin] = useState([]);
-  const [prompt1, setPrompt1] = useState("");
-  const [prompt2, setPrompt2] = useState("");
+  const [origin, setOrigin] = useState(state.origin ?? []);
+  const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
+  const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   // const [response, setResponse] = useState(null);
   // const [prepared, setPrepared] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(0);
-  const disabledRight = useRef(true);
+  const disabledRight = useRef(!isEditing);
 
-  const createdAt = new Date();
+  const createdAt = state.createdAt ?? new Date();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -218,9 +222,10 @@ function EveningCheckIn() {
     "anxious",
     "despairful",
     "disgusted",
-    "disrespectful",
+    "disrespected",
     "embarrassed",
     "fearful",
+    "frustrated",
     "grieved",
     "rejected",
     "shameful",
@@ -515,23 +520,45 @@ function EveningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      dispatch(
-        createEntry(
-          {
-            createdAt,
-            description,
-            stress,
-            rest,
-            origin,
-            prepared: false,
-            productive,
-            prompt1,
-            prompt2,
-          },
-          "evening"
-        )
-      ).then(() => navigate("/journey"));
-      navigate("/journey");
+      if (isEditing) {
+        console.log("ENTERING");
+        dispatch(
+          updateEntry(
+            {
+              id: state.id,
+              createdAt,
+              description,
+              stress,
+              rest,
+              origin,
+              prepared: false,
+              productive,
+              prompt1,
+              prompt2,
+            },
+            "evening"
+          )
+        ).then(() => navigate(`/journey/evening/${state.id}`));
+        navigate("/journey");
+      } else {
+        dispatch(
+          createEntry(
+            {
+              createdAt,
+              description,
+              stress,
+              rest,
+              origin,
+              prepared: false,
+              productive,
+              prompt1,
+              prompt2,
+            },
+            "evening"
+          )
+        ).then(() => navigate("/journey"));
+        navigate("/journey");
+      }
     }
   };
 

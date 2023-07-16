@@ -67,7 +67,7 @@ function Body() {
             <p>
               what you wanted to focus on <br />{" "}
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value}</React.Fragment>
+                <React.Fragment key={value}>{value} </React.Fragment>
               ))}
             </p>
             <p>
@@ -101,7 +101,7 @@ function Body() {
               {entry.Origins.length > 1 ? "these" : "this"} influenced your
               feelings <br />
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value}</React.Fragment>
+                <React.Fragment key={value}>{value} </React.Fragment>
               ))}
             </p>
             <p>
@@ -131,7 +131,7 @@ function Body() {
               {entry.Origins.length > 1 ? "these" : "this"} influenced your
               feelings <br />
               {entry.Origins.map(({ value }) => (
-                <React.Fragment key={value}>{value}</React.Fragment>
+                <React.Fragment key={value}>{value} </React.Fragment>
               ))}
             </p>
             <p>
@@ -156,8 +156,30 @@ function Body() {
 }
 
 function Edit() {
+  const entry = useSelector((s) => s.journey.entry);
   const { id, type } = useParams();
-  return <Link to={`/${type}/edit/${id}`}>edit</Link>;
+
+  if (entry.entryType == null) return null;
+
+  const state = {
+    id: entry.id,
+    createAt: entry.createAt,
+    rest: parseInt(entry.rest),
+    stress: parseInt(entry.stress),
+    productive: parseInt(entry.productive),
+    description: entry.Descriptions.map((d) => d.value),
+    origin: entry.Origins.map((o) => o.value),
+    prompt1: entry.prompt1,
+    prompt2: entry.prompt2,
+  };
+
+  console.log("this my init state", state);
+
+  return (
+    <Link to={`/${type}/edit/${id}`} state={state}>
+      edit
+    </Link>
+  );
 }
 
 function Delete({ setShow, show }) {
