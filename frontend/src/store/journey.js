@@ -73,7 +73,22 @@ export const readAvgMood = () => async (dispatch) => {
   dispatch(getAvgMood(data));
 };
 
-const initialState = { avgMood: null, entries: [], entry: {} };
+const initialState = { avgMood: null, days: [], entry: {} };
+
+/*
+
+state shape: { 
+   avgMood: number,
+
+   days: {
+    date: string,
+     entries: Entry[]
+   },
+
+   entry: Entry,
+  }
+
+*/
 
 const reducer = (state = initialState, action) => {
   let newState;
@@ -81,11 +96,11 @@ const reducer = (state = initialState, action) => {
     case GET_ENTRIES:
       return {
         avgMood: state.avgMood,
-        entries: action.payload,
+        days: action.payload,
         entry: state.entry,
       };
     case ADD_ENTRY:
-      const lastEntryDateStr = state.entries[0]?.date;
+      const lastEntryDateStr = state.days[0]?.date;
       const today = new Date().toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
@@ -95,7 +110,7 @@ const reducer = (state = initialState, action) => {
       if (lastEntryDateStr === today) {
         newState = {
           date: today,
-          entries: [action.payload, ...state.entries[0].entries],
+          entries: [action.payload, ...state.days[0].entries],
         };
       } else {
         newState = {
@@ -114,7 +129,7 @@ const reducer = (state = initialState, action) => {
     case DELETE_ENTRY:
       return {
         avgMood: state.avgMood,
-        entries: [...state.entries].filter(
+        days: [...state.days].filter(
           (e) =>
             /* eslint-disable */
             e.id != action.payload.id &&
@@ -125,7 +140,7 @@ const reducer = (state = initialState, action) => {
     case EDIT_ENTRY:
       return {
         avgMood: state.avgMood,
-        entries: [...state.entries].map((e) => {
+        days: [...state.days].map((e) => {
           if (
             e.id == action.payload.id &&
             e.entryType == action.payload.entryType

@@ -9,7 +9,7 @@ import Entries from "./Entries";
 import "./Journey.css";
 
 function Journey() {
-  const entries = useSelector((s) => s.journey.entries);
+  const days = useSelector((s) => s.journey.days);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,8 +25,8 @@ function Journey() {
 
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
-      {entries.length > 0 &&
-        entries.map((e, i) => {
+      {days.length > 0 &&
+        days.map((e, i) => {
           return (
             <div className="date-entry" key={i}>
               <h1 className="entry-date">{dateString(now, e.date)}</h1>

@@ -20,7 +20,7 @@ import "./EntryDetails.css";
 function EntryDetails() {
   const [show, setShow] = useState();
   const entry = useSelector((s) => s.journey.entry);
-  const days = useSelector((s) => s.journey.entries);
+  const days = useSelector((s) => s.journey.days);
   const { id, type } = useParams();
   const dispatch = useDispatch();
 
