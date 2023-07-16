@@ -20,10 +20,12 @@ function Level4({ active, onClick }) {
         rx="10.5"
         fill={fill}
         stroke="#ffffff"
+        className="transition"
       />
       <path
         d="M38.073 22.7446C39.6126 20.078 43.4616 20.078 45.0012 22.7446L62.9323 53.8023C64.4719 56.469 62.5474 59.8023 59.4682 59.8023H23.6059C20.5267 59.8023 18.6022 56.469 20.1418 53.8023L38.073 22.7446Z"
         fill={stroke}
+        className="transition"
       />
     </svg>
   );

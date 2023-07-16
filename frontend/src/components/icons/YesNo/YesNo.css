@@ -18,9 +18,9 @@
   height: 175px;
   cursor: pointer;
   gap: 16px;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .yes-no-option:hover {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }

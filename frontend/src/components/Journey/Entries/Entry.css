@@ -5,6 +5,11 @@
   height: 100%;
   padding: 16px;
   font-weight: 400;
+  transition: transform 0.5 ease;
+}
+
+.entry:hover {
+  transform: scale(0.99);
 }
 
 .entry-header {

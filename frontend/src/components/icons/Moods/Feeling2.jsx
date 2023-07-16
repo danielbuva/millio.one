@@ -43,8 +43,16 @@ function Feeling3({ active, onClick, noStroke, sm }) {
         fill={circleFill}
         stroke={stroke}
         strokeWidth="3"
+        className="transition"
       />
-      <rect x="17" y="46" width="41" height="5" fill={pathFill} />
+      <rect
+        x="17"
+        y="46"
+        width="41"
+        height="5"
+        fill={pathFill}
+        className="transition"
+      />
     </svg>
   );
 }

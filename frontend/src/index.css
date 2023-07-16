@@ -212,3 +212,7 @@ button {
 .hidden {
   opacity: 0;
 }
+
+.transition {
+  transition: fill, stroke 0.3s ease;
+}

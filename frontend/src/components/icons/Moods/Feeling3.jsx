@@ -43,12 +43,14 @@ function Feeling3({ active, onClick, noStroke, sm }) {
         fill={circleFill}
         stroke={stroke}
         strokeWidth="3"
+        className="transition"
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M17.7961 48C21.697 55.1494 29.2821 59.9998 38 59.9998C46.718 59.9998 54.3031 55.1494 58.2039 48H53.5255C50.085 52.8399 44.4136 55.9999 38 55.9999C31.5864 55.9999 25.9151 52.8399 22.4745 48H17.7961Z"
         fill={pathFill}
+        className="transition"
       />
     </svg>
   );

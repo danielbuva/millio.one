@@ -1,4 +1,4 @@
-function Level1({ active, onClick }) {
+function Level0({ active, onClick }) {
   const fill = active ? "#ffffff" : "#000000";
   const stroke = active ? "#000000" : "#ffffff";
 
@@ -20,15 +20,17 @@ function Level1({ active, onClick }) {
         rx="10.5"
         fill={fill}
         stroke="#ffffff"
+        className="transition"
       />
       <path
         d="M38.8648 23.2446C40.0195 21.2446 42.9063 21.2446 44.061 23.2446L61.9921 54.3023C63.1468 56.3023 61.7035 58.8023 59.3941 58.8023H23.5318C21.2224 58.8023 19.779 56.3023 20.9337 54.3023L38.8648 23.2446Z"
         fill={fill}
         stroke={stroke}
         strokeWidth="2"
+        className="transition"
       />
     </svg>
   );
 }
 
-export default Level1;
+export default Level0;
