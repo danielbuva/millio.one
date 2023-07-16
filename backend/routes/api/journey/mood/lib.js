@@ -76,6 +76,7 @@ async function updateEntry(req, res) {
 
     const entry = await Mood.findOne({
       where: { userId: req.user.id, id: req.params.id },
+      include: [Description, Origin],
     });
 
     await Promise.all([
@@ -96,6 +97,7 @@ async function updateEntry(req, res) {
         await entry.createOrigin({ value: origin });
       });
     });
+    res.json(entry);
   } catch (err) {
     returnError(err, res);
   }

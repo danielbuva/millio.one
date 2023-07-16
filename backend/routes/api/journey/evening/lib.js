@@ -101,6 +101,7 @@ async function updateEntry(req, res) {
 
     const entry = await NightCheckIn.findOne({
       where: { userId: req.user.id, id: req.params.id },
+      include: [Description, Origin],
     });
 
     await Promise.all([

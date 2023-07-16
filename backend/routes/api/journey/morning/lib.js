@@ -80,6 +80,7 @@ async function updateEntry(req, res) {
 
     const entry = await DayCheckIn.findOne({
       where: { userId: req.user.id, id: req.params.id },
+      include: [Origin],
     });
 
     await Promise.all([
