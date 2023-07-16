@@ -9,21 +9,34 @@ const returnUser = (req, res) => {
   return res.json(req.user);
 };
 
-function flattenAndSortByCreatedAt(arrays) {
-  const mergedArray = arrays.reduce(
-    (result, array) => result.concat(array),
-    []
-  );
+function flatSortTransform(arrays) {
+  const flattened = arrays.flat();
 
-  mergedArray.sort(
+  const sorted = flattened.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  return mergedArray;
+  const transformed = sorted.map((item) => {
+    const { Descriptions, Origins } = item;
+    const descriptionsArray = Descriptions
+      ? Descriptions.map((description) => description.value)
+      : undefined;
+    const originsArray = Origins
+      ? Origins.map((origin) => origin.value)
+      : undefined;
+
+    return {
+      ...item.toJSON(),
+      description: descriptionsArray,
+      origin: originsArray,
+    };
+  });
+
+  return transformed;
 }
 
 module.exports = {
   returnUser,
-  flattenAndSortByCreatedAt,
+  flatSortTransform,
   today,
 };

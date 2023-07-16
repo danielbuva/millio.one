@@ -1,4 +1,4 @@
-const { flattenAndSortByCreatedAt } = require("../../../utils");
+const { flatSortTransform } = require("../../../utils");
 const {
   DayCheckIn,
   Description,
@@ -19,7 +19,7 @@ async function getAllEntries(req, res) {
     Mood.findAll({ where: { userId }, include: [Description, Origin] }),
   ]);
 
-  const entries = flattenAndSortByCreatedAt(data);
+  const entries = flatSortTransform(data);
 
   res.json(entries);
 }
