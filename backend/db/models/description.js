@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       nightId: { type: DataTypes.INTEGER },
       moodId: { type: DataTypes.INTEGER },
-      description: {
+      value: {
         allowNull: false,
         type: DataTypes.ENUM,
         values: [

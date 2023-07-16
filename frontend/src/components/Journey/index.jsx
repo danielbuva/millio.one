@@ -76,7 +76,7 @@ function getEntry(entry, i) {
           key={i}
           createdAt={createdAt}
           header="reflection"
-          prompt1={`why do you think ${entry.Origins[0].origin} is making you feel this way?`}
+          prompt1={`why do you think ${entry.Origins[0].value} is making you feel this way?`}
           prompt1Ans={entry.prompt1}
           subHeader={`evening`}
         />
@@ -88,9 +88,9 @@ function getEntry(entry, i) {
           key={i}
           createdAt={createdAt}
           header="mood check - in"
-          prompt1={`why do you think ${entry.Origins[0].origin} is making you feel this way?`}
+          prompt1={`why do you think ${entry.Origins[0].value} is making you feel this way?`}
           prompt1Ans={entry.prompt1}
-          subHeader={`you felt ${entry.Descriptions[0].description}`}
+          subHeader={`you felt ${entry.Descriptions[0].value}`}
         />
       );
     default:

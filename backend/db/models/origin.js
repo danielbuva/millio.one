@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       moodId: { type: DataTypes.INTEGER },
       dayId: { type: DataTypes.INTEGER },
       nightId: { type: DataTypes.INTEGER },
-      origin: {
+      value: {
         type: DataTypes.ENUM,
         values: [
           "work",

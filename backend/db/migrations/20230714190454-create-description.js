@@ -37,7 +37,7 @@ module.exports = {
           onUpdate: "CASCADE",
           onDelete: "CASCADE",
         },
-        description: {
+        value: {
           allowNull: false,
           type: Sequelize.ENUM(
             "angry",
