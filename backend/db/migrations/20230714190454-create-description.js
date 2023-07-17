@@ -44,7 +44,7 @@ module.exports = {
             "anxious",
             "despairful",
             "disgusted",
-            "disrespectfed",
+            "disrespected",
             "embarrassed",
             "fearful",
             "frustrated",
@@ -97,7 +97,7 @@ module.exports = {
             "happy",
             "love",
             "proud",
-            "rejected"
+            "respected"
           ),
         },
         createdAt: {

@@ -182,27 +182,37 @@ function MorningCheckIn() {
   const page3 = (
     <div id="origin">
       <h1>
-        what's today's main focus? <br />{" "}
+        what's today's main focus? <br />
         <span className="hidden">hi</span>
       </h1>
       <div id="origin-options">
         {foci.map((Option, i) => {
-          const name = Option.name.toLowerCase();
+          let name = Option.name.toLowerCase();
+          name =
+            name === "selfcare"
+              ? "self-care"
+              : name === "timealone"
+              ? "time alone"
+              : name === "helpingothers"
+              ? "helping others"
+              : name;
           return (
             <div className="origin-option" key={i}>
               <Option
                 active={focus.includes(name)}
-                onClick={() =>
+                onClick={() => {
                   setFocus((state) => {
                     if (name.length > 14) return state;
                     if (state.includes(name)) {
-                      disabledRight.current = true;
                       return state.filter((s) => s !== name);
                     }
                     disabledRight.current = false;
                     return [...state, name];
-                  })
-                }
+                  });
+                  if (focus.length < 1) {
+                    disabledRight.current = true;
+                  }
+                }}
               />
               <p className="origin-name">{name}</p>
             </div>

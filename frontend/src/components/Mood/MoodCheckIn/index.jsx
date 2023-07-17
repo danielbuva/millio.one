@@ -39,7 +39,6 @@ import useEditState from "../../../hooks/useEditState";
 import "./MoodCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
-//@TODO make db enums and origin names match or parse them to match
 
 function MoodCheckIn() {
   const { isEditing, state } = useEditState();
@@ -349,7 +348,15 @@ function MoodCheckIn() {
       <h1>what's going on, what's making you feel {description[0]}?</h1>
       <div id="origin-options">
         {origins.map((Option, i) => {
-          const name = Option.name.toLowerCase();
+          let name = Option.name.toLowerCase();
+          name =
+            name === "selfcare"
+              ? "self-care"
+              : name === "timealone"
+              ? "time alone"
+              : name === "helpingothers"
+              ? "helping others"
+              : name;
           return (
             <div className="origin-option" key={i}>
               <Option

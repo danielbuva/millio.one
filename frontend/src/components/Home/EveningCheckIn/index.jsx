@@ -37,7 +37,6 @@ import useEditState from "../../../hooks/useEditState";
 import "./EveningCheckIn.css";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
-//@TODO make db enums and origin names match or parse them to match
 
 function EveningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -415,7 +414,15 @@ function EveningCheckIn() {
       <h1>which of these things is influencing your feelings today?</h1>
       <div id="origin-options">
         {origins.map((Option, i) => {
-          const name = Option.name.toLowerCase();
+          let name = Option.name.toLowerCase();
+          name =
+            name === "selfcare"
+              ? "self-care"
+              : name === "timealone"
+              ? "time alone"
+              : name === "helpingothers"
+              ? "helping others"
+              : name;
           return (
             <div className="origin-option" key={i}>
               <Option
