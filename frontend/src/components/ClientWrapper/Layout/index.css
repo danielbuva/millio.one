@@ -15,6 +15,7 @@
   width: 750px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .base-content {
@@ -78,4 +79,12 @@
 
 .nav-link:hover {
   color: #d2d2d2;
+}
+
+.user-menu {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 40px;
+  cursor: pointerww;
 }

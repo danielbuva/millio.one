@@ -2,6 +2,7 @@ import { csrfFetch } from "./utils";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
+const TOGGLE_MUTE = "session/toggleMute";
 
 const setUser = (user) => {
   return {
@@ -15,6 +16,8 @@ const removeUser = () => {
     type: REMOVE_USER,
   };
 };
+
+export const toggleMute = () => ({ type: TOGGLE_MUTE });
 
 export const login = (body) => async (dispatch) => {
   const response = await csrfFetch("/api/session", {
@@ -57,19 +60,22 @@ export const restoreUser = () => async (dispatch) => {
   return !data;
 };
 
-const initialState = { user: null };
+const initialState = { user: null, preferences: { mute: false } };
 
 const sessionReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case SET_USER:
-      newState = Object.assign({}, state);
-      newState.user = action.payload;
-      return newState;
+      return { ...state, user: action.payload };
     case REMOVE_USER:
-      newState = Object.assign({}, state);
-      newState.user = null;
-      return newState;
+      return { user: null, preferences: { mute: false } };
+    case TOGGLE_MUTE:
+      return {
+        ...state,
+        preferences: {
+          ...state.preferences,
+          mute: !state.preferences.mute,
+        },
+      };
     default:
       return state;
   }

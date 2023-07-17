@@ -270,3 +270,11 @@ button {
 .dark {
   color: #707070;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.no-select {
+  user-select: none;
+}
