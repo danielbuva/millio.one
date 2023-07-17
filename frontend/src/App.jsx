@@ -22,7 +22,6 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route exact path="/mood" element={<Mood />} />
-          <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
           <Route path="/journey" element={<Journey />} />
           <Route
             exact
@@ -42,6 +41,7 @@ function App() {
           <Route exact path="/mood/edit/:id" element={<MoodCheckIn />} />
           <Route path="/morning/check-in" element={<MorningCheckIn />} />
           <Route path="/evening/check-in" element={<EveningCheckIn />} />
+          <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
         </Route>
       </Routes>
     </ClientWrapper>
