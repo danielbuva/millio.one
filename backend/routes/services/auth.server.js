@@ -72,15 +72,15 @@ const restoreCsrf = (req, res) => {
 const getUser = (req, res) => {
   const { user } = req;
   if (user) {
-    const data = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    };
     return res.json({
-      user: data,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
     });
-  } else return res.json({ user: null });
+  }
+  return res.json({ user: null });
 };
 
 const logout = (_, res) => {

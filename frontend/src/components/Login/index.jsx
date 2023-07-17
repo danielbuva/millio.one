@@ -2,9 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-// import useSessionUser from "../../hooks/useSessionUser";
 import { login } from "../../store/session";
-import { PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../Layout";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,35 +20,31 @@ function Login() {
         const data = await res.json();
         if (data && data.message) {
           // setErrors({ email: data.message });
-          console.log(data.message);
+          console.log({ errors: data.message });
         }
       });
   };
 
-  const handlePageLeft = () => {
-    navigate(-1);
+  const handleDemo = () => {
+    dispatch(login({ email: "demo@user.io", password: "password" }))
+      .then(() => navigate("/home"))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.message) {
+          // setErrors({ credentials: data.message });
+          console.log({ errors: data.message });
+        }
+      });
   };
 
-  // const handleDemo = async () => {
-  //   await dispatch(login({ email: "demo@user.io", password: "password" }))
-  //     .catch(async (res) => {
-  //       const data = await res.json();
-  //       if (data && data.message) setErrors({ credentials: data.message });
-  //     });
-  // };
-
   return (
-    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
+    <PageWrapper
+      onPageLeft={() => {
+        navigate("/");
+      }}
+      onPageRight={handlePageRight}
+    >
       <div className="page-container">
-        <Link
-          className="auth-link"
-          to="/"
-          onClick={() => {
-            localStorage.setItem("lpIndex", "1");
-          }}
-        >
-          sign up
-        </Link>
         <div className="page">
           <h1 className="signup-header">login</h1>
           <div className="auth-inputs">
@@ -68,6 +63,20 @@ function Login() {
           </div>
         </div>
       </div>
+      <NavBar
+        left={
+          <Link
+            className="auth-link"
+            to="/"
+            onClick={() => {
+              localStorage.setItem("lpIndex", "1");
+            }}
+          >
+            sign up
+          </Link>
+        }
+        right={<button onClick={handleDemo}>demo user</button>}
+      />
     </PageWrapper>
   );
 }

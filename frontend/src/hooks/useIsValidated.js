@@ -8,7 +8,7 @@ export default function useIsValidated() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(restoreUser()).then(() => setIsValidated(true));
+    dispatch(restoreUser()).then((validated) => setIsValidated(validated));
   }, [dispatch]);
 
   return useIsValidated;

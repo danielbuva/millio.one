@@ -45,10 +45,16 @@ export const logout = () => async (dispatch) => {
 };
 
 export const restoreUser = () => async (dispatch) => {
-  const response = await csrfFetch("/api/session");
-  const data = await response.json();
+  const res = await csrfFetch("/api/session");
+  const data = await res.json();
+
   dispatch(setUser(data.user));
-  return response;
+
+  if (data.user == null) {
+    window.location.href = "/login";
+  }
+
+  return !data;
 };
 
 const initialState = { user: null };
