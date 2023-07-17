@@ -1,5 +1,6 @@
 .entry-detail-body-container {
   padding: 75px;
+  word-wrap: break-word;
 }
 
 .entry-detail-body-container > h1 {
@@ -11,6 +12,8 @@
   flex-direction: column;
   text-align: left;
   gap: 16px;
+  height: 700px;
+  overflow-y: scroll;
 }
 
 .entry-detail-body > p {
