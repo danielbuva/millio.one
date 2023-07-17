@@ -1,4 +1,4 @@
-function Feeling3({ active, onClick, noStroke, sm }) {
+function Feeling2({ active, onClick, noStroke, sm }) {
   const circleFill = active ? "#ffffff" : "#000000";
   const pathFill = active ? "#000000" : "#ffffff";
   const stroke = noStroke ? "000000" : "#ffffff";
@@ -57,4 +57,4 @@ function Feeling3({ active, onClick, noStroke, sm }) {
   );
 }
 
-export default Feeling3;
+export default Feeling2;

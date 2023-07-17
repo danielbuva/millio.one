@@ -49,14 +49,14 @@ function Home() {
           p1="morning"
           p2="preparation"
           p3="let's start your day"
-          show={!user.morningEntries && greeting === "good morning"}
+          show={user.morningEntries < 1 && greeting === "good morning"}
           src="Clouds.mp4"
         />
         <CheckInTile
           p1="evening"
           p2="reflection"
           p3="how was your day"
-          show={!user.morningEntries && greeting === "good evening"}
+          show={user.eveningEntries < 1 && greeting === "good evening"}
           src="Sparkles.mp4"
         />
       </div>

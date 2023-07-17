@@ -1,45 +1,17 @@
 import { createEntry, updateEntry } from "../../../store/journey";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { PageWrapper } from "../../ClientWrapper/Layout";
+import { origins } from "../utils";
 
-import Level0 from "../../icons/Levels/Level0";
-import Level1 from "../../icons/Levels/Level1";
-import Level2 from "../../icons/Levels/Level2";
-import Level3 from "../../icons/Levels/Level3";
-import Level4 from "../../icons/Levels/Level4";
-
-import Cleaning from "../../icons/origin/Cleaning";
-import Creativity from "../../icons/origin/Creativity";
-import Dating from "../../icons/origin/Dating";
-import Family from "../../icons/origin/Family";
-import Friends from "../../icons/origin/Friends";
-import Fitness from "../../icons/origin/Fitness";
-import Eating from "../../icons/origin/Eating";
-import Health from "../../icons/origin/Health";
-import HelpingOthers from "../../icons/origin/HelpingOthers";
-import Music from "../../icons/origin/Music";
-import Nature from "../../icons/origin/Nature";
-import Partner from "../../icons/origin/Partner";
-import Party from "../../icons/origin/Party";
-import Pet from "../../icons/origin/Pet";
-import Relaxing from "../../icons/origin/Relaxing";
-import SelfCare from "../../icons/origin/SelfCare";
-import Spirituality from "../../icons/origin/Spirituality";
-import TimeAlone from "../../icons/origin/TimeAlone";
-import Travel from "../../icons/origin/Travel";
-import Work from "../../icons/origin/Work";
+import CheckInForm, { Selection } from "../CheckInForm";
 
 import YesNo from "../../icons/YesNo";
 
 import useEditState from "../../../hooks/useEditState";
 
 import "./MorningCheckIn.css";
-
-//@TODO fix page 1, it makes the arrows slightly smaller in width
-//@TODO make db enums and origin names match or parse them to match
 
 function MorningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -65,127 +37,41 @@ function MorningCheckIn() {
   const dispatch = useDispatch();
 
   const page1 = (
-    <div>
-      <h1>
-        how was your sleep? <br />
-        <span className="hidden">hi</span>
-      </h1>
-      <div className="selection">
-        <Level0
-          active={sleep === 0}
-          onClick={() => {
-            disabledRight.current = false;
-            setSleep(0);
-          }}
-        />
-        <Level1
-          active={sleep === 1}
-          onClick={() => {
-            disabledRight.current = false;
-            setSleep(1);
-          }}
-        />
-        <Level2
-          active={sleep === 2}
-          onClick={() => {
-            disabledRight.current = false;
-            setSleep(2);
-          }}
-        />
-        <Level3
-          active={sleep === 3}
-          onClick={() => {
-            disabledRight.current = false;
-            setSleep(3);
-          }}
-        />
-        <Level4
-          active={sleep === 4}
-          onClick={() => {
-            disabledRight.current = false;
-            setSleep(4);
-          }}
-        />
-      </div>
-    </div>
+    <Selection
+      disabledRight={disabledRight}
+      prompt={
+        <h1>
+          how was your sleep? <br />
+          <span className="hidden">hi</span>
+        </h1>
+      }
+      setState={setSleep}
+      state={sleep}
+    />
   );
 
   const page2 = (
-    <div>
-      <h1>
-        how motivated are you? <br />
-        <span className="hidden">hi</span>
-      </h1>
-      <div className="selection">
-        <Level0
-          active={motivation === 0}
-          onClick={() => {
-            disabledRight.current = false;
-            setMotivation(0);
-          }}
-        />
-        <Level1
-          active={motivation === 1}
-          onClick={() => {
-            disabledRight.current = false;
-            setMotivation(1);
-          }}
-        />
-        <Level2
-          active={motivation === 2}
-          onClick={() => {
-            disabledRight.current = false;
-            setMotivation(2);
-          }}
-        />
-        <Level3
-          active={motivation === 3}
-          onClick={() => {
-            disabledRight.current = false;
-            setMotivation(3);
-          }}
-        />
-        <Level4
-          active={motivation === 4}
-          onClick={() => {
-            disabledRight.current = false;
-            setMotivation(4);
-          }}
-        />
-      </div>
-    </div>
+    <Selection
+      disabledRight={disabledRight}
+      prompt={
+        <h1>
+          how motivated are you? <br />
+          <span className="hidden">hi</span>
+        </h1>
+      }
+      setState={setMotivation}
+      state={motivation}
+    />
   );
-
-  const foci = [
-    Work,
-    Relaxing,
-    Family,
-    Friends,
-    Dating,
-    Pet,
-    Fitness,
-    SelfCare,
-    Partner,
-    Travel,
-    Nature,
-    Party,
-    Music,
-    Eating,
-    Cleaning,
-    Creativity,
-    Spirituality,
-    TimeAlone,
-    HelpingOthers,
-    Health,
-  ];
 
   const page3 = (
     <div id="origin">
       <h1>what's today's main focus?</h1>
       <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
-        {foci.map((Option, i) => {
+        {origins.map((Option, i) => {
           let name = Option.name.toLowerCase();
+
           name =
             name === "selfcare"
               ? "self-care"
@@ -194,6 +80,7 @@ function MorningCheckIn() {
               : name === "helpingothers"
               ? "helping others"
               : name;
+
           return (
             <div className="origin-option" key={i}>
               <Option
@@ -202,14 +89,16 @@ function MorningCheckIn() {
                   setFocus((state) => {
                     if (name.length > 14) return state;
                     if (state.includes(name)) {
+                      if (state.length === 1) {
+                        disabledRight.current = true;
+                      }
                       return state.filter((s) => s !== name);
                     }
-                    disabledRight.current = false;
+                    if (state.length < 1) {
+                      disabledRight.current = false;
+                    }
                     return [...state, name];
                   });
-                  if (focus.length < 1) {
-                    disabledRight.current = true;
-                  }
                 }}
               />
               <p className="origin-name">{name}</p>
@@ -279,8 +168,14 @@ function MorningCheckIn() {
           activeNo={prepared === false}
           activeYes={prepared === true}
           center
-          onYes={() => setPrepared(true)}
-          onNo={() => setPrepared(false)}
+          onYes={() => {
+            setPrepared(true);
+            disabledRight.current = false;
+          }}
+          onNo={() => {
+            setPrepared(false);
+            disabledRight.current = false;
+          }}
         />
       </div>
     </div>
@@ -301,7 +196,17 @@ function MorningCheckIn() {
         }
         break;
       case 2:
-        if (focus.length < 1) {
+        if (prompt1.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      case 3:
+        if (prompt2.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      case 4:
+        if (prepared == null) {
           disabledRight.current = true;
         }
         break;
@@ -365,15 +270,12 @@ function MorningCheckIn() {
   };
 
   return (
-    <PageWrapper
-      onPageLeft={handlePageLeft}
-      onPageRight={handlePageRight}
+    <CheckInForm
+      handlePageLeft={handlePageLeft}
+      handlePageRight={handlePageRight}
       disabledRight={disabledRight.current}
-    >
-      <div className="check-in-wrapper">
-        <div className="page-container">{pages[pageIndex]}</div>
-      </div>
-    </PageWrapper>
+      page={pages[pageIndex]}
+    />
   );
 }
 

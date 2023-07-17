@@ -1,11 +1,22 @@
+.days {
+  height: 850px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .entries {
   display: flex;
   flex-direction: column;
-  height: 700px;
-  overflow-y: scroll;
   gap: 20px;
   align-items: center;
   word-wrap: break-word;
+}
+
+.date-group {
+  border: solid red;
+  height: fit-content;
 }
 
 .entry-date {

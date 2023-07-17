@@ -1,4 +1,4 @@
-function Level3({ active, onClick }) {
+function Level2({ active, onClick }) {
   const fill = active ? "#ffffff" : "#000000";
   const stroke = active ? "#000000" : "#ffffff";
 
@@ -38,4 +38,4 @@ function Level3({ active, onClick }) {
   );
 }
 
-export default Level3;
+export default Level2;

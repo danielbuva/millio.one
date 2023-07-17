@@ -26,14 +26,14 @@ function Journey() {
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       {days && days.length > 0 ? (
-        days.map((e, i) => {
-          return (
-            <div className="date-entry" key={i}>
+        <div className="days">
+          {days.map((e, i) => (
+            <div className="date-group" key={i}>
               <h1 className="entry-date">{dateString(now, e.date)}</h1>
               <Entries entries={e.entries} />
             </div>
-          );
-        })
+          ))}
+        </div>
       ) : (
         <>
           <h1>begin your journey.</h1>
