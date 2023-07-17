@@ -60,3 +60,20 @@
   height: 100px;
   width: 100%;
 }
+
+.begin {
+  background-color: #fff;
+  color: #000;
+  border-radius: 9999px;
+  padding: 10px 25px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.begin:hover {
+  transform: scale(1.05) !important;
+  /* text-decoration: underline; */
+}
+
+.check-in-tile:hover .begin {
+  transform: scale(1.01);
+}

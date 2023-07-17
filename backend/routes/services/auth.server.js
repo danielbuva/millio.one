@@ -5,7 +5,7 @@ const {
 } = require("./error.server");
 const { jwtConfig, isProduction } = require("../../config");
 const { hashSync, compareSync } = require("bcryptjs");
-const { User } = require("../../db/models");
+const { DayCheckIn, NightCheckIn, User } = require("../../db/models");
 const { secret, expiresIn } = jwtConfig;
 const jwt = require("jsonwebtoken");
 
@@ -69,14 +69,25 @@ const restoreCsrf = (req, res) => {
   res.json({ "XSRF-Token": csrfToken });
 };
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
   const { user } = req;
+
   if (user) {
+    const [morningEntries, eveningEntries] = await Promise.all([
+      DayCheckIn.count({
+        where: { userId: user.id },
+      }),
+      NightCheckIn.count({
+        where: { userId: user.id },
+      }),
+    ]);
     return res.json({
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
+        morningEntries,
+        eveningEntries,
       },
     });
   }
@@ -122,10 +133,21 @@ const login = async (req, res) => {
       throwError(401, "Invalid credentials");
     }
 
+    const [morningEntries, eveningEntries] = await Promise.all([
+      DayCheckIn.count({
+        where: { userId: user.id },
+      }),
+      NightCheckIn.count({
+        where: { userId: user.id },
+      }),
+    ]);
+
     const user = {
       id: data.id,
       name: data.name,
       email: data.email,
+      morningEntries,
+      eveningEntries,
     };
 
     setTokenCookie(res, user);
@@ -186,6 +208,8 @@ const signup = async (req, res) => {
       id: data.id,
       name: data.name,
       email: data.email,
+      morningEntries: 0,
+      eveningEntries: 0,
     };
 
     setTokenCookie(res, user);

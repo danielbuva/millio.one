@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-function CheckIn({ p1, p2, p3, src }) {
+function CheckIn({ p1, p2, p3, src, show }) {
   const videoRef = useRef(null);
 
   return (
@@ -18,6 +18,7 @@ function CheckIn({ p1, p2, p3, src }) {
       <div className="check-in-tile-header">
         {p1} <br /> {p2} <br /> <span>{p3}</span>
       </div>
+      {show && <p className="begin">begin</p>}
       <div className="video-container">
         <video
           ref={videoRef}
