@@ -100,7 +100,7 @@ const reducer = (state = initialState, action) => {
         entry: state.entry,
       };
     case ADD_ENTRY:
-      const lastEntryDateStr = state.days[0]?.date;
+      const lastEntryDateStr = state.days && state.days[0]?.date;
       const today = new Date().toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
