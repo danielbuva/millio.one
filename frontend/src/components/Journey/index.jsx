@@ -25,8 +25,7 @@ function Journey() {
 
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
-      {days &&
-        days.length > 0 &&
+      {days && days.length > 0 ? (
         days.map((e, i) => {
           return (
             <div className="date-entry" key={i}>
@@ -34,7 +33,10 @@ function Journey() {
               <Entries entries={e.entries} />
             </div>
           );
-        })}
+        })
+      ) : (
+        <h1>write your first entry.</h1>
+      )}
       <NavBar
         left={
           <Link className="nav-link" to="/home" replace>
