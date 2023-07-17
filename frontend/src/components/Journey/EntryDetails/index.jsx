@@ -49,25 +49,27 @@ function EntryDetails() {
       return e.entries[i].id === entry.id;
     });
 
-  const leftI = entryI === 0 ? days[dayI].entries.length - 1 : entryI - 1;
+  const prevI = entryI === 0 ? days[dayI].entries.length - 1 : entryI - 1;
 
-  const rightI = entryI === days[dayI].entries.length - 1 ? 0 : entryI + 1;
+  const nextI = entryI === days[dayI].entries.length - 1 ? 0 : entryI + 1;
 
-  const leftType =
-    days[dayI].entries[leftI].entryType === 0
+  const prevEntry = days[dayI].entries[prevI];
+  const prevType =
+    prevEntry.entryType === 0
       ? "morning"
-      : days[dayI].entries[leftI].entryType === 1
+      : prevEntry.entryType === 1
       ? "evening"
-      : days[dayI].entries[leftI].entryType === 2
+      : prevEntry.entryType === 2
       ? "mood"
       : "breath";
 
-  const rightType =
-    days[dayI].entries[rightI].entryType === 0
+  const nextEntry = days[dayI].entries[nextI];
+  const nextType =
+    nextEntry.entryType === 0
       ? "morning"
-      : days[dayI].entries[rightI].entryType === 1
+      : nextEntry.entryType === 1
       ? "evening"
-      : days[dayI].entries[rightI].entryType === 2
+      : nextEntry.entryType === 2
       ? "mood"
       : "breath";
 
@@ -87,28 +89,23 @@ function EntryDetails() {
           if (onlyOneEntry) {
             navigate("/journey");
           } else {
-            navigate(
-              `/journey/${leftType}/${days[dayI].entries[leftI].id}`,
-              {
-                state: { entryIndex: leftI },
-                replace: true,
-              }
-            );
+            navigate(`/journey/${prevType}/${prevEntry.id}`, {
+              state: { entryIndex: prevI },
+              replace: true,
+            });
           }
         }
       }}
       onPageRight={() => {
-        navigate(
-          `/journey/${rightType}/${days[dayI].entries[rightI]?.id}`,
-          {
-            state: { entryIndex: rightI },
-            replace: true,
-          }
-        );
+        navigate(`/journey/${nextType}/${nextEntry.id}`, {
+          state: { entryIndex: nextI },
+          replace: true,
+        });
       }}
       disabledRight={show || onlyOneEntry}
     >
       <Body />
+
       {show && (
         <div id="confirm-delete">
           <div id="confirm-delete-content">
