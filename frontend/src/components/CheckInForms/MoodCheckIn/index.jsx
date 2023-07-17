@@ -76,6 +76,7 @@ function MoodCheckIn() {
         }
         return state.filter((s) => s !== description);
       }
+      if (state.length === 3) return state;
 
       if (state.length < 1) {
         disabledRight.current = false;
@@ -131,6 +132,8 @@ function MoodCheckIn() {
                       }
                       return state.filter((s) => s !== name);
                     }
+                    if (state.length === 3) return state;
+
                     if (state.length < 1) {
                       disabledRight.current = false;
                     }
