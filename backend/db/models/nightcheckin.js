@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         hooks: true,
       });
+      NightCheckIn.belongsTo(models.User, {
+        foreignKey: "userId",
+        otherKey: "id",
+      });
     }
   }
   NightCheckIn.init(

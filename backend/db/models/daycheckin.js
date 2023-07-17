@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         hooks: true,
       });
+      DayCheckIn.belongsTo(models.User, {
+        foreignKey: "userId",
+        otherKey: "id",
+      });
     }
   }
   DayCheckIn.init(

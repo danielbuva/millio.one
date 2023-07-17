@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         hooks: true,
       });
+      Mood.belongsTo(models.User, {
+        foreignKey: "userId",
+        otherKey: "id",
+      });
     }
   }
 
