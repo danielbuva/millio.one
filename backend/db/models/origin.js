@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
           "family",
           "friends",
           "dating",
-          "pets",
+          "pet",
           "fitness",
           "self-care",
           "partner",

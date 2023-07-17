@@ -55,7 +55,7 @@ module.exports = {
             "family",
             "friends",
             "dating",
-            "pets",
+            "pet",
             "fitness",
             "self-care",
             "partner",
