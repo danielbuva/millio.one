@@ -8,6 +8,7 @@ const { hashSync, compareSync } = require("bcryptjs");
 const { DayCheckIn, NightCheckIn, User } = require("../../db/models");
 const { secret, expiresIn } = jwtConfig;
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 
 const setTokenCookie = (res, user) => {
   const token = jwt.sign(
@@ -73,21 +74,25 @@ const getUser = async (req, res) => {
   const { user } = req;
 
   if (user) {
-    const [morningEntries, eveningEntries] = await Promise.all([
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const [hasDayEntryToday, hasNightEntryToday] = await Promise.all([
       DayCheckIn.count({
-        where: { userId: user.id },
+        where: { userId: user.id, createdAt: { [Op.gte]: today } },
       }),
       NightCheckIn.count({
-        where: { userId: user.id },
+        where: { userId: user.id, createdAt: { [Op.gte]: today } },
       }),
     ]);
+
     return res.json({
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
-        morningEntries,
-        eveningEntries,
+        hasDayEntryToday,
+        hasNightEntryToday,
       },
     });
   }
@@ -133,12 +138,15 @@ const login = async (req, res) => {
       throwError(401, "Invalid credentials");
     }
 
-    const [morningEntries, eveningEntries] = await Promise.all([
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const [hasDayEntryToday, hasNightEntryToday] = await Promise.all([
       DayCheckIn.count({
-        where: { userId: data.id },
+        where: { userId: data.id, createdAt: { [Op.gte]: today } },
       }),
       NightCheckIn.count({
-        where: { userId: data.id },
+        where: { userId: data.id, createdAt: { [Op.gte]: today } },
       }),
     ]);
 
@@ -146,8 +154,8 @@ const login = async (req, res) => {
       id: data.id,
       name: data.name,
       email: data.email,
-      morningEntries,
-      eveningEntries,
+      hasDayEntryToday,
+      hasNightEntryToday,
     };
 
     setTokenCookie(res, user);
@@ -208,8 +216,8 @@ const signup = async (req, res) => {
       id: data.id,
       name: data.name,
       email: data.email,
-      morningEntries: 0,
-      eveningEntries: 0,
+      hasDayEntryToday: 0,
+      hasNightEntryToday: 0,
     };
 
     setTokenCookie(res, user);
