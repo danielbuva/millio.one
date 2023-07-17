@@ -37,9 +37,11 @@ function Entry({
       </div>
       <p className="entry-prompt-one">{prompt1}</p>
       <p className="entry-prompt-one-ans">{prompt1Ans}</p>
-      <div>
-        {tags?.map((tag) => (
-          <div>{tag}</div>
+      <div className="tags">
+        {tags?.map((tag, i) => (
+          <div className="tag" key={i}>
+            {tag}
+          </div>
         ))}
       </div>
     </Link>
@@ -82,6 +84,13 @@ function getEntryByType(entry, i) {
           // prompt1={`why do you think ${entry.Origins[0].origin} is making you feel this way?`}
           prompt1Ans={entry.prompt1}
           subHeader={`morning`}
+          tags={[
+            <p>sleep {+entry.sleep + 1}/5</p>,
+            <p>motivation {+entry.motivation + 1}/5</p>,
+            ...entry.Origins.map((d, i) => (
+              <p key={i + d.value}>{d.value}</p>
+            )),
+          ]}
           type="morning"
         />
       );
@@ -94,9 +103,20 @@ function getEntryByType(entry, i) {
           key={i}
           createdAt={createdAt}
           header="reflection"
-          prompt1={`why do you think ${entry.origin[0]} is making you feel this way?`}
+          prompt1={`today's summary.`}
           prompt1Ans={entry.prompt1}
           subHeader={`evening`}
+          tags={[
+            <p>rest {+entry.rest + 1}/5</p>,
+            <p>stress {+entry.stress + 1}/5</p>,
+            <p>productive {+entry.productive + 1}/5</p>,
+            ...entry.Descriptions.map((d, i) => (
+              <p key={i + d.value}>{d.value}</p>
+            )),
+            ...entry.Origins.map((d, i) => (
+              <p key={i + d.value}>{d.value}</p>
+            )),
+          ]}
           type="evening"
         />
       );
@@ -112,6 +132,15 @@ function getEntryByType(entry, i) {
           prompt1={`why do you think ${entry.origin[0]} is making you feel this way?`}
           prompt1Ans={entry.prompt1}
           subHeader={`you felt ${entry.description[0]}`}
+          tags={[
+            <p>feeling {+entry.feeling + 1}/5</p>,
+            ...entry.Descriptions.map((d, i) => (
+              <p key={i + d.value}>{d.value}</p>
+            )),
+            ...entry.Origins.map((d, i) => (
+              <p key={i + d.value}>{d.value}</p>
+            )),
+          ]}
           type="mood"
         />
       );

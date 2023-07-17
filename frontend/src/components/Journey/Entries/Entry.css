@@ -48,9 +48,31 @@
 .entry-prompt-one {
   text-align: left;
   font-weight: 400;
+  color: #707070;
+  margin-bottom: 0;
 }
 
 .entry-prompt-one-ans {
   text-align: left;
   font-weight: 400;
+  margin-top: 0;
+}
+
+.tags {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  border: solid 1px #fff;
+  border-radius: 9999px;
+  width: fit-content;
+  padding: 0 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
