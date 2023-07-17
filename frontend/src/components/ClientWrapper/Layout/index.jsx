@@ -14,6 +14,13 @@ export function Layout({ children }) {
   );
 }
 
+const sounds = [
+  "/PageTurn1.mp3",
+  "/PageTurn2.mp3",
+  "/PageTurn3.mp3",
+  "/PageTurn4.mp3",
+];
+
 export function PageWrapper({
   children,
   disabledLeft,
@@ -29,7 +36,8 @@ export function PageWrapper({
   );
 
   const playSound = () => {
-    const pageTurnSound = new Audio("/PageTurn.mp3");
+    const randomIndex = Math.floor(Math.random() * sounds.length);
+    const pageTurnSound = new Audio(sounds[randomIndex]);
     pageTurnSound.volume = 0.3;
     pageTurnSound.play();
   };
