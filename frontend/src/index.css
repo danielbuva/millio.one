@@ -223,3 +223,16 @@ button {
   width: 100%;
   margin: 16px 0 75px 0;
 }
+
+.select-up-to {
+  color: #707070;
+  margin-top: 0;
+}
+
+.d {
+  margin-bottom: 2em;
+}
+
+.pb {
+  padding-bottom: 75px;
+}

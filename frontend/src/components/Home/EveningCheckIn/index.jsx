@@ -116,7 +116,11 @@ function EveningCheckIn() {
 
   const page2 = (
     <div>
-      <h1>how stressful was your day?</h1>
+      <h1>
+        how stressful was your day?
+        <br />
+        <span className="hidden">hi</span>
+      </h1>
       <div className="selection">
         <Level0
           active={stress === 0}
@@ -291,7 +295,10 @@ function EveningCheckIn() {
 
   const page4 = (
     <div>
-      <h1>how would you describe how you are feeling?</h1>
+      <h1 className="desc-options-header">
+        how would you describe how you are feeling?
+      </h1>
+      <p className="select-up-to">select up to three</p>
       <div
         className="desc-options"
         onClick={updateDescription}
@@ -411,7 +418,8 @@ function EveningCheckIn() {
 
   const page5 = (
     <div id="origin">
-      <h1>which of these things is influencing your feelings today?</h1>
+      <h1>which of these might be influencing your feelings?</h1>
+      <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
         {origins.map((Option, i) => {
           let name = Option.name.toLowerCase();

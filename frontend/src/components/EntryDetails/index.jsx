@@ -171,7 +171,7 @@ function Body() {
             <p>
               generated prompt here...? <br /> <span>{entry.prompt1}</span>
             </p>
-            <p>
+            <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
               the day.
             </p>
@@ -214,7 +214,7 @@ function Body() {
               how you answered the generated prompt <br />{" "}
               <span>{entry.prompt2}</span>
             </p>
-            <p>
+            <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
               the night.
             </p>
@@ -247,7 +247,7 @@ function Body() {
               how you answered the generated prompt <br />{" "}
               <span>{entry.prompt2}</span>
             </p>
-            <p>
+            <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
               the night.
             </p>

@@ -181,10 +181,8 @@ function MorningCheckIn() {
 
   const page3 = (
     <div id="origin">
-      <h1>
-        what's today's main focus? <br />
-        <span className="hidden">hi</span>
-      </h1>
+      <h1>what's today's main focus?</h1>
+      <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
         {foci.map((Option, i) => {
           let name = Option.name.toLowerCase();
