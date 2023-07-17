@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { PageWrapper } from "../../Layout";
@@ -35,6 +35,7 @@ import { createEntry, updateEntry } from "../../../store/journey";
 import useEditState from "../../../hooks/useEditState";
 
 import "./EveningCheckIn.css";
+import YesNo from "../../icons/YesNo";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 
@@ -51,10 +52,12 @@ function EveningCheckIn() {
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   // const [response, setResponse] = useState(null);
-  // const [prepared, setPrepared] = useState(null);
+  const [prepared, setPrepared] = useState(state.prepared);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
+
+  const [show, setShow] = useState();
 
   const createdAt = new Date();
 
@@ -491,10 +494,33 @@ function EveningCheckIn() {
     </div>
   );
 
+  useEffect(() => {
+    let show;
+    if (pageIndex === 7) {
+      show = setTimeout(() => {
+        setShow(true);
+      }, 50);
+    } else {
+      setShow(false);
+    }
+    return () => clearTimeout(show);
+  }, [pageIndex]);
+
   const page8 = (
-    <div>
+    <div className="last-page">
       <h1>good job!</h1>
-      <p>you completed your evening reflection</p>
+      <p>you completed your evening reflection.</p>
+      <div className={`prepared-container ${show ? "show" : ""}`}>
+        <p>do you feel prepared for your day?</p>
+
+        <YesNo
+          activeNo={prepared === false}
+          activeYes={prepared === true}
+          center
+          onYes={() => setPrepared(true)}
+          onNo={() => setPrepared(false)}
+        />
+      </div>
     </div>
   );
 
@@ -544,7 +570,7 @@ function EveningCheckIn() {
               stress,
               rest,
               origin,
-              prepared: false,
+              prepared,
               productive,
               prompt1,
               prompt2,
@@ -561,7 +587,7 @@ function EveningCheckIn() {
               stress,
               rest,
               origin,
-              prepared: false,
+              prepared,
               productive,
               prompt1,
               prompt2,

@@ -271,7 +271,7 @@ function MorningCheckIn() {
   const page6 = (
     <div className="last-page">
       <h1>good job!</h1>
-      <p>you completed your morning preparation</p>
+      <p>you completed your morning preparation.</p>
       <div className={`prepared-container ${show ? "show" : ""}`}>
         <p>do you feel prepared for your day?</p>
 
