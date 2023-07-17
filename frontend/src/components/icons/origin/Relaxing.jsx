@@ -1,4 +1,4 @@
-function Relax({ active, onClick }) {
+function Relaxing({ active, onClick }) {
   const circleFill = active ? "#ffffff" : "#000000";
   const stroke = active ? "#000000" : "#ffffff";
 
@@ -67,7 +67,6 @@ function Relax({ active, onClick }) {
         stroke={stroke}
         className="transition"
       />
-      className="transition"
       <line
         x1="44.3536"
         y1="44.6464"
@@ -76,7 +75,6 @@ function Relax({ active, onClick }) {
         stroke={stroke}
         className="transition"
       />
-      className="transition"
       <line
         x1="51.3536"
         y1="19.3536"
@@ -85,7 +83,6 @@ function Relax({ active, onClick }) {
         stroke={stroke}
         className="transition"
       />
-      className="transition"
       <line
         x1="24.3536"
         y1="45.3536"
@@ -94,9 +91,8 @@ function Relax({ active, onClick }) {
         stroke={stroke}
         className="transition"
       />
-      className="transition"
     </svg>
   );
 }
 
-export default Relax;
+export default Relaxing;
