@@ -5,15 +5,19 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { deleteEntry, getEntry, readEntries } from "../../store/journey";
+import {
+  deleteEntry,
+  getEntry,
+  readEntries,
+} from "../../../store/journey";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { time } from "../../utils";
+import { time } from "../../../utils";
 
 import { NavBar, PageWrapper } from "../Layout";
 
-import YesNo from "../icons/YesNo";
+import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
 

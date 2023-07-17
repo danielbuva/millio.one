@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-function CheckIn({ p1, p2, p3, src, show }) {
+function CheckInTile({ p1, p2, p3, src, show }) {
   const videoRef = useRef(null);
 
   return (
@@ -33,4 +33,4 @@ function CheckIn({ p1, p2, p3, src, show }) {
   );
 }
 
-export default CheckIn;
+export default CheckInTile;

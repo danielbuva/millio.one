@@ -3,7 +3,7 @@ import useSessionUser from "../../hooks/useSessionUser";
 import { NavBar, PageWrapper } from "../Layout";
 import { Link, useNavigate } from "react-router-dom";
 
-import CheckIn from "./CheckIn";
+import CheckInTile from "./CheckInTile";
 
 import "./Home.css";
 
@@ -45,14 +45,14 @@ function Home() {
       <div className="divider" />
       <p className="daily-reflections">DAILY REFLECTIONS</p>
       <div id="check-ins">
-        <CheckIn
+        <CheckInTile
           p1="morning"
           p2="preparation"
           p3="let's start your day"
           show={!user.morningEntries && greeting === "good morning"}
           src="Clouds.mp4"
         />
-        <CheckIn
+        <CheckInTile
           p1="evening"
           p2="reflection"
           p3="how was your day"

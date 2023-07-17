@@ -166,7 +166,7 @@ const checkIfAvailable = async (email) => {
   const emailExists = await User.findOne({ where: { email } });
 
   if (emailExists) {
-    errorResult.errors.email = "User with that email already exists";
+    errorResult.errors.email = "email in use";
   }
 
   throwIfError(errorResult);

@@ -11,7 +11,7 @@ import MoodCheckIn from "./components/Mood/MoodCheckIn";
 import MorningCheckIn from "./components/Home/MorningCheckIn";
 import EveningCheckIn from "./components/Home/EveningCheckIn";
 import EntryDetails from "./components/EntryDetails";
-import ProtectedRoutes from "./components/auth/ProtectedRoutes";
+import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
 
 function App() {
   return (

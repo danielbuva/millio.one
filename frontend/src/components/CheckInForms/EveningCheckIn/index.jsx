@@ -30,12 +30,12 @@ import Spirituality from "../../icons/origin/Spirituality";
 import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
+import YesNo from "../../iconsw/YesNo";
 
 import { createEntry, updateEntry } from "../../../store/journey";
 import useEditState from "../../../hooks/useEditState";
 
 import "./EveningCheckIn.css";
-import YesNo from "../../icons/YesNo";
 
 //@TODO fix page 1, it makes the arrows slightly smaller in width
 

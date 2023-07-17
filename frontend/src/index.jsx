@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import React from "react";
 
 import { csrfFetch, restoreCSRF } from "./store/utils";
-import * as sessionActions from "./store/session";
+import sessionActions from "./store/session";
 import configureStore from "./store";
 
 import App from "./App.jsx";
