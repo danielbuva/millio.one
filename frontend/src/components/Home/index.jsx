@@ -1,6 +1,6 @@
 import useSessionUser from "../../hooks/useSessionUser";
 
-import { NavBar, PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import { Link, useNavigate } from "react-router-dom";
 
 import CheckInTile from "./CheckInTile";

@@ -7,10 +7,10 @@ import Home from "./components/Home";
 import Mood from "./components/Mood";
 import Journey from "./components/Journey";
 import Login from "./components/Login";
-import MoodCheckIn from "./components/Mood/MoodCheckIn";
-import MorningCheckIn from "./components/Home/MorningCheckIn";
-import EveningCheckIn from "./components/Home/EveningCheckIn";
-import EntryDetails from "./components/EntryDetails";
+import MoodCheckIn from "./components/CheckInForms/MoodCheckIn";
+import MorningCheckIn from "./components/CheckInForms/MorningCheckIn";
+import EveningCheckIn from "./components/CheckInForms/EveningCheckIn";
+import EntryDetails from "./components/Journey/EntryDetails";
 import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
 
 function App() {

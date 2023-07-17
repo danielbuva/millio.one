@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 
-import Layout from "../Layout";
+import Layout from "./Layout";
 
 function ClientWrapper({ children }) {
   return (

@@ -1,8 +1,8 @@
-import { isAsyncFunction } from "../../utils";
+import { isAsyncFunction } from "../../../utils";
 
 import { useEffect, useState } from "react";
-import ArrowLeft from "../icons/ArrowLeft";
-import ArrowRight from "../icons/ArrowRight";
+import ArrowLeft from "../../icons/ArrowLeft";
+import ArrowRight from "../../icons/ArrowRight";
 
 import "./index.css";
 

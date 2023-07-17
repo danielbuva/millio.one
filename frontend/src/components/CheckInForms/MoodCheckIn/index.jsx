@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { PageWrapper } from "../../Layout";
+import { PageWrapper } from "../../ClientWrapper/Layout";
 
 import Feeling0 from "../../icons/Moods/Feeling0";
 import Feeling1 from "../../icons/Moods/Feeling1";

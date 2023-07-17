@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { readAvgMood } from "../../store/journey";
-import { NavBar, PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 

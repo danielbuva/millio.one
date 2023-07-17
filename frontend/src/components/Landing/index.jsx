@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { signup } from "../../store/session";
 
-import { PageWrapper } from "../Layout";
+import { PageWrapper } from "../ClientWrapper/Layout";
 
 import "./Landing.css";
 

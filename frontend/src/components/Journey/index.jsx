@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-import { NavBar, PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import Entries from "./Entries";
 
 import "./Journey.css";

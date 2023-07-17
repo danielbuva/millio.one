@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 import { login } from "../../store/session";
-import { NavBar, PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 
 function Login() {
   const [email, setEmail] = useState("");

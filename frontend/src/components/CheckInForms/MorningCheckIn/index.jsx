@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { PageWrapper } from "../../Layout";
+import { PageWrapper } from "../../ClientWrapper/Layout";
 
 import Level0 from "../../icons/Levels/Level0";
 import Level1 from "../../icons/Levels/Level1";

@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 
 import { time } from "../../../utils";
 
-import { NavBar, PageWrapper } from "../Layout";
+import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
 
 import YesNo from "../../icons/YesNo";
 
@@ -249,10 +249,10 @@ function Body() {
               how you answered the generated prompt <br />{" "}
               <span>{entry.prompt2}</span>
             </p>
-            <p className="pb">
+            {/* <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
               the night.
-            </p>
+            </p> */}
           </div>
         </div>
       );

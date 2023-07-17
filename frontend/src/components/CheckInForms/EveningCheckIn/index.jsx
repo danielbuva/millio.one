@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { PageWrapper } from "../../Layout";
+import { PageWrapper } from "../../ClientWrapper/Layout";
 
 import Level0 from "../../icons/Levels/Level0";
 import Level1 from "../../icons/Levels/Level1";
@@ -30,7 +30,7 @@ import Spirituality from "../../icons/origin/Spirituality";
 import TimeAlone from "../../icons/origin/TimeAlone";
 import Travel from "../../icons/origin/Travel";
 import Work from "../../icons/origin/Work";
-import YesNo from "../../iconsw/YesNo";
+import YesNo from "../../icons/YesNo";
 
 import { createEntry, updateEntry } from "../../../store/journey";
 import useEditState from "../../../hooks/useEditState";
