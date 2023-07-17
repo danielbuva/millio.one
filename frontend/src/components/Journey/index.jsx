@@ -25,7 +25,8 @@ function Journey() {
 
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
-      {days.length > 0 &&
+      {days &&
+        days.length > 0 &&
         days.map((e, i) => {
           return (
             <div className="date-entry" key={i}>
