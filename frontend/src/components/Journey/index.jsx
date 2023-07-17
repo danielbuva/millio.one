@@ -35,7 +35,10 @@ function Journey() {
           );
         })
       ) : (
-        <h1>write your first entry.</h1>
+        <>
+          <h1>begin your journey.</h1>
+          <p className="write-your-first">write your first entry</p>
+        </>
       )}
       <NavBar
         left={
