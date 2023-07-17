@@ -71,8 +71,9 @@ function EntryDetails() {
       ? "mood"
       : "breath";
 
-  const handleYes = () => {
-    dispatch(deleteEntry(id, type)).then(() => navigate("/journey"));
+  const handleYes = async () => {
+    await dispatch(deleteEntry(id, type));
+    navigate("/journey");
   };
 
   const onlyOneEntry = days.length === 1 && days[0].entries.length === 1;
