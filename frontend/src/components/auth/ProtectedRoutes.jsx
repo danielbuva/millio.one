@@ -4,9 +4,7 @@ import { Outlet } from "react-router-dom";
 import React from "react";
 
 const ProtectedRoutes = () => {
-  const notValid = useIsValidated();
-
-  if (notValid) return null;
+  if (useIsValidated()) return null;
   return <Outlet />;
 };
 

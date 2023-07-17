@@ -357,6 +357,7 @@ function MoodCheckIn() {
               : name === "helpingothers"
               ? "helping others"
               : name;
+
           return (
             <div className="origin-option" key={i}>
               <Option

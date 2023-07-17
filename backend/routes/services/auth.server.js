@@ -135,10 +135,10 @@ const login = async (req, res) => {
 
     const [morningEntries, eveningEntries] = await Promise.all([
       DayCheckIn.count({
-        where: { userId: user.id },
+        where: { userId: data.id },
       }),
       NightCheckIn.count({
-        where: { userId: user.id },
+        where: { userId: data.id },
       }),
     ]);
 
