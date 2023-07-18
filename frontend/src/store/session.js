@@ -17,7 +17,7 @@ const removeUser = () => {
   };
 };
 
-export const toggleMute = () => ({ type: TOGGLE_MUTE });
+const setMute = () => ({ type: TOGGLE_MUTE });
 
 export const login = (body) => async (dispatch) => {
   const response = await csrfFetch("/api/session", {
@@ -60,22 +60,24 @@ export const restoreUser = () => async (dispatch) => {
   return !data;
 };
 
-const initialState = { user: null, preferences: { mute: false } };
+export const toggleMute = () => async (dispatch) => {
+  await (
+    await csrfFetch("/api/session", { method: "PUT" })
+  ).json;
+
+  dispatch(setMute());
+};
+
+const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload };
+      return { user: action.payload };
     case REMOVE_USER:
-      return { user: null, preferences: { mute: false } };
+      return { user: null };
     case TOGGLE_MUTE:
-      return {
-        ...state,
-        preferences: {
-          ...state.preferences,
-          mute: !state.preferences.mute,
-        },
-      };
+      return { user: { ...state.user, mute: !state.user.mute } };
     default:
       return state;
   }

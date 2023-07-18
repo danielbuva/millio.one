@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { logout, toggleMute } from "../../store/session";
+import useSessionUser from "../../hooks/useSessionUser";
 import { PageWrapper } from "../ClientWrapper/Layout";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Yes() {
-  const mute = useSelector((s) => s.session.preferences.mute);
+  const user = useSessionUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -23,7 +24,7 @@ function Yes() {
           logout
         </p>
         <p className="dark pointer no-select" onClick={handleMute}>
-          {mute ? "unmute" : "mute"}
+          {user.mute ? "unmute" : "mute"}
         </p>
       </div>
     </PageWrapper>

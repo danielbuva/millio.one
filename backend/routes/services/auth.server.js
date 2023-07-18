@@ -93,6 +93,7 @@ const getUser = async (req, res) => {
         name: user.name,
         hasDayEntryToday,
         hasNightEntryToday,
+        mute: user.mute,
       },
     });
   }
@@ -156,6 +157,7 @@ const login = async (req, res) => {
       email: data.email,
       hasDayEntryToday,
       hasNightEntryToday,
+      mute: data.mute,
     };
 
     setTokenCookie(res, user);
@@ -218,10 +220,23 @@ const signup = async (req, res) => {
       email: data.email,
       hasDayEntryToday: 0,
       hasNightEntryToday: 0,
+      mute: data.mute,
     };
 
     setTokenCookie(res, user);
     return res.json({ user });
+  } catch (err) {
+    returnError(err, res);
+  }
+};
+
+const toggleMute = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    console.log(user.mute);
+    user.update({ mute: !user.mute });
+
+    res.json({ message: "sucess" });
   } catch (err) {
     returnError(err, res);
   }
@@ -234,6 +249,7 @@ module.exports = {
     getUser,
     login,
     logout,
+    toggleMute,
   },
   user: { signup },
   verifyAuth,

@@ -1,3 +1,4 @@
+import useSessionUser from "../../../hooks/useSessionUser";
 import { isAsyncFunction } from "../../../utils";
 
 import { useEffect, useState } from "react";
@@ -5,7 +6,6 @@ import ArrowLeft from "../../icons/ArrowLeft";
 import ArrowRight from "../../icons/ArrowRight";
 
 import "./index.css";
-import { useSelector } from "react-redux";
 
 export function Layout({ children }) {
   return (
@@ -35,11 +35,10 @@ export function PageWrapper({
   const [pageRight, setPageRight] = useState(
     Boolean(localStorage.getItem("pageRight")) || false
   );
-  const mute = useSelector((s) => s.session.preferences.mute);
+  const user = useSessionUser();
 
   const playSound = () => {
-    console.log(mute);
-    if (mute) return null;
+    if (user.mute) return null;
     const randomIndex = Math.floor(Math.random() * sounds.length);
     const pageTurnSound = new Audio(sounds[randomIndex]);
     pageTurnSound.volume = 0.3;
