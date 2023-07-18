@@ -278,3 +278,9 @@ button {
 .no-select {
   user-select: none;
 }
+
+.center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

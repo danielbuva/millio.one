@@ -1,9 +1,13 @@
+import useSessionUser from "../../hooks/useSessionUser";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 import { login } from "../../store/session";
+
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
+import ConfirmLogout from "../ConfirmLogout";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +16,10 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSessionUser();
+
+  if (user) return <ConfirmLogout />;
 
   const handlePageRight = async () => {
     return await dispatch(login({ email, password }))

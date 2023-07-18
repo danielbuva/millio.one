@@ -4,7 +4,7 @@ import { PageWrapper } from "../ClientWrapper/Layout";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-function Yes() {
+function You() {
   const user = useSessionUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function Yes() {
   };
 
   return (
-    <PageWrapper onPageLeft={() => navigate(-1)} disabledRight={true}>
+    <PageWrapper onPageLeft={() => navigate(-1)} disabledRight>
       <h1>you.</h1>
       <div>
         <p className="dark pointer" onClick={handleLogout}>
@@ -31,4 +31,4 @@ function Yes() {
   );
 }
 
-export default Yes;
+export default You;

@@ -47,18 +47,20 @@ export const logout = () => async (dispatch) => {
   return response;
 };
 
-export const restoreUser = () => async (dispatch) => {
-  const res = await csrfFetch("/api/session");
-  const data = await res.json();
+export const restoreUser =
+  (redirect = true) =>
+  async (dispatch) => {
+    const res = await csrfFetch("/api/session");
+    const data = await res.json();
 
-  dispatch(setUser(data.user));
+    dispatch(setUser(data.user));
 
-  if (data.user == null) {
-    window.location.href = "/login";
-  }
+    if (redirect && data.user == null) {
+      window.location.href = "/login";
+    }
 
-  return !data;
-};
+    return !data;
+  };
 
 export const toggleMute = () => async (dispatch) => {
   await (

@@ -2,26 +2,41 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import useSessionUser from "../../hooks/useSessionUser";
 import { signup } from "../../store/session";
 
 import { PageWrapper } from "../ClientWrapper/Layout";
+import ConfirmLogout from "../ConfirmLogout";
 
 import "./Landing.css";
 
 //@TODO add unique email validation
+
+const focusOptions = [
+  "mood",
+  "focus",
+  "productivity",
+  "sleep",
+  "stress",
+  "anxiety",
+  "something else",
+];
 
 function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
-
   const [pageIndex, setPageIndex] = useState(
     parseInt(localStorage.getItem("lpIndex") || "0")
   );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSessionUser();
+
+  if (user) return <ConfirmLogout />;
 
   const page1 = (
     <h1 id="land-text-1" key="millio">
@@ -75,16 +90,6 @@ function Landing() {
       return [...state, focus];
     });
   };
-
-  const focusOptions = [
-    "mood",
-    "focus",
-    "productivity",
-    "sleep",
-    "stress",
-    "anxiety",
-    "something else",
-  ];
 
   const page4 = (
     <React.Fragment key="focus">
