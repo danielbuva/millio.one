@@ -33,7 +33,8 @@ function Home() {
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <h1>
-        {greeting} {user.email === "demo@user.io" ? "." : user.name}
+        {greeting}
+        {user.email === "demo@user.io" ? "." : " " + user.name}
       </h1>
       <p className="home-date">
         {time.toLocaleDateString("en-us", {
