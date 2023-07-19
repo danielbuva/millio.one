@@ -35,51 +35,162 @@ function EntryDetails() {
   }, [dispatch, id, type]);
 
   const navigate = useNavigate();
-  const location = useLocation();
+  const { state } = useLocation();
 
   if (entry.entryType == null || days.length < 1) return null;
-
-  let dayI = 0;
-
-  const entryI =
-    location.state?.entryIndex ??
-    days.findIndex((e, i) => {
-      if (e.entries[i].id === entry.id) {
-        dayI = i;
-      }
-      return e.entries[i].id === entry.id;
-    });
-
-  const prevI = entryI === 0 ? days[dayI].entries.length - 1 : entryI - 1;
-
-  const nextI = entryI === days[dayI].entries.length - 1 ? 0 : entryI + 1;
-
-  const prevEntry = days[dayI].entries[prevI];
-  const prevType =
-    prevEntry.entryType === 0
-      ? "morning"
-      : prevEntry.entryType === 1
-      ? "evening"
-      : prevEntry.entryType === 2
-      ? "mood"
-      : "breath";
-
-  const nextEntry = days[dayI].entries[nextI];
-  const nextType =
-    nextEntry.entryType === 0
-      ? "morning"
-      : nextEntry.entryType === 1
-      ? "evening"
-      : nextEntry.entryType === 2
-      ? "mood"
-      : "breath";
 
   const handleYes = async () => {
     await dispatch(deleteEntry(id, type));
     navigate("/journey");
   };
 
+  let entryIndex = state?.entryIndex;
+
+  if (entryIndex == null) {
+    for (let i = 0; i < days.length; i++) {
+      entryIndex = days[i].entries.findIndex((e) => e.id === entry.id);
+      if (entryIndex > -1) break;
+    }
+  }
+
+  const dayI =
+    state?.dayI ??
+    days.findIndex((day) => day.entries[entryIndex]?.id === entry.id);
+
   const onlyOneEntry = days.length === 1 && days[0].entries.length === 1;
+
+  if (dayI < 0 || entryIndex < 0 || entryIndex == null || dayI == null) {
+    return null;
+  }
+  let leftPageDayI;
+  let rightPageDayI;
+  let leftEntryI;
+  let rightEntryI;
+
+  console.log({
+    dayI,
+    entryIndex,
+    findId: days[2].entries[entryIndex]?.id,
+    id: entry.id,
+  });
+
+  const lastDayIndex = days.length - 1;
+  const lastEntryIndex = days[dayI].entries.length - 1;
+  const hasEntries = days[dayI].entries.length > 1;
+
+  if (!onlyOneEntry) {
+    if (dayI == 0) {
+      if (entryIndex == 0) {
+        leftPageDayI = lastDayIndex;
+        leftEntryI = days[lastDayIndex].entries.length - 1;
+        if (hasEntries) {
+          rightPageDayI = 0;
+          rightEntryI = entryIndex + 1;
+        } else {
+          rightPageDayI = lastDayIndex;
+          rightEntryI = 0;
+        }
+      } else if (entryIndex == lastEntryIndex) {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+        } else {
+          leftPageDayI = dayI - 1;
+          leftEntryI = days[leftPageDayI].entries.length;
+        }
+        rightPageDayI = dayI + 1;
+        rightEntryI = entryIndex - 1;
+      }
+    } else if (dayI == lastDayIndex) {
+      if (entryIndex == 0) {
+        leftPageDayI = dayI - 1;
+        leftEntryI = days[leftPageDayI].entries.length - 1;
+        if (hasEntries) {
+          rightPageDayI = dayI;
+          rightEntryI = entryIndex + 1;
+        } else {
+          rightPageDayI = 0;
+          rightEntryI = days[0].entries.length - 1;
+        }
+      } else if (entryIndex == lastEntryIndex) {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+        } else {
+          leftPageDayI = dayI - 1;
+          leftEntryI = days[leftPageDayI].entries.length - 1;
+        }
+        rightPageDayI = 0;
+        rightEntryI = 0;
+      } else {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+          rightPageDayI = dayI;
+          rightEntryI = entryIndex + 1;
+        } else {
+          leftPageDayI = dayI - 1;
+          leftEntryI = days[leftPageDayI].entries.length - 1;
+          rightPageDayI = dayI + 1;
+          rightEntryI = 0;
+        }
+      }
+    } else {
+      if (entryIndex == 0) {
+        leftPageDayI = dayI - 1;
+        leftEntryI = days[leftPageDayI].entries.length - 1;
+        if (hasEntries) {
+          rightPageDayI = dayI;
+          rightEntryI = entryIndex + 1;
+        } else {
+          rightPageDayI = dayI + 1;
+          rightEntryI = 0;
+        }
+      } else if (entryIndex == lastEntryIndex) {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+        } else {
+          leftPageDayI = dayI - 1;
+          leftEntryI = days[leftPageDayI].entries.length - 1;
+        }
+        rightPageDayI = dayI + 1;
+        rightEntryI = 0;
+      } else {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+          rightPageDayI = dayI;
+          rightEntryI = entryIndex + 1;
+        } else {
+          leftPageDayI = dayI - 1;
+          leftEntryI = days[leftPageDayI].entries.length - 1;
+          rightPageDayI = dayI + 1;
+          rightEntryI = 0;
+        }
+      }
+    }
+  }
+
+  const leftEntry = days[leftPageDayI].entries[leftEntryI];
+  const leftType =
+    leftEntry.entryType === 0
+      ? "morning"
+      : leftEntry.entryType === 1
+      ? "evening"
+      : leftEntry.entryType === 2
+      ? "mood"
+      : "breath";
+
+  const rightEntry = days[rightPageDayI].entries[rightEntryI];
+  const rightType =
+    rightEntry.entryType === 0
+      ? "morning"
+      : rightEntry.entryType === 1
+      ? "evening"
+      : rightEntry.entryType === 2
+      ? "mood"
+      : "breath";
 
   return (
     <PageWrapper
@@ -90,16 +201,16 @@ function EntryDetails() {
           if (onlyOneEntry) {
             navigate("/journey");
           } else {
-            navigate(`/journey/${prevType}/${prevEntry.id}`, {
-              state: { entryIndex: prevI },
+            navigate(`/journey/${leftType}/${leftEntry.id}`, {
+              state: { entryIndex: leftEntryI, dayI: leftPageDayI },
               replace: true,
             });
           }
         }
       }}
       onPageRight={() => {
-        navigate(`/journey/${nextType}/${nextEntry.id}`, {
-          state: { entryIndex: nextI },
+        navigate(`/journey/${rightType}/${rightEntry.id}`, {
+          state: { entryIndex: rightEntryI, dayI: rightPageDayI },
           replace: true,
         });
       }}
@@ -329,9 +440,10 @@ function dateString(now, dateStr) {
   const date = new Date(dateStr);
   const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
 
+  console.log({ interval, nowMinusDate: (now - date) / 86400000 });
   return interval < 1
     ? "today"
-    : interval >= 3
+    : interval >= 2
     ? week[date.getDay()]
     : interval >= 1
     ? "yesterday"

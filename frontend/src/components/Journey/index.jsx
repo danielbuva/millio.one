@@ -75,6 +75,11 @@ function dateString(now, dateStr) {
       ? "yesterday"
       : "";
 
+  console.log({
+    intervalHERE: interval,
+    nowMinusDate: (now - date) / 86400000,
+  });
+
   const dateSplit = dateStr.split(" ");
   const suffix =
     dateSplit[0] + " " + dateSplit[1].slice(0, dateSplit[1].length - 1);
