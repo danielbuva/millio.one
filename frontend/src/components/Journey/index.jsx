@@ -7,6 +7,7 @@ import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import Entries from "./Entries";
 
 import "./Journey.css";
+import { week } from "./state";
 
 function Journey() {
   const days = useSelector((s) => s.journey.days);
@@ -61,16 +62,6 @@ function Journey() {
   );
 }
 
-const days = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-];
-
 function dateString(now, dateStr) {
   const date = new Date(dateStr);
   const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
@@ -79,7 +70,7 @@ function dateString(now, dateStr) {
     interval < 1
       ? "today"
       : interval >= 2
-      ? days[date.getDay()]
+      ? week[date.getDay()]
       : interval >= 1
       ? "yesterday"
       : "";

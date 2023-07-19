@@ -20,6 +20,7 @@ import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
 import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
+import { week } from "../state";
 
 function EntryDetails() {
   const [show, setShow] = useState();
@@ -331,7 +332,7 @@ function dateString(now, dateStr) {
   return interval < 1
     ? "today"
     : interval >= 3
-    ? date.getDay()
+    ? week[date.getDay()]
     : interval >= 1
     ? "yesterday"
     : "";
