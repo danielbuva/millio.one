@@ -77,7 +77,7 @@ function EntryDetails() {
   const lastDayIndex = days.length - 1;
   const lastEntryIndex = days[dayI].entries.length - 1;
   const hasEntries = days[dayI].entries.length > 1;
-
+  /* eslint-disable */
   if (!onlyOneEntry) {
     if (dayI == 0) {
       if (entryIndex == 0) {
