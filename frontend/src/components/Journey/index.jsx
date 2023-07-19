@@ -61,6 +61,16 @@ function Journey() {
   );
 }
 
+const days = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
+
 function dateString(now, dateStr) {
   const date = new Date(dateStr);
   const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
@@ -68,8 +78,8 @@ function dateString(now, dateStr) {
   const prefix =
     interval < 1
       ? "today"
-      : interval >= 3
-      ? date.getDay()
+      : interval >= 2
+      ? days[date.getDay()]
       : interval >= 1
       ? "yesterday"
       : "";
