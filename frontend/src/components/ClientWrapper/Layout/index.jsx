@@ -38,7 +38,7 @@ export function PageWrapper({
   const user = useSessionUser();
 
   const playSound = () => {
-    if (user.mute) return null;
+    if (user?.mute) return null;
     const randomIndex = Math.floor(Math.random() * sounds.length);
     const pageTurnSound = new Audio(sounds[randomIndex]);
     pageTurnSound.volume = 0.3;
