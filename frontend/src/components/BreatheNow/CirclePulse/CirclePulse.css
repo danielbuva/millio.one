@@ -1,0 +1,272 @@
+/*
+
+pulse
+
+*/
+
+.circle-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+
+.circle-pulse-container,
+.circle-pulse {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  color: #707070;
+  border: solid #707070;
+  border-radius: 100%;
+}
+
+.circle-pulse-container {
+  display: block;
+  font-size: 0;
+  color: #fff;
+}
+
+.circle-pulse {
+  display: inline-block;
+  float: none;
+  background-color: currentColor;
+  position: absolute;
+  top: -0.5%;
+  left: -0.5%;
+  border-radius: 100%;
+  opacity: 1;
+  transform: scale(0.4);
+}
+
+.animate {
+  -webkit-animation: pulse 20s infinite linear;
+  -moz-animation: pulse 20s infinite linear;
+  -o-animation: pulse 20s infinite linear;
+  animation: pulse 20s infinite linear;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    -o-transform: scale(0.4);
+    transform: scale(0.4);
+  }
+  25% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    -o-transform: scale(0.4);
+    transform: scale(0.4);
+  }
+}
+
+/*
+
+trace
+
+*/
+
+.trace-container {
+  top: 0;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+.animate-a {
+  animation: clip-rotate 5s 1;
+  transform: rotate(180deg);
+  animation-delay: 5s;
+}
+.animate-b {
+  transform: rotate(135deg);
+  animation: rotate 2.5s linear 2;
+  animation-delay: 5s;
+}
+.animate-c {
+  opacity: 1;
+  animation: show-fixed 5s 1;
+  animation-delay: 5s;
+}
+
+.half-clipped {
+  width: 50%;
+  height: 100%;
+  right: 0px;
+  position: absolute;
+  overflow: hidden;
+  transform-origin: left center;
+}
+
+.half-circle {
+  box-sizing: border-box;
+  height: 100%;
+  right: 0px;
+  position: absolute;
+  border: solid 2px transparent;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-radius: 100%;
+}
+
+.clipped {
+  width: 200%;
+  transform: rotate(-45deg);
+}
+
+.fixed {
+  width: 100%;
+  transform: rotate(135deg);
+  opacity: 0;
+}
+
+@keyframes clip-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  50.01% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(135deg);
+  }
+}
+@keyframes show-fixed {
+  0% {
+    opacity: 0;
+  }
+  49.99% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.trace-container-inner {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 29.5%;
+  right: 29.5%;
+  border: solid #707070;
+  border-radius: 100%;
+  background-color: #000;
+  z-index: 1;
+}
+.animate-d {
+  animation: clip-rotate-inner 5s 1;
+  transform: rotate(180deg);
+}
+.animate-e {
+  transform: rotate(135deg);
+  animation: rotate-inner 2.5s linear 2;
+}
+.animate-f {
+  opacity: 1;
+  animation: show-fixed-inner 5s 1;
+}
+
+.half-clipped-inner {
+  width: 50%;
+  height: 100%;
+  right: 0px;
+  position: absolute;
+  overflow: hidden;
+  transform-origin: left center;
+}
+
+.half-circle-inner {
+  box-sizing: border-box;
+  height: 100%;
+  right: 0px;
+  position: absolute;
+  border: solid 3px transparent;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-radius: 100%;
+}
+
+.clipped-inner {
+  width: 200%;
+  transform: rotate(-45deg);
+}
+
+.fixed-inner {
+  width: 100%;
+  transform: rotate(135deg);
+  opacity: 0;
+}
+
+@keyframes clip-rotate-inner {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  50.01% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotate-inner {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(135deg);
+  }
+}
+@keyframes show-fixed-inner {
+  0% {
+    opacity: 0;
+  }
+  49.99% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.no-border {
+  border: unset !important;
+  border: none !important;
+  border-color: transparent !important;
+}

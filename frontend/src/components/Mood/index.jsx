@@ -36,6 +36,7 @@ function Mood() {
       <Link to="/mood/check-in" replace>
         mood check in
       </Link>
+      <Link to="/breathe">breathe</Link>
       <NavBar
         left={
           <Link className="nav-link" to="/home" replace>

@@ -1,0 +1,34 @@
+.breathe-form-wrapper {
+  height: 90vh;
+}
+
+.breathe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 75px;
+}
+
+.breathe-form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.active {
+  transform: scale(1.5);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 10px;
+}

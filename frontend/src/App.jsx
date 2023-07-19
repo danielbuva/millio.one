@@ -13,6 +13,8 @@ import MorningCheckIn from "./components/CheckInForms/MorningCheckIn";
 import EveningCheckIn from "./components/CheckInForms/EveningCheckIn";
 import EntryDetails from "./components/Journey/EntryDetails";
 import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
+import Breathe from "./components/Beathe";
+import BreatheNow from "./components/BreatheNow";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/breathe/now" element={<BreatheNow />} />
         <Route element={<ProtectedRoutes />}>
+          <Route exact path="/breathe" element={<Breathe />} />
           <Route exaxt path="/you" element={<You />} />
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/mood" element={<Mood />} />

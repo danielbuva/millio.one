@@ -210,7 +210,10 @@ button {
 }
 
 .hidden {
-  opacity: 0;
+  opacity: 0 !important;
+  appearance: none !important;
+  visibility: hidden !important;
+  border: none !important;
 }
 
 .transition {
@@ -283,4 +286,14 @@ button {
   display: flex;
   width: 100%;
   justify-content: center;
+}
+
+.space-around {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.active {
+  color: #fff;
 }
