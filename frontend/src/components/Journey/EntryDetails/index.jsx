@@ -471,17 +471,11 @@ function Delete({ setShow }) {
 }
 
 function dateString(now, dateStr) {
-  const date = new Date(
-    new Date(dateStr).toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    })
-  );
+  const date = new Date(dateStr);
+  date.setHours(0, 0, 0, 0);
 
   const interval = Math.floor((now - date) / 86400000); // 86400000 is ms in 24 hours
 
-  console.log({ interval, nowMinusDate: (now - date) / 86400000 });
   return interval < 1
     ? "today"
     : interval >= 2
