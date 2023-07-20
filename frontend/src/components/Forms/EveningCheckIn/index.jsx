@@ -156,7 +156,7 @@ function EveningCheckIn() {
 
   const page7 = (
     <div>
-      <h1>{oPrompt.prompt}</h1>
+      <h1>{oPrompt}</h1>
       <textarea
         value={prompt2}
         placeholder="start writing..."
@@ -239,7 +239,7 @@ function EveningCheckIn() {
         setOPrompt(
           await (
             await csrfFetch(
-              `/api/journey/evening/prompt/${origin[origin.length - 1]}`
+              `/api/journey/prompt/${origin[origin.length - 1]}/1`
             )
           ).json()
         );

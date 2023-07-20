@@ -7,6 +7,7 @@ const {
   NightCheckIn,
   Origin,
   Breathe,
+  OriginPrompt,
 } = require("../../../db/models");
 
 async function getAllEntries(req, res) {
@@ -30,6 +31,20 @@ async function getAllEntries(req, res) {
   }
 }
 
+async function getPrompt(req, res) {
+  const { type, version } = req.params;
+  try {
+    const record = await OriginPrompt.findOne({
+      where: { type, version },
+    });
+
+    res.json(record.prompt);
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
   getAllEntries,
+  getPrompt,
 };

@@ -79,7 +79,7 @@ async function getEntry(req, res) {
       Origin.findAll({ where: { nightId: id } }),
     ]);
 
-    const promptRecord = await OriginPrompt.findOne({
+    const record = await OriginPrompt.findOne({
       where: { type: Origins[Origins.length - 1].value, version: 1 },
     });
 
@@ -94,7 +94,7 @@ async function getEntry(req, res) {
         day: "numeric",
         year: "numeric",
       }),
-      prompt: promptRecord.prompt,
+      prompt: record.prompt,
     });
   } catch (err) {
     returnError(err, res);
@@ -146,19 +146,6 @@ async function updateEntry(req, res) {
   }
 }
 
-async function getPrompt(req, res) {
-  const { type } = req.params;
-  try {
-    const prompt = await OriginPrompt.findOne({
-      where: { type, version: 1 },
-    });
-
-    res.json(prompt);
-  } catch (err) {
-    returnError(err, res);
-  }
-}
-
 module.exports = {
-  night: { createEntry, deleteEntry, getEntry, updateEntry, getPrompt },
+  night: { createEntry, deleteEntry, getEntry, updateEntry },
 };
