@@ -6,6 +6,7 @@ const {
   DayCheckIn,
   Origin,
   OriginPrompt,
+  TyPrompt,
 } = require("../../../../db/models");
 const { validBody } = require("./validation");
 
@@ -77,6 +78,10 @@ async function getEntry(req, res) {
       where: { type: Origins[Origins.length - 1].value, version: 0 },
     });
 
+    const tyrecord = await TyPrompt.findOne({
+      where: { version: entry.tyPrompt },
+    });
+
     res.json({
       ...entry.toJSON(),
       Origins,
@@ -86,6 +91,7 @@ async function getEntry(req, res) {
         year: "numeric",
       }),
       prompt: record.prompt,
+      tyPrompt: tyrecord.prompt,
     });
   } catch (err) {
     returnError(err, res);

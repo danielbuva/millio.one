@@ -287,6 +287,9 @@ function Body() {
             <p>
               {entry.prompt} <br /> <span>{entry.prompt1}</span>
             </p>
+            <p>
+              {entry.tyPrompt} <br /> <span>{entry.prompt2}</span>
+            </p>
             <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
               the day.
