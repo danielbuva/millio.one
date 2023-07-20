@@ -143,7 +143,6 @@ async function updateEntry(req, res) {
 
 async function getPrompt(req, res) {
   const { type, version } = req.params;
-  console.log("entering:", type, version);
   try {
     const prompt = await OriginPrompt.findOne({
       where: { type, version },
