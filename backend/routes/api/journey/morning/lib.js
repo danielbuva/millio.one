@@ -2,7 +2,11 @@ const {
   returnError,
   checkAuthorization,
 } = require("../../../services/error.server");
-const { DayCheckIn, Origin } = require("../../../../db/models");
+const {
+  DayCheckIn,
+  Origin,
+  OriginPrompt,
+} = require("../../../../db/models");
 const { validBody } = require("./validation");
 
 async function createEntry(req, res) {
@@ -67,6 +71,10 @@ async function getEntry(req, res) {
 
     checkAuthorization(entry.userId === req.user.id);
 
+    const record = await OriginPrompt.findOne({
+      where: { type: Origins[Origins.length - 1].value, version: 0 },
+    });
+
     res.json({
       ...entry.toJSON(),
       Origins,
@@ -75,6 +83,7 @@ async function getEntry(req, res) {
         day: "numeric",
         year: "numeric",
       }),
+      prompt: record.prompt,
     });
   } catch (err) {
     returnError(err, res);

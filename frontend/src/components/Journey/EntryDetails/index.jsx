@@ -285,7 +285,7 @@ function Body() {
               ))}
             </p>
             <p>
-              generated prompt here...? <br /> <span>{entry.prompt1}</span>
+              {entry.prompt} <br /> <span>{entry.prompt1}</span>
             </p>
             <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for
