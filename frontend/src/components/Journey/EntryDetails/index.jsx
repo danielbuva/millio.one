@@ -62,23 +62,20 @@ function EntryDetails() {
   if (dayI < 0 || entryIndex < 0 || entryIndex == null || dayI == null) {
     return null;
   }
+
   let leftPageDayI;
   let rightPageDayI;
   let leftEntryI;
   let rightEntryI;
-
-  console.log({
-    dayI,
-    entryIndex,
-    findId: days[2].entries[entryIndex]?.id,
-    id: entry.id,
-  });
-
-  const lastDayIndex = days.length - 1;
-  const lastEntryIndex = days[dayI].entries.length - 1;
-  const hasEntries = days[dayI].entries.length > 1;
+  let leftEntry;
+  let leftType;
+  let rightEntry;
+  let rightType;
   /* eslint-disable */
   if (!onlyOneEntry) {
+    const lastDayIndex = days.length - 1;
+    const lastEntryIndex = days[dayI].entries.length - 1;
+    const hasEntries = days[dayI].entries.length > 1;
     if (dayI == 0) {
       if (entryIndex == 0) {
         leftPageDayI = lastDayIndex;
@@ -170,43 +167,36 @@ function EntryDetails() {
         }
       }
     }
+    leftEntry = days[leftPageDayI].entries[leftEntryI];
+    leftType =
+      leftEntry.entryType === 0
+        ? "morning"
+        : leftEntry.entryType === 1
+        ? "evening"
+        : leftEntry.entryType === 2
+        ? "mood"
+        : "breath";
+
+    rightEntry = days[rightPageDayI].entries[rightEntryI];
+    rightType =
+      rightEntry.entryType === 0
+        ? "morning"
+        : rightEntry.entryType === 1
+        ? "evening"
+        : rightEntry.entryType === 2
+        ? "mood"
+        : "breath";
   }
-
-  const leftEntry = days[leftPageDayI].entries[leftEntryI];
-  const leftType =
-    leftEntry.entryType === 0
-      ? "morning"
-      : leftEntry.entryType === 1
-      ? "evening"
-      : leftEntry.entryType === 2
-      ? "mood"
-      : "breath";
-
-  const rightEntry = days[rightPageDayI].entries[rightEntryI];
-  const rightType =
-    rightEntry.entryType === 0
-      ? "morning"
-      : rightEntry.entryType === 1
-      ? "evening"
-      : rightEntry.entryType === 2
-      ? "mood"
-      : "breath";
 
   return (
     <PageWrapper
       onPageLeft={() => {
-        if (show) {
-          setShow(false);
-        } else {
-          if (onlyOneEntry) {
-            navigate("/journey");
-          } else {
-            navigate(`/journey/${leftType}/${leftEntry.id}`, {
-              state: { entryIndex: leftEntryI, dayI: leftPageDayI },
-              replace: true,
-            });
-          }
-        }
+        if (show) return setShow(false);
+        if (onlyOneEntry) return navigate("/journey");
+        navigate(`/journey/${leftType}/${leftEntry.id}`, {
+          state: { entryIndex: leftEntryI, dayI: leftPageDayI },
+          replace: true,
+        });
       }}
       onPageRight={() => {
         navigate(`/journey/${rightType}/${rightEntry.id}`, {
