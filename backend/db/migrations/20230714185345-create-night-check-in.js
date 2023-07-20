@@ -34,15 +34,15 @@ module.exports = {
         },
         rest: {
           allowNull: false,
-          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
+          type: Sequelize.INTEGER,
         },
         stress: {
           allowNull: false,
-          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
+          type: Sequelize.INTEGER,
         },
         productive: {
           allowNull: false,
-          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
+          type: Sequelize.INTEGER,
         },
         prompt1: {
           allowNull: false,

@@ -34,7 +34,7 @@ module.exports = {
         },
         feeling: {
           allowNull: false,
-          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
+          type: Sequelize.INTEGER,
         },
         prompt1: {
           allowNull: false,
