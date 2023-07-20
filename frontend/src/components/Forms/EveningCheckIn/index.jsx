@@ -13,6 +13,7 @@ import { createEntry, updateEntry } from "../../../store/journey";
 import useEditState from "../../../hooks/useEditState";
 
 import "./EveningCheckIn.css";
+import { csrfFetch } from "../../../store/utils";
 
 function EveningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -24,9 +25,9 @@ function EveningCheckIn() {
   const descRef = useRef(null);
 
   const [origin, setOrigin] = useState(state.origin ?? []);
+  const [oPrompt, setOPrompt] = useState("");
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
-  // const [response, setResponse] = useState(null);
   const [prepared, setPrepared] = useState(state.prepared);
 
   const [pageIndex, setPageIndex] = useState(0);
@@ -155,7 +156,7 @@ function EveningCheckIn() {
 
   const page7 = (
     <div>
-      <h1>generate prompt 2 here</h1>
+      <h1>{oPrompt.prompt}</h1>
       <textarea
         value={prompt2}
         placeholder="start writing..."
@@ -209,7 +210,7 @@ function EveningCheckIn() {
 
   const pages = [page1, page2, page3, page4, page5, page6, page7, page8];
 
-  const handlePageRight = () => {
+  const handlePageRight = async () => {
     switch (pageIndex) {
       case 0:
         if (stress == null) {
@@ -235,6 +236,11 @@ function EveningCheckIn() {
         if (prompt1.length < 1) {
           disabledRight.current = true;
         }
+        setOPrompt(
+          await (
+            await csrfFetch(`/api/journey/evening/prompt/${origin}/0`)
+          ).json()
+        );
         break;
       case 5:
         if (prompt2.length < 1) {
