@@ -117,6 +117,8 @@ function MoodCheckIn() {
               ? "helping others"
               : name;
 
+          console.log("name: ", name, "option.name: ", Option.name);
+
           return (
             <div className="origin-option" key={i}>
               <Option
