@@ -18,21 +18,37 @@ module.exports = {
           type: Sequelize.INTEGER,
         },
         userId: {
+          allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
         },
         duration: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.INTEGER,
         },
         pace: {
-          type: Sequelize.ENUM("slower", "neutral", "faster"),
+          allowNull: false,
+          type: Sequelize.INTEGER,
+        },
+        entryType: {
+          allowNull: true,
+          defaultValue: 3,
+          type: Sequelize.INTEGER,
         },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
       },
       options

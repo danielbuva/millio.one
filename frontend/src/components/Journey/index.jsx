@@ -5,9 +5,9 @@ import { useEffect } from "react";
 
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import Entries from "./Entries";
+import { week } from "./state";
 
 import "./Journey.css";
-import { week } from "./state";
 
 function Journey() {
   const days = useSelector((s) => s.journey.days);

@@ -12,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
   Breathe.init(
     {
       userId: { allowNull: false, type: DataTypes.INTEGER },
-      duration: { allowNull: false, type: DataTypes.STRING },
+      duration: { allowNull: false, type: DataTypes.INTEGER },
       pace: {
         allowNull: false,
-        type: DataTypes.ENUM,
-        values: ["slower", "neutral", "faster"],
+        type: DataTypes.INTEGER,
+      },
+      entryType: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 3,
       },
     },
     {

@@ -72,3 +72,21 @@ export function time(createdAt) {
     hour12: true,
   });
 }
+
+export function secondsToMinutesAndSeconds(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const minutesString =
+    minutes > 0 ? `${minutes} minute${minutes !== 1 ? "s" : ""}` : "";
+  const secondsString =
+    remainingSeconds > 0
+      ? `${remainingSeconds} second${remainingSeconds !== 1 ? "s" : ""}`
+      : "";
+
+  if (minutesString && secondsString) {
+    return `${minutesString}, ${secondsString}`;
+  } else {
+    return minutesString || secondsString || "0 seconds";
+  }
+}

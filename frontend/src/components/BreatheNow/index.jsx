@@ -36,7 +36,6 @@ function BreatheNow() {
     }, 5000);
     if (finished) {
       clearInterval(interval);
-      intervalBell.pause();
     }
     return () => {
       clearInterval(interval);
@@ -91,13 +90,6 @@ function BreatheNow() {
   }, []);
 
   if (!state) return null;
-
-  const pace =
-    +state.breathesPerMinute <= 1
-      ? "slower"
-      : +state.breathesPerMinute === 2
-      ? "neutral"
-      : "faster";
 
   return (
     <div
@@ -161,10 +153,10 @@ function BreatheNow() {
                   createEntry(
                     {
                       duration:
-                        duration > state.duration
-                          ? state.duration
+                        duration > state.duration / 1000
+                          ? state.duration / 1000
                           : duration,
-                      pace,
+                      pace: +state.breathsPerMinute,
                     },
                     "breathe"
                   )

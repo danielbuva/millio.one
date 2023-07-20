@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { time } from "../../../utils";
+import { secondsToMinutesAndSeconds, time } from "../../../utils";
 
 import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
 
@@ -187,7 +187,7 @@ function EntryDetails() {
         ? "evening"
         : leftEntry.entryType === 2
         ? "mood"
-        : "breath";
+        : "breathe";
 
     rightEntry = days[rightPageDayI].entries[rightEntryI];
     rightType =
@@ -197,7 +197,7 @@ function EntryDetails() {
         ? "evening"
         : rightEntry.entryType === 2
         ? "mood"
-        : "breath";
+        : "breathe";
   }
 
   return (
@@ -371,7 +371,39 @@ function Body() {
         </div>
       );
     case 3:
-      return <>3</>;
+      const totalCycles = Math.ceil(
+        entry.pace * (entry.duration / 60).toFixed(2)
+      );
+      const cycles = totalCycles > 1 ? "cycles" : "cycle";
+      return (
+        <div className="entry-detail-body-container">
+          {createdAt}
+          <h1>breathe.</h1>
+          <div className="entry-detail-body">
+            <p>
+              pace
+              <br />
+              <span>
+                {entry.pace < 2
+                  ? "slower"
+                  : entry.pace === 2
+                  ? "neutral"
+                  : "faster"}
+              </span>
+            </p>
+            <p>
+              duration <br />
+              <span>{secondsToMinutesAndSeconds(entry.duration)} </span>
+            </p>
+            <p>
+              number of breathes <br />{" "}
+              <span>
+                {totalCycles} {cycles}
+              </span>
+            </p>
+          </div>
+        </div>
+      );
     default:
       return null;
   }

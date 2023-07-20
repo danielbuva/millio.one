@@ -8,9 +8,10 @@ import Sun from "../../icons/Entry/Sun";
 
 import { Link } from "react-router-dom";
 
-import { time } from "../../../utils";
+import { secondsToMinutesAndSeconds, time } from "../../../utils";
 
 import "./Entry.css";
+import Windmill from "../../icons/Entry/Windmill";
 
 function Entry({
   createdAt,
@@ -78,7 +79,7 @@ function getEntryByType(entry, i) {
           icon={<Sun />}
           id={entry.id}
           i={i}
-          key={i}
+          key={"morning" + entry.id}
           createdAt={createdAt}
           header="reflection"
           // prompt1={`why do you think ${entry.Origins[0].origin} is making you feel this way?`}
@@ -100,7 +101,7 @@ function getEntryByType(entry, i) {
           icon={<Moon />}
           id={entry.id}
           i={i}
-          key={i}
+          key={"evening" + entry.id}
           createdAt={createdAt}
           header="reflection"
           prompt1={`today's summary.`}
@@ -126,7 +127,7 @@ function getEntryByType(entry, i) {
           icon={getMoodIcon(entry.feeling)}
           id={entry.id}
           i={i}
-          key={i}
+          key={"mood" + entry.id}
           createdAt={createdAt}
           header="mood check-in"
           prompt1={`why do you think ${entry.origin[0]} is making you feel this way?`}
@@ -142,6 +143,24 @@ function getEntryByType(entry, i) {
             )),
           ]}
           type="mood"
+        />
+      );
+    case 3:
+      const duration = secondsToMinutesAndSeconds(entry.duration);
+      const totalBreaths = Math.ceil(
+        entry.pace * (entry.duration / 60).toFixed(2)
+      );
+      const breaths = totalBreaths > 1 ? "breaths" : "breath";
+      return (
+        <Entry
+          icon={<Windmill />}
+          id={entry.id}
+          i={i}
+          key={"breathe" + entry.id}
+          header="breathing"
+          createdAt={createdAt}
+          prompt1Ans={`${totalBreaths} ${breaths} in ${duration}`}
+          type="breathe"
         />
       );
     default:

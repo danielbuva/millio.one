@@ -4,7 +4,6 @@ const {
 } = require("../../../services/error.server");
 const { Breathe } = require("../../../../db/models");
 const { validBody } = require("./validation");
-const breathe = require("../../../../db/models/breathe");
 
 async function createEntry(req, res) {
   try {
@@ -33,7 +32,7 @@ async function createEntry(req, res) {
 
 async function deleteEntry(req, res) {
   try {
-    await breathe.destroy({
+    await Breathe.destroy({
       where: { userId: req.user.id, id: req.params.id },
     });
     res.json({ message: "success" });
