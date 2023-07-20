@@ -38,8 +38,8 @@
   },
   "proxy": "http://127.0.0.1:8000",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-dom": "^18.2.6",
-    "@types/react-router-dom": "^5.3.3",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@types/react-router-dom": "^5.3.3"
   }
 }
