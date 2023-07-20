@@ -14,8 +14,6 @@ function CirclePulse() {
 
   const { state } = useLocation();
 
-  console.log(state);
-
   useEffect(() => {
     const current1 = halfClip.current;
     const current2 = clipped.current;
@@ -46,8 +44,8 @@ function CirclePulse() {
         current1.classList.add("animate-a");
         current2.classList.add("animate-b");
         current3.classList.add("animate-c");
-      }, 20000);
-    }, 5000);
+      }, state.seconds * 4000);
+    }, state.seconds * 1000);
 
     interval2 = setInterval(() => {
       current4.classList.add("half-clipped-inner", "animate-d");
@@ -61,7 +59,7 @@ function CirclePulse() {
         "fixed-inner",
         "animate-f"
       );
-    }, 20000);
+    }, state.seconds * 4000);
 
     const handleAnimationEndOuter = () => {
       current1.classList.remove("animate-a");
@@ -96,29 +94,61 @@ function CirclePulse() {
       current5.classList.remove("animate-e");
       current6.classList.remove("animate-f");
     };
-  }, []);
+  }, [state.seconds]);
+
+  const time = state.seconds + "s";
 
   return (
     <div className="circle-container">
       <div ref={containerRef} className="circle-pulse-container">
-        <div ref={pulseRef} className="circle-pulse" />
+        <div
+          ref={pulseRef}
+          className="circle-pulse"
+          style={{ animationDuration: state.seconds * 4 + "s" }}
+        />
       </div>
 
       <div className="trace-container-inner">
-        <div ref={innerHalfClip} className="half-clipped-inner">
+        <div
+          ref={innerHalfClip}
+          className="half-clipped-inner"
+          style={{ animationDuration: time }}
+        >
           <div
             ref={innerClipped}
             className="half-circle-inner clipped-inner"
+            style={{
+              animationDuration: state.seconds / 2 + "s",
+            }}
           />
         </div>
-        <div ref={innerfix} className="half-circle-inner fixed-inner" />
+        <div
+          ref={innerfix}
+          className="half-circle-inner fixed-inner"
+          style={{ animationDuration: time }}
+        />
       </div>
 
       <div className="trace-container">
-        <div ref={halfClip} className="half-clipped">
-          <div ref={clipped} className="half-circle clipped" />
+        <div
+          ref={halfClip}
+          className="half-clipped"
+          style={{ animationDuration: time, animationDelay: time }}
+        >
+          <div
+            ref={clipped}
+            className="half-circle clipped"
+            style={{
+              animationDuration: state.seconds / 2 + "s",
+              animationDelay: time,
+            }}
+          />
         </div>
-        <div ref={fix} className="half-circle fixed" />
+        <div
+          ref={fix}
+          className="half-circle fixed"
+          style={{ animationDuration: time, animationDelay: time }}
+        />
       </div>
     </div>
   );

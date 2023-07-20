@@ -2,9 +2,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import CirclePulse from "./CirclePulse";
-import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
+import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
 import { useDispatch } from "react-redux";
-import { createEntry } from "../../store/journey";
+import { createEntry } from "../../../../store/journey";
 
 const actions = [
   "get comfortable",
@@ -33,7 +33,7 @@ function BreatheNow() {
         intervalBell.volume = state.volume;
         intervalBell.play();
       }
-    }, 5000);
+    }, state.seconds * 1000);
     if (finished) {
       clearInterval(interval);
     }
@@ -43,7 +43,7 @@ function BreatheNow() {
         intervalBell.pause();
       }
     };
-  }, [state.intervalBell, state.volume, finished]);
+  }, [state.intervalBell, state.volume, finished, state.seconds]);
 
   useEffect(() => {
     let interval;
@@ -54,10 +54,10 @@ function BreatheNow() {
         }
         return s + 1;
       });
-    }, 5000);
+    }, state.seconds * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [state.seconds]);
 
   useEffect(() => {
     let timeout;

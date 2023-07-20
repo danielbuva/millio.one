@@ -8,13 +8,13 @@ import Home from "./components/Home";
 import Mood from "./components/Mood";
 import Journey from "./components/Journey";
 import Login from "./components/Login";
-import MoodCheckIn from "./components/CheckInForms/MoodCheckIn";
-import MorningCheckIn from "./components/CheckInForms/MorningCheckIn";
-import EveningCheckIn from "./components/CheckInForms/EveningCheckIn";
+import MoodCheckIn from "./components/Forms/MoodCheckIn";
+import MorningCheckIn from "./components/Forms/MorningCheckIn";
+import EveningCheckIn from "./components/Forms/EveningCheckIn";
 import EntryDetails from "./components/Journey/EntryDetails";
 import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
-import Breathe from "./components/Beathe";
-import BreatheNow from "./components/BreatheNow";
+import Breathe from "./components/Forms/Breathe";
+import BreatheNow from "./components/Forms/Breathe/BreatheNow";
 
 function App() {
   return (

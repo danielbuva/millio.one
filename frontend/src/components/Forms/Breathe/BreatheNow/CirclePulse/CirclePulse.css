@@ -43,10 +43,10 @@ pulse
 }
 
 .animate {
-  -webkit-animation: pulse 20s infinite linear;
-  -moz-animation: pulse 20s infinite linear;
-  -o-animation: pulse 20s infinite linear;
-  animation: pulse 20s infinite linear;
+  -webkit-animation: pulse infinite linear;
+  -moz-animation: pulse infinite linear;
+  -o-animation: pulse infinite linear;
+  animation: pulse infinite linear;
 }
 
 @keyframes pulse {
@@ -90,19 +90,16 @@ trace
   height: 300px;
 }
 .animate-a {
-  animation: clip-rotate 5s 1;
+  animation: clip-rotate 1;
   transform: rotate(180deg);
-  animation-delay: 5s;
 }
 .animate-b {
   transform: rotate(135deg);
-  animation: rotate 2.5s linear 2;
-  animation-delay: 5s;
+  animation: rotate linear 2;
 }
 .animate-c {
   opacity: 1;
-  animation: show-fixed 5s 1;
-  animation-delay: 5s;
+  animation: show-fixed 1;
 }
 
 .half-clipped {
@@ -185,16 +182,16 @@ trace
   z-index: 1;
 }
 .animate-d {
-  animation: clip-rotate-inner 5s 1;
+  animation: clip-rotate-inner 1;
   transform: rotate(180deg);
 }
 .animate-e {
   transform: rotate(135deg);
-  animation: rotate-inner 2.5s linear 2;
+  animation: rotate-inner linear 2;
 }
 .animate-f {
   opacity: 1;
-  animation: show-fixed-inner 5s 1;
+  animation: show-fixed-inner 1;
 }
 
 .half-clipped-inner {

@@ -1,20 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { PageWrapper } from "../ClientWrapper/Layout";
+import { PageWrapper } from "../../ClientWrapper/Layout";
 
 import { useState } from "react";
 
 import "./Breathe.css";
 
-const fill = ["", "", "", "", ""];
+const fill = ["", "", ""];
 const chimes = ["bell", "bowl", "chime", "wind"];
 
 function Breathe() {
-  const [breathsPerMinute, setBreathsPerMinute] = useState(5);
+  const [breathsPerMinute, setBreathsPerMinute] = useState(4);
   const [minutes, setMinutes] = useState(3);
   const [intervalBell, setIntervalBell] = useState(chimes[1]);
   const [volume, setVolume] = useState(0.3);
 
   const navigate = useNavigate();
+
+  const seconds =
+    breathsPerMinute === 3 ? 5 : breathsPerMinute === 4 ? 4 : 3;
 
   const handlePageRight = () => {
     navigate("/breathe/now", {
@@ -23,10 +26,10 @@ function Breathe() {
         duration: minutes * 60000 + 5000, // convert to ms add 5 seconds
         breathsPerMinute,
         volume,
+        seconds,
       },
     });
   };
-
   return (
     <PageWrapper
       onPageLeft={() => navigate("/mood")}
@@ -101,19 +104,19 @@ function Breathe() {
             <div className="breathe-form-group">
               <div className="row">
                 <p>inhale through your nose </p>
-                <p>5 sec</p>
+                <p>{seconds} sec</p>
               </div>
               <div className="row">
                 <p>hold </p>
-                <p>5 sec</p>
+                <p>{seconds} sec</p>
               </div>
               <div className="row">
                 <p>exhale through your nose </p>
-                <p>5 sec</p>
+                <p>{seconds} sec</p>
               </div>
               <div className="row">
                 <p>hold </p>
-                <p>5 sec</p>
+                <p>{seconds} sec</p>
               </div>
             </div>
           </div>
