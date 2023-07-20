@@ -4,6 +4,7 @@ const { night } = require("./lib");
 
 router.post("/", verifyAuth, night.createEntry);
 router.get("/:id", verifyAuth, night.getEntry);
+router.get("/prompt/:type/:version", verifyAuth, night.getPrompt);
 router.delete("/:id", verifyAuth, night.deleteEntry);
 router.put("/:id", verifyAuth, night.updateEntry);
 

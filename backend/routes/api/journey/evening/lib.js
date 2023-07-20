@@ -6,6 +6,7 @@ const {
   Description,
   NightCheckIn,
   Origin,
+  OriginPrompt,
 } = require("../../../../db/models");
 const { validBody } = require("./validation");
 
@@ -140,6 +141,20 @@ async function updateEntry(req, res) {
   }
 }
 
+async function getPrompt(req, res) {
+  const { type, version } = req.params;
+  console.log("entering:", type, version);
+  try {
+    const prompt = await OriginPrompt.findOne({
+      where: { type, version },
+    });
+
+    res.json(prompt);
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
-  night: { createEntry, deleteEntry, getEntry, updateEntry },
+  night: { createEntry, deleteEntry, getEntry, updateEntry, getPrompt },
 };
