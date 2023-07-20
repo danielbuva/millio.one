@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import useSessionUser from "../../hooks/useSessionUser";
@@ -27,14 +27,13 @@ function Landing() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
-  const [pageIndex, setPageIndex] = useState(
-    parseInt(localStorage.getItem("lpIndex") || "0")
-  );
+  const [pageIndex, setPageIndex] = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSessionUser();
+  const disabledRight = useRef(false);
 
   if (user) return <ConfirmLogout />;
 
@@ -56,13 +55,35 @@ function Landing() {
           className="auth-input"
           placeholder="email"
           value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
+          onChange={(e) => {
+            setEmail(e.currentTarget.value);
+            if (
+              email.includes("@") &&
+              email.includes(".") &&
+              password.length > 6
+            ) {
+              disabledRight.current = false;
+            } else {
+              disabledRight.current = true;
+            }
+          }}
         />
         <input
           className="auth-input"
           placeholder="password"
           value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
+          onChange={(e) => {
+            setPassword(e.currentTarget.value);
+            if (
+              email.includes("@") &&
+              email.includes(".") &&
+              password.length > 6
+            ) {
+              disabledRight.current = false;
+            } else {
+              disabledRight.current = true;
+            }
+          }}
         />
       </div>
     </React.Fragment>
@@ -75,7 +96,14 @@ function Landing() {
         className="auth-input"
         placeholder="..."
         value={name}
-        onChange={(e) => setName(e.currentTarget.value)}
+        onChange={(e) => {
+          setName(e.currentTarget.value);
+          if (e.currentTarget.value.trim().length < 1) {
+            disabledRight.current = true;
+          } else {
+            disabledRight.current = false;
+          }
+        }}
       />
     </React.Fragment>
   );
@@ -85,7 +113,14 @@ function Landing() {
       const focus = e.target.innerText;
       if (focus.length > 14) return state;
       if (state.includes(focus)) {
+        if (state.length === 1) {
+          disabledRight.current = true;
+        }
         return state.filter((s) => s !== focus);
+      }
+
+      if (state.length < 1) {
+        disabledRight.current = false;
       }
       return [...state, focus];
     });
@@ -112,19 +147,31 @@ function Landing() {
   const pages = [page1, page2, page3, page4];
 
   const handlePageRight = () => {
+    switch (pageIndex) {
+      case 0:
+        if (!email || !password) {
+          disabledRight.current = true;
+        }
+        break;
+      case 1:
+        if (!name) {
+          disabledRight.current = true;
+        }
+        break;
+      case 2:
+        if (focus.length < 1) {
+          disabledRight.current = true;
+        }
+        break;
+      default:
+        break;
+    }
+
     if (pageIndex < pages.length - 1) {
       setPageIndex((previousPage) => {
-        localStorage.setItem("lpIndex", previousPage + 1);
         return previousPage + 1;
       });
     } else {
-      // if (password !== confirmPassword) {
-      //   return setErrors({
-      //     confirmPassword:
-      //       "Confirm password field must be the same as the Password field",
-      //   });
-      // }
-
       dispatch(
         signup({
           email,
@@ -134,13 +181,11 @@ function Landing() {
       )
         .then(() => {
           navigate("/home");
-          localStorage.setItem("lpIndex", "0");
         })
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            // setErrors(data.errors);
-            console.log(data.errors);
+            console.error(data.errors);
           }
         });
     }
@@ -149,14 +194,18 @@ function Landing() {
   const handlePageLeft = () => {
     if (pageIndex > 0) {
       setPageIndex((previousPage) => {
-        localStorage.setItem("lpIndex", previousPage - 1);
         return previousPage - 1;
       });
     }
+    disabledRight.current = false;
   };
 
   return (
-    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageRight}>
+    <PageWrapper
+      onPageLeft={handlePageLeft}
+      onPageRight={handlePageRight}
+      disabledRight={disabledRight.current}
+    >
       <div className="page-container">
         {pageIndex !== 0 && (
           <Link className="auth-link" to="/login">
