@@ -327,8 +327,7 @@ function Body() {
               a summary of your day <br /> <span>{entry.prompt1}</span>
             </p>
             <p>
-              how you answered the generated prompt <br />{" "}
-              <span>{entry.prompt2}</span>
+              {entry.prompt} <br /> <span>{entry.prompt2}</span>
             </p>
             <p className="pb">
               you {entry.prepared ? "felt" : "didn't feel"} prepated for

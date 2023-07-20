@@ -79,6 +79,10 @@ async function getEntry(req, res) {
       Origin.findAll({ where: { nightId: id } }),
     ]);
 
+    const promptRecord = await OriginPrompt.findOne({
+      where: { type: Origins[Origins.length - 1].value, version: 1 },
+    });
+
     checkAuthorization(entry.userId === req.user.id);
 
     res.json({
@@ -90,6 +94,7 @@ async function getEntry(req, res) {
         day: "numeric",
         year: "numeric",
       }),
+      prompt: promptRecord.prompt,
     });
   } catch (err) {
     returnError(err, res);
