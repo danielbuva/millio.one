@@ -426,6 +426,7 @@ function Edit() {
         motivation: parseInt(entry.motivation),
         focus: entry.Origins.map((o) => o.value),
         prepared: entry.prepared,
+        tyPrompt: entry.tyPrompt,
         prompt1: entry.prompt1,
         prompt2: entry.prompt2,
       };

@@ -124,6 +124,17 @@ async function updateEntry(req, res) {
         await entry.createOrigin({ value: origin });
       });
     });
+    res.json({
+      ...entry.toJSON(),
+      Origins: origin.map((o) => ({ value: o })),
+      createdAt: new Date(entry.createdAt).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }),
+      prompt: record.prompt,
+      tyPrompt: tyrecord.prompt,
+    });
   } catch (err) {
     returnError(err, res);
   }

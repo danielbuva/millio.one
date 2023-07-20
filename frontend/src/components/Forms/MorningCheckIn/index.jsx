@@ -123,7 +123,7 @@ function MorningCheckIn() {
 
   const page5 = (
     <div>
-      <h1>{typrompt}</h1>
+      <h1>{state.tyPrompt ?? typrompt}</h1>
       <textarea
         value={prompt2}
         placeholder="start writing..."
@@ -237,7 +237,6 @@ function MorningCheckIn() {
               origin: focus,
               motivation,
               prepared,
-              // tyPrompt: promptNum.current,
               prompt1,
               prompt2,
               sleep,

@@ -31,7 +31,7 @@ const validBody = (
   if (prepared == null) {
     errorResult.errors.prepared = "prepared is required";
   }
-  if (tyPrompt == null) {
+  if (!isEditing && tyPrompt == null) {
     errorResult.errors.tyPrompt = "tyPrompt is required";
   }
 
