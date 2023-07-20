@@ -239,7 +239,7 @@ function EveningCheckIn() {
         setOPrompt(
           await (
             await csrfFetch(
-              `/api/journey/evening/prompt/${origin[origin.length - 1]}/1`
+              `/api/journey/evening/prompt/${origin[origin.length - 1]}`
             )
           ).json()
         );

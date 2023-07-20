@@ -147,10 +147,10 @@ async function updateEntry(req, res) {
 }
 
 async function getPrompt(req, res) {
-  const { type, version } = req.params;
+  const { type } = req.params;
   try {
     const prompt = await OriginPrompt.findOne({
-      where: { type, version },
+      where: { type, version: 1 },
     });
 
     res.json(prompt);
