@@ -1,3 +1,4 @@
+const { returnError } = require("../../services/error.server");
 const { flatSortTransform } = require("../../../utils");
 const {
   DayCheckIn,
@@ -5,6 +6,7 @@ const {
   Mood,
   NightCheckIn,
   Origin,
+  Breathe,
 } = require("../../../db/models");
 
 async function getAllEntries(req, res) {
@@ -18,6 +20,7 @@ async function getAllEntries(req, res) {
         include: [Description, Origin],
       }),
       Mood.findAll({ where: { userId }, include: [Description, Origin] }),
+      Breathe.findAll({ where: { userId } }),
     ]);
 
     const entries = flatSortTransform(data);

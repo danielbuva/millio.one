@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
+      User.hasMany(models.Breathe, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
 
