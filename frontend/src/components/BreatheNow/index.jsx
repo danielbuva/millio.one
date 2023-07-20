@@ -2,7 +2,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import CirclePulse from "./CirclePulse";
-import { PageWrapper } from "../ClientWrapper/Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
+import { useDispatch } from "react-redux";
+import { createEntry } from "../../store/journey";
 
 const actions = [
   "get comfortable",
@@ -16,7 +18,10 @@ const actions = [
 function BreatheNow() {
   const [finished, setFinished] = useState(false);
   const [action, setAction] = useState(0);
+  const [show, setShow] = useState(false);
+  const [duration, setDuration] = useState(0);
   const { state } = useLocation();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -31,6 +36,7 @@ function BreatheNow() {
     }, 5000);
     if (finished) {
       clearInterval(interval);
+      intervalBell.pause();
     }
     return () => {
       clearInterval(interval);
@@ -64,36 +70,113 @@ function BreatheNow() {
     return () => clearTimeout(timeout);
   }, [state.duration]);
 
+  useEffect(() => {
+    let interval;
+    if (show) {
+      interval = setInterval(() => {
+        setShow(false);
+      }, 2000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [show]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDuration((s) => s + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!state) return null;
+
+  const pace =
+    +state.breathesPerMinute <= 1
+      ? "slower"
+      : +state.breathesPerMinute === 2
+      ? "neutral"
+      : "faster";
+
   return (
-    <PageWrapper
-      onPageRight={() => {
-        navigate("/journey");
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        height: "100%",
+        cursor: show ? "default" : "none",
+      }}
+      onMouseMove={() => setShow(true)}
+      onClick={() => {
+        setShow(true);
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          height: "75%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+      <PageWrapper
+        onPageLeft={() => {
+          if (!show) {
+            setShow(true);
+          } else {
+            navigate(-1);
+          }
         }}
+        onPageRight={() => {
+          if (!show) {
+            setShow(true);
+          } else {
+            navigate("/journey");
+          }
+        }}
+        hide={!show}
       >
-        {!finished ? (
-          <>
-            <CirclePulse />
-            <h1 style={{ position: "absolute", bottom: "10%" }}>
-              {actions[action]}
-            </h1>
-          </>
-        ) : (
-          <>
-            <h1>good job!</h1>
-            <p></p>
-          </>
-        )}
-      </div>
-    </PageWrapper>
+        <div
+          style={{
+            position: "relative",
+            height: "75%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {!finished ? (
+            <>
+              <CirclePulse />
+              <h1 style={{ position: "absolute", bottom: "10%" }}>
+                {actions[action]}
+              </h1>
+            </>
+          ) : (
+            <>
+              <h1>good job!</h1>
+              <p></p>
+            </>
+          )}
+        </div>
+        <NavBar
+          middle={
+            <button
+              style={{ opacity: show && !finished ? 1 : 0 }}
+              onClick={() => {
+                dispatch(
+                  createEntry(
+                    {
+                      duration:
+                        duration > state.duration
+                          ? state.duration
+                          : duration,
+                      pace,
+                    },
+                    "breathe"
+                  )
+                );
+              }}
+            >
+              finish earlier
+            </button>
+          }
+        />
+      </PageWrapper>
+    </div>
   );
 }
 

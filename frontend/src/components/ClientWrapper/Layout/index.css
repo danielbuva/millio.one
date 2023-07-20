@@ -25,13 +25,13 @@
 }
 
 .left-arrow {
-  transition: transform 0.2s;
+  transition: transform 0.2s, opacity 1s;
   cursor: pointer;
   user-select: none;
 }
 
 .right-arrow {
-  transition: transform 0.15s;
+  transition: transform 0.2s, opacity 1s;
   cursor: pointer;
   user-select: none;
 }
