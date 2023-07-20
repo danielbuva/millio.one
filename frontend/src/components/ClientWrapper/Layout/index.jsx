@@ -16,10 +16,10 @@ export function Layout({ children }) {
 }
 
 const sounds = [
-  "PageTurn1.mp3",
-  "PageTurn2.mp3",
-  "PageTurn3.mp3",
-  "PageTurn4.mp3",
+  "/PageTurn1.mp3",
+  "/PageTurn2.mp3",
+  "/PageTurn3.mp3",
+  "/PageTurn4.mp3",
 ];
 
 export function PageWrapper({
