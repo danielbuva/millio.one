@@ -3,6 +3,9 @@ import { readAvgMood } from "../../store/journey";
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import Tile from "./Tile";
+
+import "./Mood.css";
 
 function Mood() {
   const navigate = useNavigate();
@@ -33,10 +36,15 @@ function Mood() {
       <h1>
         {avgMood ? avgMoodText + " mood." : "check in for mood trends."}
       </h1>
-      <Link to="/mood/check-in" replace>
-        mood check in
-      </Link>
-      <Link to="/breathe">breathe</Link>
+      <div className="tiles">
+        <Tile to="/mood/check-in" p1="mood" p2="check-in" p3="hi" />
+
+        <Tile
+          to="/breathe"
+          p1="breathe"
+          p2={`clear your mind, relax your body, and improve your focus`}
+        />
+      </div>
       <NavBar
         left={
           <Link className="nav-link" to="/home" replace>

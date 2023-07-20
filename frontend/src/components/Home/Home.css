@@ -39,10 +39,12 @@
 .check-in-tile-header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   height: 175px;
   font-weight: 700;
   line-height: 25px;
+  padding: 0 16px;
+  padding-top: 50px;
 }
 
 .check-in-tile-header > span {
