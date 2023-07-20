@@ -33,6 +33,8 @@ async function getAllEntries(req, res) {
 
 async function getPrompt(req, res) {
   const { type, version } = req.params;
+
+  console.log(req.params);
   try {
     const record = await OriginPrompt.findOne({
       where: { type, version },

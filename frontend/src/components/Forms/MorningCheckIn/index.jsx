@@ -12,6 +12,7 @@ import YesNo from "../../icons/YesNo";
 import useEditState from "../../../hooks/useEditState";
 
 import "./MorningCheckIn.css";
+import { csrfFetch } from "../../../store/utils";
 
 function MorningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -21,9 +22,9 @@ function MorningCheckIn() {
   const descRef = useRef(null);
 
   const [focus, setFocus] = useState(state.focus ?? []);
+  const [prompt, setPrompt] = useState("");
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
-  // const [response, setResponse] = useState(null);
   const [prepared, setPrepared] = useState(state.prepared);
 
   const [pageIndex, setPageIndex] = useState(0);
@@ -69,21 +70,10 @@ function MorningCheckIn() {
       <h1>what's today's main focus?</h1>
       <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
-        {origins.map((Option, i) => {
-          let name = Option.name.toLowerCase();
-
-          name =
-            name === "selfcare"
-              ? "self-care"
-              : name === "timealone"
-              ? "time alone"
-              : name === "helpingothers"
-              ? "helping others"
-              : name;
-
+        {origins.map(({ Icon, name }, i) => {
           return (
             <div className="origin-option" key={i}>
-              <Option
+              <Icon
                 active={focus.includes(name)}
                 onClick={() => {
                   setFocus((state) => {
@@ -112,7 +102,7 @@ function MorningCheckIn() {
 
   const page4 = (
     <div>
-      <h1>generate promps here</h1>
+      <h1>{prompt}</h1>
       <textarea
         value={prompt1}
         placeholder="start writing..."
@@ -130,7 +120,7 @@ function MorningCheckIn() {
 
   const page5 = (
     <div>
-      <h1>generate promps here</h1>
+      <h1>gratitude prompt here</h1>
       <textarea
         value={prompt2}
         placeholder="start writing..."
@@ -184,7 +174,7 @@ function MorningCheckIn() {
 
   const pages = [page1, page2, page3, page4, page5, page6];
 
-  const handlePageRight = () => {
+  const handlePageRight = async () => {
     switch (pageIndex) {
       case 0:
         if (motivation == null) {
@@ -200,6 +190,13 @@ function MorningCheckIn() {
         if (prompt1.length < 1) {
           disabledRight.current = true;
         }
+        setPrompt(
+          await (
+            await csrfFetch(
+              `/api/journey/prompt/${focus[focus.length - 1]}/0`
+            )
+          ).json()
+        );
         break;
       case 3:
         if (prompt2.length < 1) {
