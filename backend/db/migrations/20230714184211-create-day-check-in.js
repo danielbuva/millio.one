@@ -34,11 +34,11 @@ module.exports = {
         },
         sleep: {
           allowNull: false,
-          type: Sequelize.ENUM(0, 1, 2, 3, 4),
+          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
         },
         motivation: {
           allowNull: false,
-          type: Sequelize.ENUM(0, 1, 2, 3, 4),
+          type: Sequelize.ENUM("0", "1", "2", "3", "4"),
         },
         prompt1: {
           allowNull: false,

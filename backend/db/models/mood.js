@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       feeling: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       prompt1: {
         allowNull: false,

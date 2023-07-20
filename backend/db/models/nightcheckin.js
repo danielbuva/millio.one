@@ -34,17 +34,17 @@ module.exports = (sequelize, DataTypes) => {
       rest: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       stress: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       productive: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       prompt1: { allowNull: false, type: DataTypes.STRING },
       prompt2: { allowNull: false, type: DataTypes.STRING },

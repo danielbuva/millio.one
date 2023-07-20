@@ -28,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       sleep: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       motivation: {
         allowNull: false,
         type: DataTypes.ENUM,
-        values: [0, 1, 2, 3, 4],
+        values: ["0", "1", "2", "3", "4"],
       },
       prompt1: { allowNull: false, type: DataTypes.STRING },
       prompt2: { allowNull: false, type: DataTypes.STRING },
