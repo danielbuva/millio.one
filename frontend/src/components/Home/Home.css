@@ -18,10 +18,13 @@
   transition: transform 0.2s ease-in-out;
   overflow: hidden;
   height: 350px;
+  background-color: transparent;
+  position: relative;
 }
 
 .check-in-tile:hover {
   transform: scale(0.99);
+  z-index: 4;
 }
 
 .check-in-tile > span {

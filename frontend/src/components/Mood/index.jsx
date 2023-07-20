@@ -37,12 +37,19 @@ function Mood() {
         {avgMood ? avgMoodText + " mood." : "check in for mood trends."}
       </h1>
       <div className="tiles">
-        <Tile to="/mood/check-in" p1="mood" p2="check-in" p3="hi" />
+        <Tile
+          to="/mood/check-in"
+          p1="mood"
+          p2="check-in"
+          p3="hi"
+          src="Mood.png"
+        />
 
         <Tile
           to="/breathe"
           p1="breathe"
           p2={`clear your mind, relax your body, and improve your focus`}
+          src="Breathe.png"
         />
       </div>
       <NavBar
