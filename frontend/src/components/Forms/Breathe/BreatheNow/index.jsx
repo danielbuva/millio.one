@@ -36,6 +36,15 @@ function BreatheNow() {
     }, state.seconds * 1000);
     if (finished) {
       clearInterval(interval);
+      dispatch(
+        createEntry(
+          {
+            duration,
+            pace: +state.breathsPerMinute,
+          },
+          "breathe"
+        )
+      );
     }
     return () => {
       clearInterval(interval);
@@ -43,7 +52,14 @@ function BreatheNow() {
         intervalBell.pause();
       }
     };
-  }, [state.intervalBell, state.volume, finished, state.seconds]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    state.intervalBell,
+    state.volume,
+    finished,
+    state.seconds,
+    dispatch,
+  ]);
 
   useEffect(() => {
     let interval;
@@ -162,6 +178,7 @@ function BreatheNow() {
                   )
                 );
               }}
+              disabled={finished}
             >
               finish earlier
             </button>
