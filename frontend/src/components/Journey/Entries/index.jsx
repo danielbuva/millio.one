@@ -55,15 +55,15 @@ function Entries({ entries }) {
 
 function getMoodIcon(feeling) {
   switch (feeling) {
-    case "0":
+    case 0:
       return <Feeling0 sm />;
-    case "1":
+    case 1:
       return <Feeling1 sm />;
-    case "2":
+    case 2:
       return <Feeling2 sm />;
-    case "3":
+    case 3:
       return <Feeling3 sm />;
-    case "4":
+    case 4:
       return <Feeling4 sm />;
     default:
       return null;
