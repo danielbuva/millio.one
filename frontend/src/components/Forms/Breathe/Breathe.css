@@ -32,3 +32,23 @@ input[type="range"] {
   text-decoration-skip-ink: none;
   text-underline-offset: 10px;
 }
+
+.stat-cards {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-card {
+  background-color: #1d1d1d;
+  border-radius: 9px;
+  width: 110px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 7px;
+  gap: 7px;
+}
+
+.timer {
+  width: 80px !important;
+}

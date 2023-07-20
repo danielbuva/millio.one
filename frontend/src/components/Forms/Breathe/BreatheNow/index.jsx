@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-import CirclePulse from "./CirclePulse";
-import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
-import { useDispatch } from "react-redux";
 import { createEntry } from "../../../../store/journey";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
+import Windmill from "../../../icons/Entry/Windmill";
+import CirclePulse from "./CirclePulse";
+import Timer from "../../../icons/Entry/Timer";
 
 const actions = [
   "get comfortable",
@@ -20,10 +22,28 @@ function BreatheNow() {
   const [action, setAction] = useState(0);
   const [show, setShow] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
   const { state } = useLocation();
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const submit = () => {
+    if (duration > 20 && !submitted) {
+      dispatch(
+        createEntry(
+          {
+            duration,
+            pace: +state.breathsPerMinute,
+          },
+          "breathe"
+        )
+      ).then(() => {
+        setSubmitted(true);
+        setFinished(true);
+      });
+    }
+  };
 
   useEffect(() => {
     let intervalBell;
@@ -36,15 +56,7 @@ function BreatheNow() {
     }, state.seconds * 1000);
     if (finished) {
       clearInterval(interval);
-      dispatch(
-        createEntry(
-          {
-            duration,
-            pace: +state.breathsPerMinute,
-          },
-          "breathe"
-        )
-      );
+      submit();
     }
     return () => {
       clearInterval(interval);
@@ -102,8 +114,10 @@ function BreatheNow() {
       setDuration((s) => s + 1);
     }, 1000);
 
+    if (finished) clearInterval(interval);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [finished]);
 
   if (!state) return null;
 
@@ -116,26 +130,32 @@ function BreatheNow() {
         cursor: show ? "default" : "none",
       }}
       onMouseMove={() => setShow(true)}
-      onClick={() => {
-        setShow(true);
-      }}
+      onClick={() => setShow(true)}
     >
       <PageWrapper
         onPageLeft={() => {
           if (!show) {
             setShow(true);
           } else {
-            navigate(-1);
+            if (duration < 20 || finished) {
+              navigate("/breathe");
+            } else {
+              setFinished(true);
+            }
           }
         }}
         onPageRight={() => {
           if (!show) {
             setShow(true);
           } else {
-            navigate("/journey");
+            if (duration < 20) {
+              navigate("/journey");
+            } else {
+              setFinished(true);
+            }
           }
         }}
-        hide={!show}
+        hide={!show && !finished}
       >
         <div
           style={{
@@ -154,10 +174,22 @@ function BreatheNow() {
               </h1>
             </>
           ) : (
-            <>
+            <div className="breaths-good-job">
               <h1>good job!</h1>
-              <p></p>
-            </>
+              <div className="stat-cards">
+                <div className="stat-card">
+                  <Windmill boxSize="25" />{" "}
+                  {Math.ceil(
+                    state.breathsPerMinute * (duration / 60).toFixed(2)
+                  )}
+                  &nbsp; breaths
+                </div>
+                <div className="stat-card timer">
+                  <Timer />
+                  {secondsToMinutesAndSeconds(duration)}
+                </div>
+              </div>
+            </div>
           )}
         </div>
         <NavBar
@@ -165,18 +197,10 @@ function BreatheNow() {
             <button
               style={{ opacity: show && !finished ? 1 : 0 }}
               onClick={() => {
-                dispatch(
-                  createEntry(
-                    {
-                      duration:
-                        duration > state.duration / 1000
-                          ? state.duration / 1000
-                          : duration,
-                      pace: +state.breathsPerMinute,
-                    },
-                    "breathe"
-                  )
-                );
+                setFinished(true);
+                if (duration < 20) {
+                  navigate("/breathe");
+                }
               }}
               disabled={finished}
             >
@@ -187,6 +211,17 @@ function BreatheNow() {
       </PageWrapper>
     </div>
   );
+}
+
+function secondsToMinutesAndSeconds(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const formattedSeconds =
+    remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+
+  return `${formattedMinutes}:${formattedSeconds}`;
 }
 
 export default BreatheNow;

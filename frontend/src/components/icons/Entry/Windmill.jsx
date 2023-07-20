@@ -1,8 +1,8 @@
-function Windmill() {
+function Windmill({ boxSize = "40" }) {
   return (
     <svg
-      width="40"
-      height="40"
+      width={boxSize}
+      height={boxSize}
       viewBox="0 0 48.00 48.00"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
