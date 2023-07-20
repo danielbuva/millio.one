@@ -281,7 +281,7 @@ function MoodCheckIn() {
   );
 }
 
-export function toCapitalCamelCase(str) {
+function toCapitalCamelCase(str) {
   if (typeof str !== "string" || str.length === 0) {
     return str; // Return the input as is if it's not a non-empty string
   }
