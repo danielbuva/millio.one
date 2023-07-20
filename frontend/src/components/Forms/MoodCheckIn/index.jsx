@@ -10,6 +10,7 @@ import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
 import useEditState from "../../../hooks/useEditState";
 
 import "./MoodCheckIn.css";
+import { csrfFetch } from "../../../store/utils";
 
 function MoodCheckIn() {
   const { isEditing, state } = useEditState();
@@ -19,11 +20,14 @@ function MoodCheckIn() {
   const descRef = useRef(null);
 
   const [origin, setOrigin] = useState(state.origin ?? []);
+  const [tyPrompt, setTyPrompt] = useState("");
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
+  const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   const [response, setResponse] = useState(null);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
+  const promptNum = useRef(Math.floor(Math.random() * 8));
 
   const createdAt = new Date();
 
@@ -165,22 +169,40 @@ function MoodCheckIn() {
 
   const page6 = (
     <div>
+      <h1>{state.tyPrompt ?? tyPrompt}</h1>
+      <textarea
+        value={prompt2}
+        placeholder="start writing..."
+        onChange={(e) => {
+          setPrompt2(e.currentTarget.value);
+          if (prompt2.trim().length <= 1) {
+            disabledRight.current = true;
+          } else {
+            disabledRight.current = false;
+          }
+        }}
+      />
+    </div>
+  );
+
+  const page7 = (
+    <div>
       <h1>would you like to do a breathing exercise?</h1>
       <p>no</p>
       <p>yes</p>
     </div>
   );
 
-  const page7 = (
+  const page8 = (
     <div>
       <h1>good job!</h1>
       <p>you completed a mood check-in</p>
     </div>
   );
 
-  const pages = [page1, page2, page3, page4, page5, page6, page7];
+  const pages = [page1, page2, page3, page4, page5, page6, page7, page8];
 
-  const handlePageRight = () => {
+  const handlePageRight = async () => {
     if (pageIndex === 1 && descRef.current) {
       descRef.current.scrollTo(0, 0);
     }
@@ -199,6 +221,7 @@ function MoodCheckIn() {
               feeling,
               origin,
               prompt1,
+              prompt2,
             },
             "mood"
           )
@@ -213,6 +236,8 @@ function MoodCheckIn() {
               feeling,
               origin,
               prompt1,
+              prompt2,
+              tyPrompt: promptNum.current,
             },
             "mood"
           )
@@ -247,6 +272,12 @@ function MoodCheckIn() {
         if (!prompt1) {
           disabledRight.current = true;
         }
+        setTyPrompt(
+          await (
+            await csrfFetch(`/api/journey/typrompt/${promptNum.current}`)
+          ).json()
+        );
+
         break;
       default:
         return;

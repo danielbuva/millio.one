@@ -2,19 +2,32 @@ const {
   returnError,
   checkAuthorization,
 } = require("../../../services/error.server");
-const { Description, Mood, Origin } = require("../../../../db/models");
+const {
+  Description,
+  Mood,
+  Origin,
+  TyPrompt,
+} = require("../../../../db/models");
 const { validBody } = require("./validation");
 
 async function createEntry(req, res) {
   try {
-    const { prompt1, createdAt, description, feeling, origin } = validBody(
-      req.body
-    );
+    const {
+      prompt1,
+      prompt2,
+      createdAt,
+      description,
+      feeling,
+      origin,
+      tyPrompt,
+    } = validBody(req.body);
 
     const newMood = await Mood.create({
       prompt1,
+      prompt2,
       createdAt,
       feeling,
+      tyPrompt,
       userId: req.user.id,
     });
 
@@ -28,6 +41,7 @@ async function createEntry(req, res) {
 
     res.json({
       prompt1,
+      prompt2,
       createdAt,
       description,
       entryType: 0,
@@ -61,10 +75,15 @@ async function getEntry(req, res) {
 
     checkAuthorization(entry.userId === req.user.id);
 
+    const tyrecord = await TyPrompt.findOne({
+      where: { version: entry.tyPrompt },
+    });
+
     res.json({
       ...entry.toJSON(),
       Origins,
       Descriptions,
+      tyPrompt: tyrecord.prompt,
     });
   } catch (err) {
     returnError(err, res);
@@ -101,6 +120,7 @@ async function updateEntry(req, res) {
         await entry.createOrigin({ value: origin });
       });
     });
+
     res.json(entry);
   } catch (err) {
     returnError(err, res);

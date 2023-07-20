@@ -1,13 +1,17 @@
 const { throwIfError } = require("../../../services/error.server");
 
 const validBody = (
-  { createdAt, description, feeling, origin, prompt1 },
+  { createdAt, description, feeling, origin, prompt1, prompt2, tyPrompt },
   isEditing = false
 ) => {
   let errorResult = { errors: {}, message: "Bad Request", status: 400 };
 
   if (!isEditing && !createdAt) {
     errorResult.errors.createdAt = "createdAt is Required";
+  }
+
+  if (!isEditing && tyPrompt == null) {
+    errorResult.errors.tyPrompt = "tyPrompt is Required";
   }
 
   if (!description || description.length < 1) {
@@ -29,10 +33,21 @@ const validBody = (
   if (!prompt1 || prompt1.length < 1) {
     errorResult.errors.prompt1 = "prompt1 is required";
   }
+  if (!prompt2 || prompt2.length < 1) {
+    errorResult.errors.prompt2 = "prompt2 is required";
+  }
 
   throwIfError(errorResult);
 
-  return { createdAt, description, feeling, origin, prompt1 };
+  return {
+    createdAt,
+    description,
+    feeling,
+    origin,
+    prompt1,
+    prompt2,
+    tyPrompt,
+  };
 };
 
 module.exports = {

@@ -362,13 +362,10 @@ function Body() {
               <br /> <span>{entry.prompt1}</span>
             </p>
             <p>
-              how you answered the generated prompt <br />{" "}
+              {entry.tyPrompt}
+              <br />
               <span>{entry.prompt2}</span>
             </p>
-            {/* <p className="pb">
-              you {entry.prepared ? "felt" : "didn't feel"} prepated for
-              the night.
-            </p> */}
           </div>
         </div>
       );
@@ -452,6 +449,7 @@ function Edit() {
         origin: entry.Origins.map((o) => o.value),
         prompt1: entry.prompt1,
         prompt2: entry.prompt2,
+        tyPrompt: entry.tyPrompt,
       };
       break;
     default:

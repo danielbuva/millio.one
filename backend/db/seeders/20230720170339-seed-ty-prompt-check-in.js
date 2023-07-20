@@ -33,8 +33,13 @@ const prompts = [
   },
   {
     prompt:
-      "What's one small step you can take towards overcoming a challenge you currently face. ",
+      "What's one small step you can take towards overcoming a challenge you currently face.",
     version: 7,
+  },
+  {
+    prompt:
+      "what do you feel in your body? close your eyes, take a deep breath and focus on how your body feels in this state.",
+    version: 8,
   },
 ];
 
