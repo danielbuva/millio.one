@@ -16,6 +16,10 @@
   overflow-y: scroll;
 }
 
+.entry-detail-body::-webkit-scrollbar {
+  display: none;
+}
+
 .entry-detail-body > p {
   line-height: 30px;
 }

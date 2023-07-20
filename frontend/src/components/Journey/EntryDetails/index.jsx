@@ -18,9 +18,9 @@ import { secondsToMinutesAndSeconds, time } from "../../../utils";
 import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
 
 import YesNo from "../../icons/YesNo";
+import { week } from "../state";
 
 import "./EntryDetails.css";
-import { week } from "../state";
 
 function EntryDetails() {
   const [show, setShow] = useState();
