@@ -28,7 +28,7 @@ function BreatheNow() {
   useEffect(() => {
     let intervalBell;
     const interval = setInterval(() => {
-      if (state.intervalBell) {
+      if (state.intervalBell && state.intervalBell !== "none") {
         intervalBell = new Audio(`/${state.intervalBell}.mp3`);
         intervalBell.volume = state.volume;
         intervalBell.play();

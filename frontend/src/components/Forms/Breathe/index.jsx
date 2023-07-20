@@ -6,7 +6,7 @@ import { useState } from "react";
 import "./Breathe.css";
 
 const fill = ["", "", ""];
-const chimes = ["bell", "bowl", "chime", "wind"];
+const chimes = ["none", "bell", "g-bowl", "bowl", "chime", "wind"];
 
 function Breathe() {
   const [breathsPerMinute, setBreathsPerMinute] = useState(4);
@@ -66,9 +66,11 @@ function Breathe() {
                       i === chimes.indexOf(intervalBell) ? "active" : ""
                     }`}
                     onClick={() => {
-                      const preview = new Audio(`/${c}.mp3`);
-                      preview.volume = volume;
-                      preview.play();
+                      if (c !== "none") {
+                        const preview = new Audio(`/${c}.mp3`);
+                        preview.volume = volume;
+                        preview.play();
+                      }
                       setIntervalBell(c);
                     }}
                   >
