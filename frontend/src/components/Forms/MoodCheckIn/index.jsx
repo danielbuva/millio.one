@@ -103,7 +103,10 @@ function MoodCheckIn() {
 
   const page3 = (
     <div id="origin">
-      <h1>what's going on, what's making you feel {description[0]}?</h1>
+      <h1>
+        what's going on, what's making you feel{" "}
+        {mapMultipleWords(description)}?
+      </h1>
       <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
         {origins.map(({ Icon, name }, i) => {
@@ -140,8 +143,8 @@ function MoodCheckIn() {
   const page4 = (
     <div>
       <h1>
-        Think how {origin[0]} is bringing the feeling of being{" "}
-        {description[0]}
+        Think how {mapMultipleWords(origin)} is bringing the feeling of
+        being {mapMultipleWords(description)}
       </h1>
       <textarea
         value={prompt1}
@@ -287,6 +290,32 @@ function toCapitalCamelCase(str) {
     .join("");
 
   return capitalCamelCased;
+}
+
+function mapMultipleWords(wordArray) {
+  return wordArray.map((word, i) => {
+    let conjuction;
+    switch (wordArray.length) {
+      case 1:
+        conjuction = "";
+        break;
+      case 2:
+        conjuction = i === 0 ? "" : " and ";
+        break;
+      case 3:
+        conjuction = i === 0 ? "" : i === 2 ? ", and " : ", ";
+        break;
+      default:
+        conjuction = "";
+        break;
+    }
+    return (
+      <span key={i + word}>
+        {conjuction}
+        {word}
+      </span>
+    );
+  });
 }
 
 export default MoodCheckIn;
