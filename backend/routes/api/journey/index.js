@@ -1,5 +1,5 @@
 const { verifyAuth } = require("../../services/auth.server");
-const { getAllEntries, getPrompt } = require("./lib");
+const { getAllEntries, getPrompt, getTyPrompt } = require("./lib");
 const router = require("express").Router();
 const dayRouter = require("./morning");
 const nightRouter = require("./evening");
@@ -12,6 +12,7 @@ router.use("/morning", dayRouter);
 router.use("/evening", nightRouter);
 router.use("/mood", moodRouter);
 router.use("/breathe", breatheRouter);
+router.get("/typrompt/:version", getTyPrompt);
 router.get("/prompt/:type/:version", getPrompt);
 
 module.exports = router;

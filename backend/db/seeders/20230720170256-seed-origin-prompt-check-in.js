@@ -258,8 +258,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    return queryInterface.bulkDelete(options, {
-      where: {},
-    });
+    return queryInterface.bulkDelete(options);
   },
 };

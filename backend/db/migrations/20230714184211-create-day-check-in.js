@@ -40,6 +40,10 @@ module.exports = {
           allowNull: false,
           type: Sequelize.INTEGER,
         },
+        tyPrompt: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+        },
         prompt1: {
           allowNull: false,
           type: Sequelize.STRING(600),

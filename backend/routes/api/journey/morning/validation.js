@@ -1,7 +1,16 @@
 const { throwIfError } = require("../../../services/error.server");
 
 const validBody = (
-  { createdAt, origin, prepared, prompt1, prompt2, sleep, motivation },
+  {
+    createdAt,
+    origin,
+    prepared,
+    tyPrompt,
+    prompt1,
+    prompt2,
+    sleep,
+    motivation,
+  },
   isEditing = false
 ) => {
   let errorResult = { errors: {}, message: "Bad Request", status: 400 };
@@ -21,6 +30,9 @@ const validBody = (
   }
   if (prepared == null) {
     errorResult.errors.prepared = "prepared is required";
+  }
+  if (tyPrompt == null) {
+    errorResult.errors.tyPrompt = "tyPrompt is required";
   }
 
   if (!prompt1 || prompt1.length < 1) {
@@ -42,6 +54,7 @@ const validBody = (
     motivation,
     origin,
     prepared,
+    tyPrompt,
     prompt1,
     prompt2,
     sleep,

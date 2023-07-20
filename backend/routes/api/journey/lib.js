@@ -8,6 +8,7 @@ const {
   Origin,
   Breathe,
   OriginPrompt,
+  TyPrompt,
 } = require("../../../db/models");
 
 async function getAllEntries(req, res) {
@@ -40,7 +41,17 @@ async function getPrompt(req, res) {
   }
 }
 
+async function getTyPrompt(req, res) {
+  try {
+    const record = await TyPrompt.findOne({ where: req.params });
+    res.json(record.prompt);
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
   getAllEntries,
   getPrompt,
+  getTyPrompt,
 };

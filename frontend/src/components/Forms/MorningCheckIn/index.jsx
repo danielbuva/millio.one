@@ -23,6 +23,7 @@ function MorningCheckIn() {
 
   const [focus, setFocus] = useState(state.focus ?? []);
   const [prompt, setPrompt] = useState("");
+  const [typrompt, setTyprompt] = useState("");
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   const [prepared, setPrepared] = useState(state.prepared);
@@ -36,6 +37,8 @@ function MorningCheckIn() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const promptNum = useRef(Math.floor(Math.random() * 8));
 
   const page1 = (
     <Selection
@@ -120,7 +123,7 @@ function MorningCheckIn() {
 
   const page5 = (
     <div>
-      <h1>gratitude prompt here</h1>
+      <h1>{typrompt}</h1>
       <textarea
         value={prompt2}
         placeholder="start writing..."
@@ -202,6 +205,11 @@ function MorningCheckIn() {
         if (prompt2.length < 1) {
           disabledRight.current = true;
         }
+        setTyprompt(
+          await (
+            await csrfFetch(`/api/journey/typrompt/${promptNum.current}`)
+          ).json()
+        );
         break;
       case 4:
         if (prepared == null) {
@@ -229,6 +237,7 @@ function MorningCheckIn() {
               origin: focus,
               motivation,
               prepared,
+              // tyPrompt: promptNum.current,
               prompt1,
               prompt2,
               sleep,
@@ -248,6 +257,7 @@ function MorningCheckIn() {
               prompt1,
               prompt2,
               sleep,
+              tyPrompt: promptNum.current,
             },
             "morning"
           )

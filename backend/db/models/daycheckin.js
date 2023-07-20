@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      tyPrompt: { allowNull: false, type: DataTypes.INTEGER },
       prompt1: { allowNull: false, type: DataTypes.STRING },
       prompt2: { allowNull: false, type: DataTypes.STRING },
       prepared: { allowNull: false, type: DataTypes.BOOLEAN },
