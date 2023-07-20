@@ -398,7 +398,7 @@ function Body() {
               <span>{secondsToMinutesAndSeconds(entry.duration)} </span>
             </p>
             <p>
-              number of breathes <br />{" "}
+              number of breathes <br />
               <span>
                 {totalCycles} {cycles}
               </span>
