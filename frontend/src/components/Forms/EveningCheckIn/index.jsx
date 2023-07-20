@@ -105,19 +105,10 @@ function EveningCheckIn() {
       <h1>which of these might be influencing your feelings?</h1>
       <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
-        {origins.map((Option, i) => {
-          let name = Option.name.toLowerCase();
-          name =
-            name === "selfcare"
-              ? "self-care"
-              : name === "timealone"
-              ? "time alone"
-              : name === "helpingothers"
-              ? "helping others"
-              : name;
+        {origins.map(({ Icon, name }, i) => {
           return (
             <div className="origin-option" key={i}>
-              <Option
+              <Icon
                 active={origin.includes(name)}
                 onClick={() => {
                   setOrigin((state) => {

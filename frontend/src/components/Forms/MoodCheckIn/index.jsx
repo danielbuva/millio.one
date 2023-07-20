@@ -106,22 +106,10 @@ function MoodCheckIn() {
       <h1>what's going on, what's making you feel {description[0]}?</h1>
       <p className="select-up-to d">select up to three</p>
       <div id="origin-options">
-        {origins.map((Option, i) => {
-          let name = Option.name.toLowerCase();
-          name =
-            name === "selfcare"
-              ? "self-care"
-              : name === "timealone"
-              ? "time alone"
-              : name === "helpingothers"
-              ? "helping others"
-              : name;
-
-          console.log("name: ", name, "option.name: ", Option.name);
-
+        {origins.map(({ Icon, name }, i) => {
           return (
             <div className="origin-option" key={i}>
-              <Option
+              <Icon
                 active={origin.includes(name)}
                 onClick={() => {
                   setOrigin((state) => {
