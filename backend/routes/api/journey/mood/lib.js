@@ -65,11 +65,6 @@ async function getEntry(req, res) {
       ...entry.toJSON(),
       Origins,
       Descriptions,
-      createdAt: new Date(entry.createdAt).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      }),
     });
   } catch (err) {
     returnError(err, res);

@@ -89,11 +89,6 @@ async function getEntry(req, res) {
       ...entry.toJSON(),
       Origins,
       Descriptions,
-      createdAt: new Date(entry.createdAt).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      }),
       prompt: record.prompt,
     });
   } catch (err) {
@@ -140,6 +135,15 @@ async function updateEntry(req, res) {
       origin.forEach(async (origin) => {
         await entry.createOrigin({ value: origin });
       });
+    });
+    res.json({
+      ...entry.toJSON(),
+      Origins: origin.map((o) => ({ value: o })),
+      createdAt: new Date(entry.createdAt).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }),
     });
   } catch (err) {
     returnError(err, res);
