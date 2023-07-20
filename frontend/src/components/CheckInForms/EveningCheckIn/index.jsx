@@ -197,7 +197,7 @@ function EveningCheckIn() {
       <h1>good job!</h1>
       <p>you completed your evening reflection.</p>
       <div className={`prepared-container ${show ? "show" : ""}`}>
-        <p>do you feel prepared for your day?</p>
+        <p>do you feel prepared for your night?</p>
 
         <YesNo
           activeNo={prepared === false}

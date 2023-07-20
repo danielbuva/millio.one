@@ -233,7 +233,6 @@ const signup = async (req, res) => {
 const toggleMute = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id);
-    console.log(user.mute);
     user.update({ mute: !user.mute });
 
     res.json({ message: "sucess" });

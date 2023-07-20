@@ -95,8 +95,20 @@ function EntryDetails() {
           leftPageDayI = dayI - 1;
           leftEntryI = days[leftPageDayI].entries.length;
         }
-        rightPageDayI = dayI + 1;
-        rightEntryI = entryIndex - 1;
+        if (lastDayIndex > 0) {
+          rightPageDayI = dayI + 1;
+          rightEntryI = 0;
+        } else {
+          rightPageDayI = dayI;
+          rightEntryI = 0;
+        }
+      } else {
+        if (hasEntries) {
+          leftPageDayI = dayI;
+          leftEntryI = entryIndex - 1;
+          rightPageDayI = dayI;
+          rightEntryI = entryIndex + 1;
+        }
       }
     } else if (dayI == lastDayIndex) {
       if (entryIndex == 0) {

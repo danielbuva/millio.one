@@ -64,7 +64,7 @@ export const updateEntry = (entry, type) => async (dispatch) => {
       body: JSON.stringify(entry),
     })
   ).json();
-  console.log("[DATA LOG]: ", data);
+
   dispatch(editEntry(data));
 };
 

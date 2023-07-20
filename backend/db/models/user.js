@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
-      mute: { type: DataTypes.BOOLEAN, allowNull: false },
+      mute: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       name: { type: DataTypes.STRING, allowNull: false },
       email: {
         type: DataTypes.STRING,
