@@ -183,15 +183,26 @@ function MorningCheckIn() {
           activeNo={prepared === false}
           activeYes={prepared === true}
           center
-          onYes={() => setPrepared(true)}
-          onNo={() => setPrepared(false)}
+          onYes={async () => {
+            setPrepared(true);
+            await csrfFetch(`/api/journey/morning/prepared/${id}`, {
+              method: "PUT",
+              body: JSON.stringify({ prepared: true }),
+            });
+          }}
+          onNo={async () => {
+            setPrepared(false);
+            await csrfFetch(`/api/journey/morning/prepared/${id}`, {
+              method: "PUT",
+              body: JSON.stringify({ prepared: false }),
+            });
+          }}
         />
       </div>
     </div>
   );
 
   const pages = [page1, page2, page3, page4, page5, page6];
-  console.log({ isEditing, pageIndex });
 
   const handlePageRight = async () => {
     switch (pageIndex) {
@@ -274,12 +285,6 @@ function MorningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      if (prepared != null) {
-        await csrfFetch(`/api/journey/morning/prepared/${id}`, {
-          method: "PUT",
-          body: JSON.stringify({ prepared }),
-        });
-      }
       navigate("/journey");
     }
   };
