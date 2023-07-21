@@ -7,8 +7,9 @@ function About() {
   return (
     <PageWrapper onPageLeft={navigateBack} onPageRight={navigateBack}>
       <h1>about.</h1>
+      <p>millio one.</p>
+      <div className="divider" />
       <div>
-        <p>millio one.</p>
         <p>I made this in less than two weeks.</p>
         <p>
           this is a clone-ish of&nbsp;

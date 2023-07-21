@@ -22,6 +22,8 @@ function You() {
   return (
     <PageWrapper onPageLeft={navigateBack} onPageRight={navigateBack}>
       <h1>you.</h1>
+      <p>hi</p>
+      <div className="divider" />
       <div>
         <p className="auth-link pointer" onClick={handleLogout}>
           logout
