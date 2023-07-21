@@ -23,8 +23,6 @@ const focusOptions = [
   "something else",
 ];
 
-const smile = "☺";
-
 function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +30,6 @@ function Landing() {
   const [focus, setFocus] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [errors, setErrors] = useState({});
-
-  const passwordRef = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,22 +80,14 @@ function Landing() {
                 setErrors((e) => ({ ...e, email: emailInUse }));
               }
             } else {
-              setErrors((e) => ({ ...e, email: "invalid email" }));
+              setErrors((e) => ({ ...e, email: "☺ invalid email" }));
             }
           }}
         />
         <input
           className="auth-input"
           placeholder="password"
-          defaultValue={smile.repeat(password.length)}
-          onClick={() => passwordRef.current?.focus()}
-          style={password ? { letterSpacing: "-8px" } : undefined}
-        />
-        <input
-          className="auth-input"
-          placeholder="password"
           value={password}
-          ref={passwordRef}
           onChange={(e) => {
             setPassword(e.currentTarget.value);
             if (
@@ -117,19 +105,14 @@ function Landing() {
             if (password.length < 6) {
               setErrors((e) => ({
                 ...e,
-                password: "use at least 6 characters for password",
+                password: "☺ use at least 6 characters for password",
               }));
             }
           }}
-          style={{
-            position: "absolute",
-            left: "-9999px",
-            opacity: "0",
-          }}
         />
       </div>
-      <p className="error">{errors.email}</p>
-      <p className="error">{errors.password}</p>
+      <p>{errors.email}</p>
+      <p>{errors.password}</p>
     </React.Fragment>
   );
 
