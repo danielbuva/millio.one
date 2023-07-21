@@ -5,13 +5,12 @@ import { useDispatch } from "react-redux";
 import useSessionUser from "../../hooks/useSessionUser";
 import { signup } from "../../store/session";
 
-import { PageWrapper } from "../ClientWrapper/Layout";
+import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import ConfirmLogout from "../ConfirmLogout";
 import { csrfFetch } from "../../store/utils";
 
 import "./Landing.css";
-
-//@TODO add unique email validation
+import DemoUser from "../Login/DemoUser";
 
 const focusOptions = [
   "mood",
@@ -238,12 +237,22 @@ function Landing() {
       }
     >
       <div className="page-container">
-        {pageIndex !== 0 && (
-          <Link className="auth-link" to="/login">
-            log in
-          </Link>
-        )}
         <div className="page">{pages[pageIndex]}</div>
+        {pageIndex >= 1 && (
+          <NavBar
+            left={
+              <Link className="auth-link" to="/about">
+                about
+              </Link>
+            }
+            middle={<DemoUser />}
+            right={
+              <Link className="auth-link" to="/login">
+                log in
+              </Link>
+            }
+          />
+        )}
       </div>
     </PageWrapper>
   );

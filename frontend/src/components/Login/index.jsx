@@ -8,6 +8,7 @@ import { login } from "../../store/session";
 
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import ConfirmLogout from "../ConfirmLogout";
+import DemoUser from "./DemoUser";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,17 +24,6 @@ function Login() {
 
   const handlePageRight = async () => {
     return await dispatch(login({ email, password }))
-      .then(() => navigate("/home"))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message) {
-          setErrors(data);
-        }
-      });
-  };
-
-  const handleDemo = () => {
-    dispatch(login({ email: "demo@user.io", password: "password" }))
       .then(() => navigate("/home"))
       .catch(async (res) => {
         const data = await res.json();
@@ -73,6 +63,12 @@ function Login() {
       </div>
       <NavBar
         left={
+          <Link className="auth-link" to="/about">
+            about
+          </Link>
+        }
+        middle={<DemoUser />}
+        right={
           <Link
             className="auth-link"
             to="/"
@@ -83,7 +79,6 @@ function Login() {
             sign up
           </Link>
         }
-        right={<button onClick={handleDemo}>demo user</button>}
       />
     </PageWrapper>
   );

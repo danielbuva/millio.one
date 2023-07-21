@@ -188,9 +188,6 @@ button {
 
 .auth-link {
   color: #707070;
-  position: absolute;
-  top: 2%;
-  right: 5%;
 }
 
 .auth-link:hover {
@@ -310,4 +307,12 @@ input:-webkit-autofill::first-line {
   -webkit-box-shadow: 0 0 0 30px #000 inset !important;
   -webkit-text-fill-color: #fff !important;
   caret-color: #fff;
+}
+
+.demo-button {
+  transition: transform 0.2s ease-in-out;
+}
+
+.demo-button:hover {
+  transform: scale(1.02);
 }
