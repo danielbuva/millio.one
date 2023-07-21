@@ -44,7 +44,7 @@ function Home() {
         })}
       </p>
       <div className="divider" />
-      <p className="daily-reflections">DAILY REFLECTIONS</p>
+      <p className="reflections">DAILY REFLECTIONS</p>
       <div id="check-ins">
         <CheckInTile
           p1="morning"

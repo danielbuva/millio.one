@@ -316,3 +316,8 @@ input:-webkit-autofill::first-line {
 .demo-button:hover {
   transform: scale(1.02);
 }
+
+.reflections {
+  letter-spacing: 5px;
+  margin-bottom: 32px;
+}

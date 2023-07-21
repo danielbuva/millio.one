@@ -1,7 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import { readAvgMood } from "../../store/journey";
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { readAvgMood } from "../../store/journey";
+import CircleArrow from "../icons/CircleArrow";
 import { useEffect } from "react";
 import Tile from "./Tile";
 
@@ -30,10 +31,19 @@ function Mood() {
       : avgMood < 4
       ? "good"
       : "excellent";
-
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <h1>{avgMood ? avgMoodText + " mood." : "mood."}</h1>
+      <div className="avg-mood">
+        <CircleArrow up={avgMood >= 3} />
+        {avgMood && (
+          <p className="avg-mood-text">
+            {avgMood % 1 === 0 ? avgMood + ".0" : avgMood} average mood
+          </p>
+        )}
+      </div>
+      <div className="divider" />
+      <p className="reflections">MOOD REFLECTIONS</p>
       <div className="tiles">
         <Tile
           to="/mood/check-in"

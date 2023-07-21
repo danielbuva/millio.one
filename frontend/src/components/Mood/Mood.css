@@ -14,3 +14,16 @@
 .check-in-tile-header {
   z-index: 3;
 }
+
+.avg-mood {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 30px;
+  margin-bottom: -6px;
+}
+
+.avg-mood-text {
+  padding: 0;
+}
