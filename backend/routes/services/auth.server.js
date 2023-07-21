@@ -183,6 +183,13 @@ const checkIfAvailable = async (email) => {
   return email;
 };
 
+const returnIfInUse = async (req, res) => {
+  const emailExists = await User.findOne({ where: req.params });
+  if (emailExists) {
+    res.json("email in use");
+  }
+};
+
 const validSignUp = async ({ email, password, name }) => {
   let errorResult = {
     message: "Bad Request",
@@ -249,6 +256,7 @@ module.exports = {
     login,
     logout,
     toggleMute,
+    returnIfInUse,
   },
   user: { signup },
   verifyAuth,

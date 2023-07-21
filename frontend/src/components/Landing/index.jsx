@@ -7,6 +7,7 @@ import { signup } from "../../store/session";
 
 import { PageWrapper } from "../ClientWrapper/Layout";
 import ConfirmLogout from "../ConfirmLogout";
+import { csrfFetch } from "../../store/utils";
 
 import "./Landing.css";
 
@@ -22,12 +23,17 @@ const focusOptions = [
   "something else",
 ];
 
+const smile = "☺";
+
 function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [focus, setFocus] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
+  const [errors, setErrors] = useState({});
+
+  const passwordRef = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,13 +72,36 @@ function Landing() {
             } else {
               disabledRight.current = true;
             }
+            setErrors((e) => ({ ...e, email: undefined }));
+          }}
+          onBlur={async () => {
+            if (email.includes("@") && email.includes(".")) {
+              console.log("entering");
+              const emailInUse = await (
+                await csrfFetch(`/api/session/${email}`)
+              ).json();
+              if (emailInUse) {
+                setErrors((e) => ({ ...e, email: emailInUse }));
+              }
+            } else {
+              setErrors((e) => ({ ...e, email: "invalid email" }));
+            }
           }}
         />
         <input
           className="auth-input"
           placeholder="password"
+          defaultValue={smile.repeat(password.length)}
+          onClick={() => passwordRef.current?.focus()}
+          style={password ? { letterSpacing: "-8px" } : undefined}
+        />
+        <input
+          className="auth-input"
+          placeholder="password"
           value={password}
+          ref={passwordRef}
           onChange={(e) => {
+            console.log(password);
             setPassword(e.currentTarget.value);
             if (
               email.includes("@") &&
@@ -83,9 +112,25 @@ function Landing() {
             } else {
               disabledRight.current = true;
             }
+            setErrors((e) => ({ ...e, password: undefined }));
+          }}
+          onBlur={() => {
+            if (password.length < 6) {
+              setErrors((e) => ({
+                ...e,
+                password: "use at least 6 characters for password",
+              }));
+            }
+          }}
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            opacity: "0",
           }}
         />
       </div>
+      <p className="error">{errors.email}</p>
+      <p className="error">{errors.password}</p>
     </React.Fragment>
   );
 
@@ -198,13 +243,17 @@ function Landing() {
       });
     }
     disabledRight.current = false;
+    setErrors({});
   };
 
   return (
     <PageWrapper
       onPageLeft={handlePageLeft}
       onPageRight={handlePageRight}
-      disabledRight={disabledRight.current}
+      disabledRight={
+        (pageIndex === 1 && (errors.email || errors.password)) ||
+        disabledRight.current
+      }
     >
       <div className="page-container">
         {pageIndex !== 0 && (
