@@ -12,7 +12,7 @@ import ConfirmLogout from "../ConfirmLogout";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,8 +27,7 @@ function Login() {
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.message) {
-          // setErrors({ email: data.message });
-          console.log({ errors: data.message });
+          setErrors(data);
         }
       });
   };
@@ -39,12 +38,12 @@ function Login() {
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.message) {
-          // setErrors({ credentials: data.message });
-          console.log({ errors: data.message });
+          setErrors(data);
         }
       });
   };
 
+  console.log(errors);
   return (
     <PageWrapper
       onPageLeft={() => {
@@ -68,6 +67,7 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
             />
+            <p>{errors.message}</p>
           </div>
         </div>
       </div>
