@@ -35,7 +35,7 @@ function MorningCheckIn() {
 
   const [show, setShow] = useState();
 
-  const createdAt = new Date();
+  const createdAt = useRef(new Date());
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -255,7 +255,7 @@ function MorningCheckIn() {
           dispatch(
             createEntry(
               {
-                createdAt,
+                createdAt: createdAt.current,
                 origin: focus,
                 motivation,
                 prompt1,

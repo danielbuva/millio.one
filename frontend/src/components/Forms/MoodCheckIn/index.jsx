@@ -32,7 +32,7 @@ function MoodCheckIn() {
   const disabledRight = useRef(!isEditing);
   const promptNum = useRef(Math.floor(Math.random() * 8));
 
-  const createdAt = new Date();
+  const createdAt = useRef(new Date());
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +64,17 @@ function MoodCheckIn() {
   const page1 = (
     <Selection
       disabledRight={disabledRight}
-      prompt={<h1>how are you feeling?</h1>}
+      prompt={
+        <>
+          <h1>how are you feeling?</h1>
+          <p>
+            date:{" "}
+            <span className="date-tag">
+              {formatDate(createdAt.current)}
+            </span>
+          </p>
+        </>
+      }
       setState={setFeeling}
       state={feeling}
       type="emotion"
@@ -299,7 +309,7 @@ function MoodCheckIn() {
           dispatch(
             createEntry(
               {
-                createdAt,
+                createdAt: createdAt.current,
                 description,
                 feeling,
                 origin,
@@ -394,6 +404,35 @@ function mapMultipleWords(wordArray) {
       </span>
     );
   });
+}
+
+function formatDate(date) {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  let hours = date.getHours();
+  const amOrPm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12 || 12; // Convert 24-hour format to 12-hour format
+
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  const formattedDate = `${
+    months[date.getMonth()]
+  } ${date.getDate()} at ${hours}:${minutes} ${amOrPm}`;
+
+  return formattedDate;
 }
 
 export default MoodCheckIn;
