@@ -26,6 +26,9 @@ function Journey() {
 
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
+      <h1>journey.</h1>
+      <p className="write-your-first">: )</p>
+      <div className="divider" />
       {days && days.length > 0 ? (
         <div className="days">
           {days.map((e, i) => (
