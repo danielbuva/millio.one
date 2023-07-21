@@ -6,14 +6,15 @@ import { useDispatch } from "react-redux";
 import { origins } from "../utils";
 
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
+import YesNo from "../../icons/YesNo";
 
 import useEditState from "../../../hooks/useEditState";
-
-import "./MoodCheckIn.css";
 import { csrfFetch } from "../../../store/utils";
 
+import "./MoodCheckIn.css";
+
 function MoodCheckIn() {
-  const { isEditing, state } = useEditState();
+  let { isEditing, state } = useEditState();
 
   const [feeling, setFeeling] = useState(state.feeling);
   const [description, setDescription] = useState(state.description ?? []);
@@ -205,62 +206,37 @@ function MoodCheckIn() {
 
   const page7 = (
     <div>
-      <h1>would you like to do a breathing exercise?</h1>
-      <p>no</p>
-      <p>yes</p>
+      <h1>good job!</h1>
+      <p>you completed a mood check-in</p>
     </div>
   );
 
   const page8 = (
-    <div>
-      <h1>good job!</h1>
-      <p>you completed a mood check-in</p>
+    <div className="breathe-question">
+      <h1 className="question-header">
+        would you like to do a breathing exercise?
+      </h1>
+      <YesNo
+        center
+        onYes={() => {
+          navigate("/breathe");
+          disabledRight.current = false;
+        }}
+        onNo={() => {
+          navigate("/journey");
+          disabledRight.current = false;
+        }}
+      />
     </div>
   );
 
   const pages = [page1, page2, page3, page4, page5, page6, page7, page8];
 
   const handlePageRight = async () => {
-    if (pageIndex === 1 && descRef.current) {
-      descRef.current.scrollTo(0, 0);
-    }
-
     if (pageIndex < pages.length - 1) {
       setPageIndex((previousPage) => {
         return previousPage + 1;
       });
-    } else {
-      if (isEditing) {
-        dispatch(
-          updateEntry(
-            {
-              id: state.id,
-              description,
-              feeling,
-              origin,
-              prompt1,
-              prompt2,
-            },
-            "mood"
-          )
-        );
-        navigate(`/journey/mood/${state.id}`);
-      } else {
-        dispatch(
-          createEntry(
-            {
-              createdAt,
-              description,
-              feeling,
-              origin,
-              prompt1,
-              prompt2,
-              tyPrompt: promptNum.current,
-            },
-            "mood"
-          )
-        ).then(() => navigate("/journey"));
-      }
     }
 
     switch (pageIndex) {
@@ -270,6 +246,9 @@ function MoodCheckIn() {
         }
         break;
       case 1:
+        if (descRef.current) {
+          descRef.current.scrollTo(0, 0);
+        }
         if (origin.length < 1) {
           disabledRight.current = true;
         }
@@ -302,6 +281,42 @@ function MoodCheckIn() {
           disabledRight.current = true;
         }
         break;
+      case 5:
+        if (isEditing) {
+          dispatch(
+            updateEntry(
+              {
+                id: state.id,
+                description,
+                feeling,
+                origin,
+                prompt1,
+                prompt2,
+              },
+              "mood"
+            )
+          );
+          navigate(`/journey/mood/${state.id}`);
+        } else {
+          dispatch(
+            createEntry(
+              {
+                createdAt,
+                description,
+                feeling,
+                origin,
+                prompt1,
+                prompt2,
+                tyPrompt: promptNum.current,
+              },
+              "mood"
+            )
+          );
+        }
+        break;
+      case pages.length - 1:
+        navigate("/journey");
+        break;
       default:
         return;
     }
@@ -314,6 +329,9 @@ function MoodCheckIn() {
       });
     } else {
       navigate(-1);
+    }
+    if (pageIndex === 5) {
+      isEditing = true;
     }
     disabledRight.current = false;
   };
