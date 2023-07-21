@@ -2,18 +2,20 @@ import useNavigateBack from "../../../hooks/useNavigateBack";
 import { PageWrapper } from "../../ClientWrapper/Layout";
 import { useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import "./Breathe.css";
 
 const fill = ["", "", ""];
-const chimes = ["none", "bell", "g-bowl", "bowl", "chime", "wind"];
+const chimes = ["none", "bell", "i", "bowl", "chime", "wind"];
 
 function Breathe() {
   const [breathsPerMinute, setBreathsPerMinute] = useState(4);
   const [minutes, setMinutes] = useState(3);
   const [intervalBell, setIntervalBell] = useState(chimes[1]);
   const [volume, setVolume] = useState(0.3);
+  const [space, setSpace] = useState(false);
+  const currentSoundRef = useRef(null);
 
   const navigate = useNavigate();
   const navigateBack = useNavigateBack();
@@ -22,6 +24,10 @@ function Breathe() {
     breathsPerMinute === 3 ? 5 : breathsPerMinute === 4 ? 4 : 3;
 
   const handlePageRight = () => {
+    if (currentSoundRef.current) {
+      currentSoundRef.current.pause();
+      currentSoundRef.current.currentTime = 0;
+    }
     navigate("/breathe/now", {
       state: {
         intervalBell,
@@ -31,6 +37,15 @@ function Breathe() {
         seconds,
       },
     });
+  };
+
+  const playSound = (sound) => {
+    const audio = new Audio(sound);
+    audio.volume = volume;
+    audio.play().catch((err) => {
+      console.error("Error while playing audio:", err);
+    });
+    currentSoundRef.current = audio;
   };
 
   return (
@@ -48,7 +63,7 @@ function Breathe() {
                 {fill.map((_, i) => (
                   <p
                     className={`dark pointer ${
-                      i === breathsPerMinute - 3 ? "active" : ""
+                      i === breathsPerMinute - 3 ? "active-b" : ""
                     }`}
                     key={i}
                     onClick={() => setBreathsPerMinute(i + 3)}
@@ -59,25 +74,60 @@ function Breathe() {
               </div>
             </div>
 
-            <div className="breathe-form-group">
+            <div
+              className="breathe-form-group chimes"
+              style={space ? { marginBottom: "70px" } : undefined}
+            >
               <p>chimes.</p>
               <div className="space-around">
                 {chimes.map((c, i) => (
                   <p
                     key={c}
                     className={`dark pointer ${
-                      i === chimes.indexOf(intervalBell) ? "active" : ""
+                      i === chimes.indexOf(intervalBell) ? "active-b" : ""
                     }`}
                     onClick={() => {
-                      if (c !== "none") {
-                        const preview = new Audio(`/${c}.mp3`);
-                        preview.volume = volume;
-                        preview.play();
+                      if (currentSoundRef.current) {
+                        currentSoundRef.current.pause();
+                        currentSoundRef.current.currentTime = 0;
                       }
-                      setIntervalBell(c);
+                      setIntervalBell((bell) => {
+                        if (c === bell) {
+                          setSpace(false);
+                          return "none";
+                        }
+                        if (c !== "none" && c !== "i") {
+                          setSpace(false);
+                          playSound(`/${c}.mp3`);
+                        } else if (c === "i") {
+                          setSpace(true);
+                          playSound(`/gong.wav`);
+                        } else {
+                          setSpace(false);
+                        }
+                        return c;
+                      });
                     }}
+                    style={c === "i" ? { border: "none" } : undefined}
                   >
-                    {c}
+                    {c === "i" ? (
+                      <>
+                        {space && (
+                          <span className="space-holder">
+                            copper-plated aluminium, 26cm diameter, and
+                            16cm deep singing bowl struck with a
+                            felt-tipped mallet.
+                          </span>
+                        )}
+                        <span className="bowl">
+                          copper-plated aluminium, 26cm diameter, and 16cm
+                          deep singing bowl struck with a felt-tipped
+                          mallet.
+                        </span>
+                      </>
+                    ) : (
+                      c
+                    )}
                   </p>
                 ))}
               </div>
@@ -97,7 +147,7 @@ function Breathe() {
               {fill.map((_, i) => (
                 <p
                   className={`dark pointer ${
-                    i === minutes - 1 ? "active" : ""
+                    i === minutes - 1 ? "active-b" : ""
                   }`}
                   key={i}
                   onClick={() => setMinutes(i + 1)}

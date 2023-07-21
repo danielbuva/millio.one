@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { createEntry } from "../../../../store/journey";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
@@ -49,7 +49,11 @@ function BreatheNow() {
   useEffect(() => {
     let intervalBell;
     const interval = setInterval(() => {
-      if (state.intervalBell && state.intervalBell !== "none") {
+      if (state.intervalBell === "i") {
+        intervalBell = new Audio(`/gong.wav`);
+        intervalBell.volume = state.volume;
+        intervalBell.play();
+      } else if (state.intervalBell && state.intervalBell !== "none") {
         intervalBell = new Audio(`/${state.intervalBell}.mp3`);
         intervalBell.volume = state.volume;
         intervalBell.play();

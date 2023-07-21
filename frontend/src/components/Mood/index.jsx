@@ -31,6 +31,7 @@ function Mood() {
       : avgMood < 4
       ? "good"
       : "excellent";
+
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <h1>{avgMood ? avgMoodText + " mood." : "mood."}</h1>
@@ -39,7 +40,8 @@ function Mood() {
           <>
             <CircleArrow up={avgMood >= 3} />
             <p className="avg-mood-text">
-              {avgMood % 1 === 0 ? avgMood + ".0" : avgMood} average mood
+              {avgMood % 1 === 0 ? avgMood + ".0" : avgMood.toFixed(2)}{" "}
+              average mood
             </p>
           </>
         ) : (

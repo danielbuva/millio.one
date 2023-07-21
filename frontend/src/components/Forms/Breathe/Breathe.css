@@ -13,6 +13,8 @@
   display: flex;
   flex-direction: column;
   margin: 10px 0;
+  user-select: none;
+  position: relative;
 }
 
 input[type="range"] {
@@ -26,11 +28,15 @@ input[type="range"] {
   width: 400px;
 }
 
-.active {
+.active-b {
   transform: scale(1.5);
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
-  text-underline-offset: 10px;
+  color: #fff !important;
+  border-bottom: solid;
+  position: relative;
+}
+
+.active-b > span {
+  font-size: 16px;
 }
 
 .stat-cards {
@@ -51,4 +57,20 @@ input[type="range"] {
 
 .timer {
   width: 80px !important;
+}
+
+.bowl {
+  font-size: 3px;
+}
+.active-b .bowl {
+  width: 300px;
+  position: absolute;
+  top: 20px;
+  left: -50px;
+  border-bottom: solid;
+}
+
+.space-holder {
+  font-size: 3px !important;
+  color: #000;
 }
