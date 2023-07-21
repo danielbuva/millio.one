@@ -1,20 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
+import useNavigateBack from "../../hooks/useNavigateBack";
 
 function About() {
-  const navigate = useNavigate();
-  const handlePageLeft = () => {
-    window.getSelection().empty();
-    if (!sessionStorage.getItem("hasVisited")) {
-      sessionStorage.setItem("hasVisited", "true");
-      navigate("/home");
-    } else {
-      navigate(-1);
-    }
-  };
+  const navigateBack = useNavigateBack();
 
   return (
-    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageLeft}>
+    <PageWrapper onPageLeft={navigateBack} onPageRight={navigateBack}>
       <h1>about.</h1>
       <div>
         <p>millio one.</p>

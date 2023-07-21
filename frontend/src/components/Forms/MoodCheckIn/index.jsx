@@ -9,6 +9,7 @@ import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
 import YesNo from "../../icons/YesNo";
 
 import useEditState from "../../../hooks/useEditState";
+import useNavigateBack from "../../../hooks/useNavigateBack";
 import { csrfFetch } from "../../../store/utils";
 
 import "./MoodCheckIn.css";
@@ -34,6 +35,7 @@ function MoodCheckIn() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigateBack = useNavigateBack();
 
   useEffect(() => {
     const desc = descRef.current;
@@ -328,7 +330,7 @@ function MoodCheckIn() {
         return previousPage - 1;
       });
     } else {
-      navigate(-1);
+      navigateBack();
     }
     if (pageIndex === 5) {
       isEditing = true;

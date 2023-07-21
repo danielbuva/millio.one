@@ -5,15 +5,15 @@ import { useDispatch } from "react-redux";
 import { origins } from "../utils";
 
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
-
 import YesNo from "../../icons/YesNo";
 
 import { createEntry, updateEntry } from "../../../store/journey";
+import { csrfFetch } from "../../../store/utils";
 
+import useNavigateBack from "../../../hooks/useNavigateBack";
 import useEditState from "../../../hooks/useEditState";
 
 import "./EveningCheckIn.css";
-import { csrfFetch } from "../../../store/utils";
 
 function EveningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -39,6 +39,7 @@ function EveningCheckIn() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigateBack = useNavigateBack();
 
   const page1 = (
     <Selection
@@ -328,7 +329,7 @@ function EveningCheckIn() {
         return previousPage - 1;
       });
     } else {
-      navigate(-1);
+      navigateBack();
     }
     disabledRight.current = false;
   };

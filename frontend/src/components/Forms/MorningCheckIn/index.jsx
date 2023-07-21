@@ -1,18 +1,19 @@
-import { createEntry, updateEntry } from "../../../store/journey";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { createEntry, updateEntry } from "../../../store/journey";
+import { csrfFetch } from "../../../store/utils";
+
 import { origins } from "../utils";
 
 import CheckInForm, { Selection } from "../CheckInForm";
-
 import YesNo from "../../icons/YesNo";
 
+import useNavigateBack from "../../../hooks/useNavigateBack";
 import useEditState from "../../../hooks/useEditState";
 
 import "./MorningCheckIn.css";
-import { csrfFetch } from "../../../store/utils";
 
 function MorningCheckIn() {
   const { isEditing, state } = useEditState();
@@ -37,6 +38,7 @@ function MorningCheckIn() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigateBack = useNavigateBack();
 
   const promptNum = useRef(Math.floor(Math.random() * 8));
 
@@ -289,7 +291,7 @@ function MorningCheckIn() {
         return previousPage - 1;
       });
     } else {
-      navigate(-1);
+      navigateBack();
     }
     disabledRight.current = false;
   };

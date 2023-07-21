@@ -3,6 +3,7 @@ import useSessionUser from "../../hooks/useSessionUser";
 import { PageWrapper } from "../ClientWrapper/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import useNavigateBack from "../../hooks/useNavigateBack";
 
 function You() {
   const user = useSessionUser();
@@ -16,18 +17,10 @@ function You() {
     dispatch(toggleMute());
   };
 
-  const handlePageLeft = () => {
-    window.getSelection().empty();
-    if (!sessionStorage.getItem("hasVisited")) {
-      sessionStorage.setItem("hasVisited", "true");
-      navigate("/home");
-    } else {
-      navigate(-1);
-    }
-  };
+  const navigateBack = useNavigateBack();
 
   return (
-    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageLeft}>
+    <PageWrapper onPageLeft={navigateBack} onPageRight={navigateBack}>
       <h1>you.</h1>
       <div>
         <p className="auth-link pointer" onClick={handleLogout}>
