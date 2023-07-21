@@ -101,7 +101,6 @@ function Landing() {
           value={password}
           ref={passwordRef}
           onChange={(e) => {
-            console.log(password);
             setPassword(e.currentTarget.value);
             if (
               email.includes("@") &&
