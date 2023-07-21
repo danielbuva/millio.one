@@ -20,3 +20,24 @@
   grid-gap: 10px;
   grid-template-columns: repeat(3, 1fr);
 }
+
+.page-indicator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  gap: 5px;
+  color: #000;
+  user-select: none;
+}
+
+.page-indicator {
+  border-bottom: #2f2f2f solid 3px;
+}
+
+.active-indicator {
+  user-select: text;
+  border-bottom: #fff solid 3px;
+}

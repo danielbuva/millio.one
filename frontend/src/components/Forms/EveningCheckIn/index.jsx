@@ -347,6 +347,8 @@ function EveningCheckIn() {
         (pageIndex === 6 && prompt2HasError)
       }
       page={pages[pageIndex]}
+      currentPageIndex={pageIndex}
+      numberOfPages={pages.length}
     />
   );
 }

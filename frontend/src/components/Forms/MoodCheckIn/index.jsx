@@ -358,6 +358,8 @@ function MoodCheckIn() {
         (pageIndex === 5 && prompt2HasError)
       }
       page={pages[pageIndex]}
+      currentPageIndex={pageIndex}
+      numberOfPages={pages.length}
     />
   );
 }

@@ -312,6 +312,8 @@ function MorningCheckIn() {
         (pageIndex === 4 && prompt2HasError)
       }
       page={pages[pageIndex]}
+      currentPageIndex={pageIndex}
+      numberOfPages={pages.length}
     />
   );
 }

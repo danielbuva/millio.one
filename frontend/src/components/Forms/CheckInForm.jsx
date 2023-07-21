@@ -26,6 +26,8 @@ function CheckInForm({
   handlePageRight,
   disabledRight,
   page,
+  numberOfPages,
+  currentPageIndex,
 }) {
   return (
     <PageWrapper
@@ -36,6 +38,10 @@ function CheckInForm({
       <div className="check-in-wrapper">
         <div className="page-container">{page}</div>
       </div>
+      <PageIndicator
+        currentPageIndex={currentPageIndex}
+        numberOfPages={numberOfPages}
+      />
     </PageWrapper>
   );
 }
@@ -114,6 +120,26 @@ export function Descriptions({ updateDescription, description, descRef }) {
   );
 }
 
-// export function
+function PageIndicator({ numberOfPages, currentPageIndex }) {
+  return (
+    <div className="page-indicator-container">
+      {Array(numberOfPages)
+        .fill("")
+        .map((_, i) => {
+          return (
+            <div
+              className={
+                "page-indicator" +
+                (i === currentPageIndex ? " active-indicator" : "")
+              }
+              key={i}
+            >
+              hiii
+            </div>
+          );
+        })}
+    </div>
+  );
+}
 
 export default CheckInForm;
