@@ -153,6 +153,9 @@ function BreatheNow() {
             } else {
               setFinished(true);
             }
+            if (finished && submitted) {
+              navigate("/journey");
+            }
           }
         }}
         hide={!show && !finished}

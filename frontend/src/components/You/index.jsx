@@ -1,7 +1,7 @@
 import { logout, toggleMute } from "../../store/session";
 import useSessionUser from "../../hooks/useSessionUser";
 import { PageWrapper } from "../ClientWrapper/Layout";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 function You() {
@@ -16,16 +16,29 @@ function You() {
     dispatch(toggleMute());
   };
 
+  const handlePageLeft = () => {
+    window.getSelection().empty();
+    if (!sessionStorage.getItem("hasVisited")) {
+      sessionStorage.setItem("hasVisited", "true");
+      navigate("/home");
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
-    <PageWrapper onPageLeft={() => navigate(-1)} disabledRight>
+    <PageWrapper onPageLeft={handlePageLeft} onPageRight={handlePageLeft}>
       <h1>you.</h1>
       <div>
-        <p className="dark pointer" onClick={handleLogout}>
+        <p className="auth-link pointer" onClick={handleLogout}>
           logout
         </p>
-        <p className="dark pointer no-select" onClick={handleMute}>
+        <p className="auth-link pointer" onClick={handleMute}>
           {user.mute ? "unmute" : "mute"}
         </p>
+        <Link className="auth-link" to="/about">
+          about
+        </Link>
       </div>
     </PageWrapper>
   );

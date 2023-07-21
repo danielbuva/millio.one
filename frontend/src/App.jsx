@@ -15,12 +15,14 @@ import EntryDetails from "./components/Journey/EntryDetails";
 import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
 import Breathe from "./components/Forms/Breathe";
 import BreatheNow from "./components/Forms/Breathe/BreatheNow";
+import About from "./components/About";
 
 function App() {
   return (
     <ClientWrapper>
       <Routes>
         <Route exact path="/" element={<Landing />} />
+        <Route exact path="/about" element={<About />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/breathe/now" element={<BreatheNow />} />
         <Route element={<ProtectedRoutes />}>
