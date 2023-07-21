@@ -22,30 +22,8 @@
   padding: 0;
 }
 
-.desc-container {
-  padding: 20px 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-}
-
 #last {
   padding-bottom: 120px;
-}
-
-.desc-option {
-  width: 130px;
-  height: 60px;
-  border: solid 2px #fff;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  font-weight: 700;
 }
 
 #origin {

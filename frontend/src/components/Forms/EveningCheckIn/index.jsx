@@ -22,7 +22,6 @@ function EveningCheckIn() {
   const [stress, setStress] = useState(state.stress);
   const [productive, setProductive] = useState(state.productive);
   const [description, setDescription] = useState(state.description ?? []);
-  const descRef = useRef(null);
 
   const [origin, setOrigin] = useState(state.origin ?? []);
   const [oPrompt, setOPrompt] = useState("");
@@ -243,7 +242,6 @@ function EveningCheckIn() {
         }
         break;
       case 1:
-        descRef.current && descRef.current.scrollTo(0, 0);
         if (productive == null) {
           disabledRight.current = true;
         }

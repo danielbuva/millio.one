@@ -43,16 +43,16 @@ function MoodCheckIn() {
     if (pageIndex === 1 && desc) {
       switch (feeling) {
         case 1:
-          desc.scrollTo(0, 424);
+          desc.scrollTo(0, 390);
           break;
         case 2:
-          desc.scrollTo(0, 944);
+          desc.scrollTo(0, 870);
           break;
         case 3:
-          desc.scrollTo(0, 1368);
+          desc.scrollTo(0, 1260);
           break;
         case 4:
-          desc.scrollTo(0, 1740);
+          desc.scrollTo(0, 1470);
           break;
         default:
           desc.scrollTo(0, 0);

@@ -19,6 +19,8 @@ import {
   desc4Options,
 } from "./utils";
 
+import "./Form.css";
+
 function CheckInForm({
   handlePageLeft,
   handlePageRight,

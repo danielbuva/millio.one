@@ -1,0 +1,22 @@
+.desc-option {
+  width: 130px;
+  height: 60px;
+  border: solid 2px #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.desc-container {
+  padding: 20px 0;
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
