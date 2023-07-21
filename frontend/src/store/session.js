@@ -91,7 +91,6 @@ const sessionReducer = (state = initialState, action) => {
         };
       } else return state;
     case MINUS_ENTRY:
-      console.log("payload: ", action.payload);
       if (action.payload === "morning") {
         return {
           user: {

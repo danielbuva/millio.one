@@ -33,7 +33,6 @@ function Login() {
       });
   };
 
-  console.log(errors);
   return (
     <PageWrapper
       onPageLeft={() => {

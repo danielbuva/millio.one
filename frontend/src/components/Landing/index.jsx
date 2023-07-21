@@ -71,7 +71,6 @@ function Landing() {
           }}
           onBlur={async () => {
             if (email.includes("@") && email.includes(".")) {
-              console.log("entering");
               const emailInUse = await (
                 await csrfFetch(`/api/session/${email}`)
               ).json();
