@@ -7,10 +7,12 @@ import {
 import thunk from "redux-thunk";
 import session from "./session";
 import journey from "./journey";
+import layout from "./layout";
 
 const rootReducer = combineReducers({
   session,
   journey,
+  layout,
 });
 
 let enhancer;

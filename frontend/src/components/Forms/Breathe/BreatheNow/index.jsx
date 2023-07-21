@@ -1,12 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { createEntry } from "../../../../store/journey";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
 import Windmill from "../../../icons/Entry/Windmill";
 import CirclePulse from "./CirclePulse";
 import Timer from "../../../icons/Entry/Timer";
+import { setShow } from "../../../../store/layout";
 
 const actions = [
   "get comfortable",
@@ -20,11 +21,11 @@ const actions = [
 function BreatheNow() {
   const [finished, setFinished] = useState(false);
   const [action, setAction] = useState(0);
-  const [show, setShow] = useState(false);
   const [duration, setDuration] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const { state } = useLocation();
   const dispatch = useDispatch();
+  const show = useSelector((s) => s.layout.show);
 
   const navigate = useNavigate();
 
@@ -101,13 +102,13 @@ function BreatheNow() {
     let interval;
     if (show) {
       interval = setInterval(() => {
-        setShow(false);
+        dispatch(setShow(false));
       }, 2000);
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [show]);
+  }, [dispatch, show]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -127,15 +128,14 @@ function BreatheNow() {
         display: "flex",
         alignItems: "center",
         height: "100%",
-        cursor: show ? "default" : "none",
       }}
-      onMouseMove={() => setShow(true)}
-      onClick={() => setShow(true)}
+      onMouseMove={() => dispatch(setShow(true))}
+      onClick={() => dispatch(setShow(true))}
     >
       <PageWrapper
         onPageLeft={() => {
           if (!show) {
-            setShow(true);
+            dispatch(setShow(true));
           } else {
             if (duration < 20 || finished) {
               navigate("/breathe");
@@ -146,7 +146,7 @@ function BreatheNow() {
         }}
         onPageRight={() => {
           if (!show) {
-            setShow(true);
+            dispatch(setShow(true));
           } else {
             if (duration < 20) {
               navigate("/journey");

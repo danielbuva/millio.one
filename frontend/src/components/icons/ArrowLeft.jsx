@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+
 function ArrowLeft({ onClick, className, disabled, hide }) {
+  const show = useSelector((s) => s.layout.show);
+
   return (
     <svg
       onClick={disabled ? undefined : onClick}
@@ -7,7 +11,7 @@ function ArrowLeft({ onClick, className, disabled, hide }) {
       viewBox="0 0 77 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={className + (show ? "" : "hide-cursor")}
       style={
         hide
           ? { opacity: 0 }

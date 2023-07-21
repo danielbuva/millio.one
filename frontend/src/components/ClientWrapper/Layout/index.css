@@ -36,6 +36,10 @@
   user-select: none;
 }
 
+.hide-cursor {
+  cursor: none;
+}
+
 .page-turn-right {
   transform: translateX(8px);
 }

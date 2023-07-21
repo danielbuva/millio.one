@@ -1,15 +1,35 @@
 import useSessionUser from "../../../hooks/useSessionUser";
-import { isAsyncFunction } from "../../../utils";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setShow } from "../../../store/layout";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import ArrowLeft from "../../icons/ArrowLeft";
 import ArrowRight from "../../icons/ArrowRight";
+
+import { isAsyncFunction } from "../../../utils";
 
 import "./index.css";
 
 export function Layout({ children }) {
+  const show = useSelector((s) => s.layout.show);
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
+  const style = show ? undefined : { cursor: "none" };
+
   return (
-    <div id="base">
+    <div
+      id="base"
+      style={style}
+      onClick={
+        pathname === "/breathe/now"
+          ? () => {
+              dispatch(setShow(true));
+            }
+          : undefined
+      }
+    >
       <div id="base-container">{children}</div>
     </div>
   );

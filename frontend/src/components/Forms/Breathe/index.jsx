@@ -32,6 +32,7 @@ function Breathe() {
       },
     });
   };
+
   return (
     <PageWrapper
       onPageLeft={() => navigateBack()}
