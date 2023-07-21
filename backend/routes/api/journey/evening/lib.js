@@ -44,6 +44,7 @@ async function createEntry(req, res) {
     });
 
     res.json({
+      id: newNight.id,
       createdAt,
       description,
       entryType: 1,
@@ -150,6 +151,19 @@ async function updateEntry(req, res) {
   }
 }
 
+async function addPrepared(req, res) {
+  try {
+    const entry = await NightCheckIn.findOne({
+      where: { id: req.params.id },
+    });
+    entry.prepared = req.body.prepared;
+    await entry.save();
+    res.json({ message: "success" });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
-  night: { createEntry, deleteEntry, getEntry, updateEntry },
+  night: { addPrepared, createEntry, deleteEntry, getEntry, updateEntry },
 };

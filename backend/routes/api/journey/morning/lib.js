@@ -39,6 +39,7 @@ async function createEntry(req, res) {
     });
 
     res.json({
+      id: newDay.id,
       createdAt,
       entryType: 1,
       motivation,
@@ -134,6 +135,19 @@ async function updateEntry(req, res) {
   }
 }
 
+async function addPrepared(req, res) {
+  try {
+    const entry = await DayCheckIn.findOne({
+      where: { id: req.params.id },
+    });
+    entry.prepared = req.body.prepared;
+    await entry.save();
+    res.json({ message: "success" });
+  } catch (err) {
+    returnError(err, res);
+  }
+}
+
 module.exports = {
-  day: { createEntry, deleteEntry, getEntry, updateEntry },
+  day: { addPrepared, createEntry, deleteEntry, getEntry, updateEntry },
 };

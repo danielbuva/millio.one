@@ -7,7 +7,7 @@ import { origins } from "../utils";
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
 import YesNo from "../../icons/YesNo";
 
-import { createEntry, updateEntry } from "../../../store/journey";
+import { createEntry } from "../../../store/journey";
 import { csrfFetch } from "../../../store/utils";
 
 import useNavigateBack from "../../../hooks/useNavigateBack";
@@ -16,7 +16,7 @@ import useEditState from "../../../hooks/useEditState";
 import "./EveningCheckIn.css";
 
 function EveningCheckIn() {
-  const { isEditing, state } = useEditState();
+  const { isEditing, state, setIsEditing } = useEditState();
 
   const [rest, setRest] = useState(state.rest);
   const [stress, setStress] = useState(state.stress);
@@ -29,6 +29,7 @@ function EveningCheckIn() {
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   const [prepared, setPrepared] = useState(state.prepared);
+  const [id, setId] = useState(state.id);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
@@ -224,9 +225,9 @@ function EveningCheckIn() {
       </div>
     </div>
   );
+  console.log({ id, pageIndex, isEditing });
 
   const pages = [page1, page2, page3, page4, page5, page6, page7, page8];
-
   const handlePageRight = async () => {
     switch (pageIndex) {
       case 0:
@@ -235,6 +236,7 @@ function EveningCheckIn() {
         }
         break;
       case 1:
+        descRef.current && descRef.current.scrollTo(0, 0);
         if (productive == null) {
           disabledRight.current = true;
         }
@@ -267,16 +269,46 @@ function EveningCheckIn() {
         }
         break;
       case 6:
-        if (prepared == null) {
-          disabledRight.current = true;
+        if (isEditing) {
+          await csrfFetch(`/api/journey/evening/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              description,
+              stress,
+              rest,
+              origin,
+              prepared,
+              productive,
+              prompt1,
+              prompt2,
+            }),
+          }).then(() => {
+            if (state.id) {
+              navigate(`/journey/evening/${id}`);
+            } else {
+              navigate("/journey");
+            }
+          });
+        } else {
+          dispatch(
+            createEntry(
+              {
+                createdAt,
+                description,
+                stress,
+                rest,
+                origin,
+                productive,
+                prompt1,
+                prompt2,
+              },
+              "evening"
+            )
+          ).then(setId);
         }
         break;
       default:
         break;
-    }
-
-    if (pageIndex === 1 && descRef.current) {
-      descRef.current.scrollTo(0, 0);
     }
 
     if (pageIndex < pages.length - 1) {
@@ -284,42 +316,13 @@ function EveningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      if (isEditing) {
-        dispatch(
-          updateEntry(
-            {
-              id: state.id,
-              description,
-              stress,
-              rest,
-              origin,
-              prepared,
-              productive,
-              prompt1,
-              prompt2,
-            },
-            "evening"
-          )
-        ).then(() => navigate(`/journey/evening/${state.id}`));
-      } else {
-        dispatch(
-          createEntry(
-            {
-              createdAt,
-              description,
-              stress,
-              rest,
-              origin,
-              prepared,
-              productive,
-              prompt1,
-              prompt2,
-            },
-            "evening"
-          )
-        ).then(() => navigate("/journey"));
-        navigate("/journey");
+      if (prepared != null) {
+        await csrfFetch(`/api/journey/evening/prepared/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ prepared }),
+        });
       }
+      navigate("/journey");
     }
   };
 
@@ -330,6 +333,9 @@ function EveningCheckIn() {
       });
     } else {
       navigateBack();
+    }
+    if (pageIndex === 7) {
+      setIsEditing(true);
     }
     disabledRight.current = false;
   };

@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 function useEditState() {
   const location = useLocation();
   const state = location.state ?? {};
-  let isEditing = !!state.id;
+  const [isEditing, setIsEditing] = useState(!!state.id);
 
-  return { isEditing, state };
+  return { isEditing, state, setIsEditing };
 }
 
 export default useEditState;

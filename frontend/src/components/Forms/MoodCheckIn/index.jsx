@@ -1,4 +1,4 @@
-import { createEntry, updateEntry } from "../../../store/journey";
+import { createEntry } from "../../../store/journey";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ import { csrfFetch } from "../../../store/utils";
 import "./MoodCheckIn.css";
 
 function MoodCheckIn() {
-  let { isEditing, state } = useEditState();
+  const { isEditing, state, setIsEditing } = useEditState();
 
   const [feeling, setFeeling] = useState(state.feeling);
   const [description, setDescription] = useState(state.description ?? []);
@@ -26,6 +26,7 @@ function MoodCheckIn() {
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   const [response, setResponse] = useState(null);
+  const [id, setId] = useState(state.id);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
@@ -240,7 +241,6 @@ function MoodCheckIn() {
         return previousPage + 1;
       });
     }
-
     switch (pageIndex) {
       case 0:
         if (description.length < 1) {
@@ -285,20 +285,22 @@ function MoodCheckIn() {
         break;
       case 5:
         if (isEditing) {
-          dispatch(
-            updateEntry(
-              {
-                id: state.id,
-                description,
-                feeling,
-                origin,
-                prompt1,
-                prompt2,
-              },
-              "mood"
-            )
-          );
-          navigate(`/journey/mood/${state.id}`);
+          await csrfFetch(`/api/journey/mood/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              description,
+              feeling,
+              origin,
+              prompt1,
+              prompt2,
+            }),
+          }).then(() => {
+            if (state.id) {
+              navigate(`/journey/mood/${id}`);
+            } else {
+              navigate("/journey");
+            }
+          });
         } else {
           dispatch(
             createEntry(
@@ -313,7 +315,7 @@ function MoodCheckIn() {
               },
               "mood"
             )
-          );
+          ).then(setId);
         }
         break;
       case pages.length - 1:
@@ -332,8 +334,8 @@ function MoodCheckIn() {
     } else {
       navigateBack();
     }
-    if (pageIndex === 5) {
-      isEditing = true;
+    if (pageIndex === 6) {
+      setIsEditing(true);
     }
     disabledRight.current = false;
   };

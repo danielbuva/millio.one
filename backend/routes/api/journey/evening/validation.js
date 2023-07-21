@@ -32,10 +32,6 @@ const validBody = (
     errorResult.errors.description = "select up to 3";
   }
 
-  if (prepared == null) {
-    errorResult.errors.prepared = "prepared is required";
-  }
-
   if (isNaN(productive)) {
     errorResult.errors.productive = "productive is required";
   }

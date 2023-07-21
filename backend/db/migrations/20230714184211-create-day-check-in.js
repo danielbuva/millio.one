@@ -53,7 +53,7 @@ module.exports = {
           type: Sequelize.STRING(600),
         },
         prepared: {
-          allowNull: false,
+          allowNull: true,
           type: Sequelize.BOOLEAN,
         },
         createdAt: {

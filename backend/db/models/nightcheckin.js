@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       prompt1: { allowNull: false, type: DataTypes.STRING },
       prompt2: { allowNull: false, type: DataTypes.STRING },
-      prepared: { allowNull: false, type: DataTypes.BOOLEAN },
+      prepared: { allowNull: true, type: DataTypes.BOOLEAN },
     },
     {
       sequelize,

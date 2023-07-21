@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { createEntry, updateEntry } from "../../../store/journey";
+import { createEntry } from "../../../store/journey";
 import { csrfFetch } from "../../../store/utils";
 
 import { origins } from "../utils";
@@ -16,7 +16,7 @@ import useEditState from "../../../hooks/useEditState";
 import "./MorningCheckIn.css";
 
 function MorningCheckIn() {
-  const { isEditing, state } = useEditState();
+  const { isEditing, state, setIsEditing } = useEditState();
 
   const [sleep, setSleep] = useState(state.sleep);
   const [motivation, setMotivation] = useState(state.motivation);
@@ -28,6 +28,7 @@ function MorningCheckIn() {
   const [prompt1, setPrompt1] = useState(state.prompt1 ?? "");
   const [prompt2, setPrompt2] = useState(state.prompt2 ?? "");
   const [prepared, setPrepared] = useState(state.prepared);
+  const [id, setId] = useState(state.id);
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
@@ -182,20 +183,15 @@ function MorningCheckIn() {
           activeNo={prepared === false}
           activeYes={prepared === true}
           center
-          onYes={() => {
-            setPrepared(true);
-            disabledRight.current = false;
-          }}
-          onNo={() => {
-            setPrepared(false);
-            disabledRight.current = false;
-          }}
+          onYes={() => setPrepared(true)}
+          onNo={() => setPrepared(false)}
         />
       </div>
     </div>
   );
 
   const pages = [page1, page2, page3, page4, page5, page6];
+  console.log({ isEditing, pageIndex });
 
   const handlePageRight = async () => {
     switch (pageIndex) {
@@ -232,8 +228,37 @@ function MorningCheckIn() {
         );
         break;
       case 4:
-        if (prepared == null) {
-          disabledRight.current = true;
+        if (isEditing) {
+          await csrfFetch(`/api/journey/morning/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              origin: focus,
+              motivation,
+              prepared,
+              prompt1,
+              prompt2,
+              sleep,
+            }),
+          }).then(() => {
+            if (state.id) {
+              navigate(`/journey/morning/${id}`);
+            }
+          });
+        } else {
+          dispatch(
+            createEntry(
+              {
+                createdAt,
+                origin: focus,
+                motivation,
+                prompt1,
+                prompt2,
+                sleep,
+                tyPrompt: promptNum.current,
+              },
+              "morning"
+            )
+          ).then(setId);
         }
         break;
       default:
@@ -249,42 +274,15 @@ function MorningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      if (isEditing) {
-        dispatch(
-          updateEntry(
-            {
-              id: state.id,
-              origin: focus,
-              motivation,
-              prepared,
-              prompt1,
-              prompt2,
-              sleep,
-            },
-            "morning"
-          )
-        );
-        navigate(`/journey/morning/${state.id}`);
-      } else {
-        dispatch(
-          createEntry(
-            {
-              createdAt,
-              origin: focus,
-              motivation,
-              prepared,
-              prompt1,
-              prompt2,
-              sleep,
-              tyPrompt: promptNum.current,
-            },
-            "morning"
-          )
-        ).then(() => navigate("/journey"));
+      if (prepared != null) {
+        await csrfFetch(`/api/journey/morning/prepared/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ prepared }),
+        });
       }
+      navigate("/journey");
     }
   };
-
   const handlePageLeft = () => {
     if (pageIndex > 0) {
       setPageIndex((previousPage) => {
@@ -292,6 +290,9 @@ function MorningCheckIn() {
       });
     } else {
       navigateBack();
+    }
+    if (pageIndex === 5) {
+      setIsEditing(true);
     }
     disabledRight.current = false;
   };

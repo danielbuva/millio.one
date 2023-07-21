@@ -28,9 +28,7 @@ const validBody = (
   } else if (origin.length > 3) {
     errorResult.errors.description = "select up to 3";
   }
-  if (prepared == null) {
-    errorResult.errors.prepared = "prepared is required";
-  }
+
   if (!isEditing && tyPrompt == null) {
     errorResult.errors.tyPrompt = "tyPrompt is required";
   }

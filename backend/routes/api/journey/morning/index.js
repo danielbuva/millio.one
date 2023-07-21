@@ -6,5 +6,6 @@ router.post("/", verifyAuth, day.createEntry);
 router.get("/:id", verifyAuth, day.getEntry);
 router.delete("/:id", verifyAuth, day.deleteEntry);
 router.put("/:id", verifyAuth, day.updateEntry);
+router.put("/prepared/:id", verifyAuth, day.addPrepared);
 
 module.exports = router;

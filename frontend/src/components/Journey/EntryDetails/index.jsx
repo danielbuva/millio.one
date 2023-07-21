@@ -5,20 +5,17 @@ import {
   useParams,
 } from "react-router-dom";
 
-import {
-  deleteEntry,
-  getEntry,
-  readEntries,
-} from "../../../store/journey";
+import { getEntry, readEntries } from "../../../store/journey";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { secondsToMinutesAndSeconds, time } from "../../../utils";
 
 import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
-
-import YesNo from "../../icons/YesNo";
 import { week } from "../state";
+
+import { csrfFetch } from "../../../store/utils";
+import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
 
@@ -40,7 +37,7 @@ function EntryDetails() {
   if (entry.entryType == null || days.length < 1) return null;
 
   const handleYes = async () => {
-    await dispatch(deleteEntry(id, type));
+    await csrfFetch(`/api/journey/${type}/${id}`, { method: "DELETE" });
     navigate("/journey");
   };
 
@@ -290,10 +287,12 @@ function Body() {
             <p>
               {entry.tyPrompt} <br /> <span>{entry.prompt2}</span>
             </p>
-            <p className="pb">
-              you {entry.prepared ? "felt" : "didn't feel"} prepated for
-              the day.
-            </p>
+            {entry.prepared !== null && (
+              <p className="pb">
+                you {entry.prepared ? "felt" : "didn't feel"} prepated for
+                the day.
+              </p>
+            )}
           </div>
         </div>
       );
@@ -332,10 +331,12 @@ function Body() {
             <p>
               {entry.prompt} <br /> <span>{entry.prompt2}</span>
             </p>
-            <p className="pb">
-              you {entry.prepared ? "felt" : "didn't feel"} prepated for
-              the night.
-            </p>
+            {entry.prepared !== null && (
+              <p className="pb">
+                you {entry.prepared ? "felt" : "didn't feel"} prepated for
+                the night.
+              </p>
+            )}
           </div>
         </div>
       );

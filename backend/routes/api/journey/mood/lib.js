@@ -40,6 +40,7 @@ async function createEntry(req, res) {
     });
 
     res.json({
+      id: newMood.id,
       prompt1,
       prompt2,
       createdAt,
@@ -92,7 +93,7 @@ async function getEntry(req, res) {
 
 async function updateEntry(req, res) {
   try {
-    const { prompt1, description, feeling, origin } = validBody(
+    const { prompt1, prompt2, description, feeling, origin } = validBody(
       req.body,
       true
     );
@@ -105,6 +106,7 @@ async function updateEntry(req, res) {
     await Promise.all([
       entry.update({
         prompt1,
+        prompt2,
         feeling,
       }),
       Description.destroy({ where: { moodId: req.params.id } }),
