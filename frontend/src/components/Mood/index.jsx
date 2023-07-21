@@ -35,11 +35,15 @@ function Mood() {
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <h1>{avgMood ? avgMoodText + " mood." : "mood."}</h1>
       <div className="avg-mood">
-        <CircleArrow up={avgMood >= 3} />
-        {avgMood && (
-          <p className="avg-mood-text">
-            {avgMood % 1 === 0 ? avgMood + ".0" : avgMood} average mood
-          </p>
+        {avgMood ? (
+          <>
+            <CircleArrow up={avgMood >= 3} />
+            <p className="avg-mood-text">
+              {avgMood % 1 === 0 ? avgMood + ".0" : avgMood} average mood
+            </p>
+          </>
+        ) : (
+          <p>mood trends here, but no data yet.</p>
         )}
       </div>
       <div className="divider" />
