@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import { getEntry, readEntries } from "../../../store/journey";
+import { deleteEntry } from "../../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,6 @@ import { secondsToMinutesAndSeconds, time } from "../../../utils";
 import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
 import { week } from "../state";
 
-import { csrfFetch } from "../../../store/utils";
 import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
@@ -36,11 +36,6 @@ function EntryDetails() {
 
   if (entry.entryType == null || days.length < 1) return null;
 
-  const handleYes = async () => {
-    await csrfFetch(`/api/journey/${type}/${id}`, { method: "DELETE" });
-    navigate("/journey");
-  };
-
   let entryIndex = state?.entryIndex;
 
   if (entryIndex == null) {
@@ -59,6 +54,21 @@ function EntryDetails() {
   if (dayI < 0 || entryIndex < 0 || entryIndex == null || dayI == null) {
     return null;
   }
+
+  const handleYes = () => {
+    dispatch(
+      deleteEntry(
+        type,
+        id,
+        dateString(new Date(), days[dayI].date) === "today"
+      )
+    )
+      .then(() => navigate("/journey"))
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
+    // navigate("/journey");
+  };
 
   let leftPageDayI;
   let rightPageDayI;
@@ -249,9 +259,7 @@ function Body() {
 
   if (entry.entryType == null) return null;
 
-  const now = new Date();
-
-  const entryDate = dateString(now, entry.createdAt);
+  const entryDate = dateString(new Date(), entry.createdAt);
 
   const createdAt = (
     <p className="entry-created-at">

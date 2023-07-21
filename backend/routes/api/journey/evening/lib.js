@@ -66,6 +66,7 @@ async function deleteEntry(req, res) {
     await NightCheckIn.destroy({
       where: { userId: req.user.id, id: req.params.id },
     });
+    res.json({ message: "success" });
   } catch (err) {
     returnError(err, res);
   }

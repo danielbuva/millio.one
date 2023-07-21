@@ -30,6 +30,8 @@ function Home() {
     greeting = "good evening";
   }
 
+  console.log(user);
+
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
       <h1>

@@ -1,11 +1,10 @@
+import { addEntry } from "./session";
 import { csrfFetch } from "./utils";
 
-const ADD_ENTRY = "journey/entry/add";
 const GET_ENTRIES = "journey/entries/get";
 const SET_ENTRY = "journey/entry/set";
 const SET_AVG_MOOD = "journey/mood/set";
 
-const addEntry = () => ({ type: ADD_ENTRY });
 const getEntries = (entries) => ({ type: GET_ENTRIES, payload: entries });
 const setEntry = (entry) => ({ type: SET_ENTRY, payload: entry });
 const getAvgMood = (avgMood) => ({ type: SET_AVG_MOOD, payload: avgMood });
@@ -16,9 +15,13 @@ export const createEntry = (entry, type) => async (dispatch) => {
     body: JSON.stringify(entry),
   });
   const data = await res.json();
-  console.log("entering");
-  console.log(data);
-  dispatch(addEntry());
+  const add1 =
+    type === "morning"
+      ? { hasDayEntryToday: 1 }
+      : type === "evening"
+      ? { hasNightEntryToday: 1 }
+      : null;
+  dispatch(addEntry(add1));
   return data.id;
 };
 
