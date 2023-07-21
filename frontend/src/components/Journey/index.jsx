@@ -39,6 +39,21 @@ function Journey() {
         <>
           <h1>begin your journey.</h1>
           <p className="write-your-first">write your first entry</p>
+          <div className="divider" />
+          <div className="first-check-ins">
+            <Link className="auth-link call" to="/morning/check-in">
+              morning+
+            </Link>
+            <Link className="auth-link call" to="/evening/check-in">
+              evening+
+            </Link>
+            <Link className="auth-link call" to="/mood/check-in">
+              mood+
+            </Link>
+            <Link className="auth-link call" to="/breathe">
+              breathe+
+            </Link>
+          </div>
         </>
       )}
       <NavBar

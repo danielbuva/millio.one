@@ -31,3 +31,15 @@
 .write-your-first {
   color: #707070;
 }
+
+.first-check-ins {
+  display: flex;
+  flex-direction: column;
+}
+
+.call {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import useNavigateBack from "../../../hooks/useNavigateBack";
 import { PageWrapper } from "../../ClientWrapper/Layout";
+import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -15,6 +16,7 @@ function Breathe() {
   const [volume, setVolume] = useState(0.3);
 
   const navigate = useNavigate();
+  const navigateBack = useNavigateBack();
 
   const seconds =
     breathsPerMinute === 3 ? 5 : breathsPerMinute === 4 ? 4 : 3;
@@ -32,7 +34,7 @@ function Breathe() {
   };
   return (
     <PageWrapper
-      onPageLeft={() => navigate("/mood")}
+      onPageLeft={() => navigateBack()}
       onPageRight={handlePageRight}
     >
       <h1>breathe.</h1>
