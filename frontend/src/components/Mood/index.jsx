@@ -33,9 +33,7 @@ function Mood() {
 
   return (
     <PageWrapper onPageRight={handlePageRight} onPageLeft={handlePageLeft}>
-      <h1>
-        {avgMood ? avgMoodText + " mood." : "check in for mood trends."}
-      </h1>
+      <h1>{avgMood ? avgMoodText + " mood." : "mood."}</h1>
       <div className="tiles">
         <Tile
           to="/mood/check-in"
