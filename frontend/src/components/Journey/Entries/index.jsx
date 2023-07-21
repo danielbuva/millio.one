@@ -9,9 +9,9 @@ import Sun from "../../icons/Entry/Sun";
 import { Link } from "react-router-dom";
 
 import { secondsToMinutesAndSeconds, time } from "../../../utils";
+import Windmill from "../../icons/Entry/Windmill";
 
 import "./Entry.css";
-import Windmill from "../../icons/Entry/Windmill";
 
 function Entry({
   createdAt,
