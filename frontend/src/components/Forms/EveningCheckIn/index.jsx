@@ -135,6 +135,13 @@ function EveningCheckIn() {
       </div>
     </div>
   );
+  const prompt1HasError = prompt1.length > 600;
+
+  const prompt1ErrorStyle = prompt1HasError
+    ? { color: "#f4212e" }
+    : prompt1.length >= 550
+    ? { color: "#ffffff" }
+    : { opacity: 0 };
 
   const page6 = (
     <div>
@@ -151,8 +158,16 @@ function EveningCheckIn() {
           }
         }}
       />
+      <p style={prompt1ErrorStyle}>{prompt1.length}/600</p>
     </div>
   );
+  const prompt2HasError = prompt2.length > 600;
+
+  const prompt2ErrorStyle = prompt2HasError
+    ? { color: "#f4212e" }
+    : prompt2.length >= 550
+    ? { color: "#ffffff" }
+    : { opacity: 0 };
 
   const page7 = (
     <div>
@@ -169,6 +184,7 @@ function EveningCheckIn() {
           }
         }}
       />
+      <p style={prompt2ErrorStyle}>{prompt2.length}/600</p>
     </div>
   );
 
@@ -233,7 +249,7 @@ function EveningCheckIn() {
         }
         break;
       case 4:
-        if (prompt1.length < 1) {
+        if (prompt1.length < 1 && !prompt1HasError) {
           disabledRight.current = true;
         }
         setOPrompt(
@@ -245,7 +261,7 @@ function EveningCheckIn() {
         );
         break;
       case 5:
-        if (prompt2.length < 1) {
+        if (prompt2.length < 1 && !prompt2HasError) {
           disabledRight.current = true;
         }
         break;
@@ -321,7 +337,11 @@ function EveningCheckIn() {
     <CheckInForm
       handlePageLeft={handlePageLeft}
       handlePageRight={handlePageRight}
-      disabledRight={disabledRight.current}
+      disabledRight={
+        disabledRight.current ||
+        (pageIndex === 5 && prompt1HasError) ||
+        (pageIndex === 6 && prompt2HasError)
+      }
       page={pages[pageIndex]}
     />
   );

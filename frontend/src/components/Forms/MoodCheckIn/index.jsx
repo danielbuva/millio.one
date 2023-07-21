@@ -144,6 +144,14 @@ function MoodCheckIn() {
     </div>
   );
 
+  const prompt1HasError = prompt1.length > 600;
+
+  const prompt1ErrorStyle = prompt1HasError
+    ? { color: "#f4212e" }
+    : prompt1.length >= 550
+    ? { color: "#ffffff" }
+    : { opacity: 0 };
+
   const page4 = (
     <div>
       <h1>
@@ -162,10 +170,19 @@ function MoodCheckIn() {
           }
         }}
       />
+      <p style={prompt1ErrorStyle}>{prompt1.length}/600</p>
     </div>
   );
 
   const page5 = <div>{response}</div>;
+
+  const prompt2HasError = prompt2.length > 600;
+
+  const prompt2ErrorStyle = prompt2HasError
+    ? { color: "#f4212e" }
+    : prompt2.length >= 550
+    ? { color: "#ffffff" }
+    : { opacity: 0 };
 
   const page6 = (
     <div>
@@ -182,6 +199,7 @@ function MoodCheckIn() {
           }
         }}
       />
+      <p style={prompt2ErrorStyle}>{prompt2.length}/600</p>
     </div>
   );
 
@@ -269,7 +287,7 @@ function MoodCheckIn() {
           });
         break;
       case 2:
-        if (!prompt1) {
+        if (!prompt1 && !prompt1HasError) {
           disabledRight.current = true;
         }
         setTyPrompt(
@@ -278,6 +296,11 @@ function MoodCheckIn() {
           ).json()
         );
 
+        break;
+      case 4:
+        if (!prompt2 && !prompt2HasError) {
+          disabledRight.current = true;
+        }
         break;
       default:
         return;
@@ -299,7 +322,11 @@ function MoodCheckIn() {
     <CheckInForm
       handlePageLeft={handlePageLeft}
       handlePageRight={handlePageRight}
-      disabledRight={disabledRight.current}
+      disabledRight={
+        disabledRight.current ||
+        (pageIndex === 3 && prompt1HasError) ||
+        (pageIndex === 5 && prompt2HasError)
+      }
       page={pages[pageIndex]}
     />
   );
