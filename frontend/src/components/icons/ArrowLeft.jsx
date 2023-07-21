@@ -1,8 +1,21 @@
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function ArrowLeft({ onClick, className, disabled, hide }) {
   const show = useSelector((s) => s.layout.show);
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.keyCode === 37 && !disabled) {
+        onClick();
+      }
+    };
 
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClick, disabled]);
   return (
     <svg
       onClick={disabled ? undefined : onClick}
