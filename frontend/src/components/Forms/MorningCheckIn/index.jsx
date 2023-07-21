@@ -250,10 +250,6 @@ function MorningCheckIn() {
               prompt2,
               sleep,
             }),
-          }).then(() => {
-            if (state.id) {
-              navigate(`/journey/morning/${id}`);
-            }
           });
         } else {
           dispatch(
@@ -285,7 +281,11 @@ function MorningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      navigate("/journey");
+      if (state.id) {
+        navigate(`/journey/morning/${id}`);
+      } else {
+        navigate("/journey");
+      }
     }
   };
   const handlePageLeft = () => {

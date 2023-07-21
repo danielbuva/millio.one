@@ -294,12 +294,6 @@ function MoodCheckIn() {
               prompt1,
               prompt2,
             }),
-          }).then(() => {
-            if (state.id) {
-              navigate(`/journey/mood/${id}`);
-            } else {
-              navigate("/journey");
-            }
           });
         } else {
           dispatch(
@@ -319,7 +313,11 @@ function MoodCheckIn() {
         }
         break;
       case pages.length - 1:
-        navigate("/journey");
+        if (state.id) {
+          navigate(`/journey/mood/${id}`);
+        } else {
+          navigate("/journey");
+        }
         break;
       default:
         return;

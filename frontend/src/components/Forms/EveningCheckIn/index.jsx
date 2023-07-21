@@ -289,12 +289,6 @@ function EveningCheckIn() {
               prompt1,
               prompt2,
             }),
-          }).then(() => {
-            if (state.id) {
-              navigate(`/journey/evening/${id}`);
-            } else {
-              navigate("/journey");
-            }
           });
         } else {
           dispatch(
@@ -323,7 +317,11 @@ function EveningCheckIn() {
         return previousPage + 1;
       });
     } else {
-      navigate("/journey");
+      if (state.id) {
+        navigate(`/journey/evening/${id}`);
+      } else {
+        navigate("/journey");
+      }
     }
   };
 
