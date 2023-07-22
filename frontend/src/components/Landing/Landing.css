@@ -53,3 +53,27 @@
   cursor: pointer;
   color: #d2d2d2;
 }
+
+.eye {
+  position: relative;
+  height: 100%;
+  z-index: 1;
+}
+
+.eye-ball {
+  z-index: 1;
+}
+
+.pupil {
+  position: absolute;
+  left: 278px;
+  top: 190px;
+  z-index: -1;
+}
+
+.iris {
+  position: absolute;
+  left: 331px;
+  top: 243px;
+  z-index: -1;
+}

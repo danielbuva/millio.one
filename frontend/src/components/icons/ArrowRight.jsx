@@ -18,7 +18,7 @@ function ArrowRight({ onClick, className, disabled, hide }) {
   }, [onClick, disabled]);
   return (
     <svg
-      onClick={disabled ? undefined : onClick}
+      onClick={disabled || hide ? undefined : onClick}
       width="77"
       height="24"
       viewBox="0 0 77 24"
@@ -27,7 +27,7 @@ function ArrowRight({ onClick, className, disabled, hide }) {
       className={className + (show ? "" : "hide-cursor")}
       style={
         hide
-          ? { opacity: 0 }
+          ? { opacity: 0, cursor: "default" }
           : disabled
           ? { cursor: "not-allowed" }
           : undefined

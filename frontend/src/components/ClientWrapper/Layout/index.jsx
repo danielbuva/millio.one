@@ -48,7 +48,8 @@ export function PageWrapper({
   disabledRight,
   onPageLeft,
   onPageRight,
-  hide,
+  hideLeft,
+  hideRight,
 }) {
   const [pageLeft, setPageLeft] = useState(
     Boolean(localStorage.getItem("pageLeft")) || false
@@ -115,14 +116,14 @@ export function PageWrapper({
   return (
     <>
       <ArrowLeft
-        hide={hide}
+        hide={hideLeft}
         className={`left-arrow ${pageLeft ? "page-turn-left" : ""}`}
         onClick={handlePageLeft}
         disabled={disabledLeft}
       />
       <div className="base-content">{children}</div>
       <ArrowRight
-        hide={hide}
+        hide={hideRight}
         className={`right-arrow ${pageRight ? "page-turn-right" : ""}`}
         onClick={handlePageRight}
         disabled={disabledRight}

@@ -28,12 +28,14 @@
   transition: transform 0.2s, opacity 1s;
   cursor: pointer;
   user-select: none;
+  z-index: 2;
 }
 
 .right-arrow {
   transition: transform 0.2s, opacity 1s;
   cursor: pointer;
   user-select: none;
+  z-index: 2;
 }
 
 .hide-cursor {

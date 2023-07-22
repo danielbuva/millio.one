@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import useSessionUser from "../../hooks/useSessionUser";
@@ -8,9 +8,13 @@ import { signup } from "../../store/session";
 import { NavBar, PageWrapper } from "../ClientWrapper/Layout";
 import ConfirmLogout from "../ConfirmLogout";
 import { csrfFetch } from "../../store/utils";
+import DemoUser from "../Login/DemoUser";
+
+import Eyeball from "./images/Eyeball.png";
+import Pupil from "./images/Pupil.png";
+import Iris from "./images/Iris.png";
 
 import "./Landing.css";
-import DemoUser from "../Login/DemoUser";
 
 const focusOptions = [
   "mood",
@@ -29,14 +33,60 @@ function Landing() {
   const [focus, setFocus] = useState([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [errors, setErrors] = useState({});
+  const [hideRight, setHideRight] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSessionUser();
   const disabledRight = useRef(false);
+  const eyeRef = useRef(null);
+  const pupilRef = useRef(null);
+  const irisRef = useRef(null);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (pupilRef.current) {
+        const x = (e.clientX - 900) / 6;
+        const y = (e.clientY - 320) / 6;
+        pupilRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      }
+      if (irisRef.current) {
+        const x = (e.clientX - 900) / 4.5;
+        const y = (e.clientY - 320) / 4.5;
+        irisRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      }
+    };
+
+    if (pageIndex === 0) {
+      document.addEventListener("mousemove", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleKeyDown);
+    };
+  }, [pageIndex]);
+
+  useEffect(() => {
+    let timeout;
+    if (pageIndex === 0) {
+      timeout = setTimeout(() => {
+        setHideRight(false);
+      }, 3000);
+    } else if (timeout) {
+      clearTimeout(timeout);
+    }
+    return () => timeout && clearTimeout(timeout);
+  }, [pageIndex]);
   if (user) return <ConfirmLogout />;
+
+  const page0 = (
+    <div className="eye" ref={eyeRef}>
+      <img alt="eye ball" className="eyeball" src={Eyeball} />
+      <img alt="pupil" className="pupil" src={Pupil} ref={pupilRef} />
+      <img alt="iris" className="iris" src={Iris} ref={irisRef} />
+    </div>
+  );
 
   const page1 = (
     <h1 id="land-text-1" key="millio">
@@ -169,21 +219,21 @@ function Landing() {
     </React.Fragment>
   );
 
-  const pages = [page1, page2, page3, page4];
+  const pages = [page0, page1, page2, page3, page4];
 
   const handlePageRight = () => {
     switch (pageIndex) {
-      case 0:
+      case 1:
         if (!email || !password) {
           disabledRight.current = true;
         }
         break;
-      case 1:
+      case 2:
         if (!name) {
           disabledRight.current = true;
         }
         break;
-      case 2:
+      case 3:
         if (focus.length < 1) {
           disabledRight.current = true;
         }
@@ -231,13 +281,17 @@ function Landing() {
       onPageLeft={handlePageLeft}
       onPageRight={handlePageRight}
       disabledRight={
-        (pageIndex === 1 && (errors.email || errors.password)) ||
+        (pageIndex === 2 && (errors.email || errors.password)) ||
         disabledRight.current
       }
+      hideLeft={pageIndex === 0}
+      hideRight={hideRight}
     >
-      <div className="page-container">
-        <div className="page">{pages[pageIndex]}</div>
-        {pageIndex >= 1 && (
+      <div className="page-container" onClick={() => setHideRight(false)}>
+        <div className={pageIndex === 0 ? "" : "page"}>
+          {pages[pageIndex]}
+        </div>
+        {pageIndex >= 2 && (
           <NavBar
             left={
               <Link className="auth-link" to="/about">

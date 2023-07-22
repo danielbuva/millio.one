@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { createEntry } from "../../../../store/journey";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { NavBar, PageWrapper } from "../../../ClientWrapper/Layout";
@@ -162,7 +162,8 @@ function BreatheNow() {
             }
           }
         }}
-        hide={!show && !finished}
+        hideLeft={!show && !finished}
+        hideRight={!show && !finished}
       >
         <div
           style={{
