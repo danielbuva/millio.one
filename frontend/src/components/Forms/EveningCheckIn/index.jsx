@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { origins } from "../utils";
 
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
+import ShouldntBeHere from "../ShouldntBeHere";
 import YesNo from "../../icons/YesNo";
 
 import { createEntry } from "../../../store/journey";
@@ -16,7 +17,8 @@ import useEditState from "../../../hooks/useEditState";
 import "./EveningCheckIn.css";
 
 function EveningCheckIn() {
-  const { isEditing, state, setIsEditing } = useEditState();
+  const { isEditing, state, setIsEditing, shouldNavigateBack } =
+    useEditState();
 
   const [rest, setRest] = useState(state.rest);
   const [stress, setStress] = useState(state.stress);
@@ -42,6 +44,20 @@ function EveningCheckIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigateBack = useNavigateBack();
+
+  useEffect(() => {
+    let show;
+    if (pageIndex === 7) {
+      show = setTimeout(() => {
+        setShow(true);
+      }, 50);
+    } else {
+      setShow(false);
+    }
+    return () => clearTimeout(show);
+  }, [pageIndex]);
+
+  if (shouldNavigateBack) return <ShouldntBeHere />;
 
   const page1 = (
     <Selection
@@ -190,18 +206,6 @@ function EveningCheckIn() {
       <p style={prompt2ErrorStyle}>{prompt2.length}/600</p>
     </div>
   );
-
-  useEffect(() => {
-    let show;
-    if (pageIndex === 7) {
-      show = setTimeout(() => {
-        setShow(true);
-      }, 50);
-    } else {
-      setShow(false);
-    }
-    return () => clearTimeout(show);
-  }, [pageIndex]);
 
   const page8 = (
     <div className="last-page">

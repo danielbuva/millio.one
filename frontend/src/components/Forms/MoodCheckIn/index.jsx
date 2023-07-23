@@ -6,16 +6,18 @@ import { useDispatch } from "react-redux";
 import { origins } from "../utils";
 
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
+import ShouldntBeHere from "../ShouldntBeHere";
 import YesNo from "../../icons/YesNo";
 
-import useEditState from "../../../hooks/useEditState";
 import useNavigateBack from "../../../hooks/useNavigateBack";
+import useEditState from "../../../hooks/useEditState";
 import { csrfFetch } from "../../../store/utils";
 
 import "./MoodCheckIn.css";
 
 function MoodCheckIn() {
-  const { isEditing, state, setIsEditing } = useEditState();
+  const { isEditing, state, setIsEditing, shouldNavigateBack } =
+    useEditState();
 
   const [feeling, setFeeling] = useState(state.feeling);
   const [description, setDescription] = useState(state.description ?? []);
@@ -62,6 +64,8 @@ function MoodCheckIn() {
       }
     }
   }, [feeling, pageIndex]);
+
+  if (shouldNavigateBack) return <ShouldntBeHere />;
 
   const page1 = (
     <Selection

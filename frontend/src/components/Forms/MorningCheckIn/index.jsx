@@ -8,6 +8,7 @@ import { csrfFetch } from "../../../store/utils";
 import { origins } from "../utils";
 
 import CheckInForm, { Selection } from "../CheckInForm";
+import ShouldntBeHere from "../ShouldntBeHere";
 import YesNo from "../../icons/YesNo";
 
 import useNavigateBack from "../../../hooks/useNavigateBack";
@@ -16,7 +17,8 @@ import useEditState from "../../../hooks/useEditState";
 import "./MorningCheckIn.css";
 
 function MorningCheckIn() {
-  const { isEditing, state, setIsEditing } = useEditState();
+  const { isEditing, state, setIsEditing, shouldNavigateBack } =
+    useEditState();
 
   const [sleep, setSleep] = useState(state.sleep);
   const [motivation, setMotivation] = useState(state.motivation);
@@ -44,6 +46,20 @@ function MorningCheckIn() {
   const navigateBack = useNavigateBack();
 
   const promptNum = useRef(Math.floor(Math.random() * 8));
+
+  useEffect(() => {
+    let show;
+    if (pageIndex === 5) {
+      show = setTimeout(() => {
+        setShow(true);
+      }, 50);
+    } else {
+      setShow(false);
+    }
+    return () => clearTimeout(show);
+  }, [pageIndex]);
+
+  if (shouldNavigateBack) return <ShouldntBeHere />;
 
   const page1 = (
     <Selection
@@ -161,18 +177,6 @@ function MorningCheckIn() {
       <p style={prompt2ErrorStyle}>{prompt2.length}/600</p>
     </div>
   );
-
-  useEffect(() => {
-    let show;
-    if (pageIndex === 5) {
-      show = setTimeout(() => {
-        setShow(true);
-      }, 50);
-    } else {
-      setShow(false);
-    }
-    return () => clearTimeout(show);
-  }, [pageIndex]);
 
   const page6 = (
     <div className="last-page">
