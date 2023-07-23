@@ -321,3 +321,9 @@ input:-webkit-autofill::first-line {
   letter-spacing: 5px;
   margin-bottom: 32px;
 }
+
+.face {
+  font-size: 60px;
+  font-weight: 700;
+  margin-top: 200px;
+}

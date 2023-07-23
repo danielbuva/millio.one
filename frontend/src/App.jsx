@@ -16,6 +16,7 @@ import ProtectedRoutes from "./components/ClientWrapper/ProtectedRoutes";
 import Breathe from "./components/Forms/Breathe";
 import BreatheNow from "./components/Forms/Breathe/BreatheNow";
 import About from "./components/About";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="/evening/check-in" element={<EveningCheckIn />} />
           <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </ClientWrapper>
   );
