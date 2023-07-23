@@ -135,67 +135,67 @@ const origins = [
     value: "time alone",
   },
   {
-    dayId: 1,
+    moodId: 1,
     value: "nature",
   },
   {
-    dayId: 1,
+    moodId: 1,
     value: "party",
   },
   {
-    dayId: 2,
+    moodId: 2,
     value: "music",
   },
   {
-    dayId: 2,
+    moodId: 2,
     value: "nature",
   },
   {
-    dayId: 3,
+    moodId: 3,
     value: "cleaning",
   },
   {
-    dayId: 3,
+    moodId: 3,
     value: "creativity",
   },
   {
-    dayId: 4,
+    moodId: 4,
     value: "relaxing",
   },
   {
-    dayId: 5,
+    moodId: 5,
     value: "travel",
   },
   {
-    dayId: 6,
+    moodId: 6,
     value: "work",
   },
   {
-    dayId: 6,
+    moodId: 6,
     value: "friends",
   },
   {
-    dayId: 6,
+    moodId: 6,
     value: "pet",
   },
   {
-    dayId: 7,
+    moodId: 7,
     value: "partner",
   },
   {
-    dayId: 8,
+    moodId: 8,
     value: "work",
   },
   {
-    dayId: 8,
+    moodId: 8,
     value: "self-care",
   },
   {
-    dayId: 9,
+    moodId: 9,
     value: "fitness",
   },
   {
-    dayId: 10,
+    moodId: 10,
     value: "time alone",
   },
 ];
