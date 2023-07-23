@@ -9,9 +9,9 @@ const entries = [
   {
     id: 1,
     userId: 1,
-    retst: 4,
+    rest: 4,
     stress: 0,
-    productivity: 1,
+    productive: 1,
     prompt1:
       "today I got all my work done and more. I also went rock climbing with my friend miguel!",
     prompt2:
@@ -22,9 +22,9 @@ const entries = [
   {
     id: 2,
     userId: 1,
-    retst: 4,
+    rest: 4,
     stress: 1,
-    productivity: 2,
+    productive: 2,
     prompt1:
       "giving maximum effort at work, and ended my day with a date :)",
     prompt2:
@@ -35,9 +35,9 @@ const entries = [
   {
     id: 3,
     userId: 1,
-    retst: 3,
+    rest: 3,
     stress: 3,
-    productivity: 3,
+    productive: 3,
     prompt1: "more work, cleaning and lots of music.",
     prompt2: "spending all my creative energy on my work.",
     prepared: false,
@@ -46,9 +46,9 @@ const entries = [
   {
     id: 4,
     userId: 1,
-    retst: 3,
+    rest: 3,
     stress: 3,
-    productivity: 3,
+    productive: 3,
     prompt1: "continue work and took my time to enjoy the day.",
     prompt2: "I get to spend everyday exactly how I want.",
     prepared: false,
@@ -57,9 +57,9 @@ const entries = [
   {
     id: 5,
     userId: 1,
-    retst: 3,
+    rest: 3,
     stress: 3,
-    productivity: 3,
+    productive: 3,
     prompt1:
       "I went sight seeing today, along with work in all the places I visited.",
     prompt2: "I have arrived.",
@@ -69,9 +69,9 @@ const entries = [
   {
     id: 6,
     userId: 1,
-    retst: 2,
+    rest: 2,
     stress: 4,
-    productivity: 4,
+    productive: 4,
     prompt1:
       "work, saw some friends and spent time with my kitty as usual.",
     prompt2: "yes!",
@@ -81,9 +81,9 @@ const entries = [
   {
     id: 7,
     userId: 1,
-    retst: 2,
+    rest: 2,
     stress: 4,
-    productivity: 4,
+    productive: 4,
     prompt1: "I focused on work and my partner today. I got a lot done :)",
     prompt2:
       "I only listen, I try my best not to influence unless they ask.",
@@ -93,9 +93,9 @@ const entries = [
   {
     id: 8,
     userId: 1,
-    retst: 2,
+    rest: 2,
     stress: 3,
-    productivity: 4,
+    productive: 4,
     prompt1: "I focused on work again and taking care of myself.",
     prompt2: "I don't today :/",
     prepared: false,
@@ -104,9 +104,9 @@ const entries = [
   {
     id: 9,
     userId: 1,
-    retst: 1,
+    rest: 1,
     stress: 3,
-    productivity: 4,
+    productive: 4,
     prompt1: "more work, but also some climbing with my friend.",
     prompt2: "not really :/",
     prepared: false,
@@ -115,9 +115,9 @@ const entries = [
   {
     id: 10,
     userId: 1,
-    retst: 1,
+    rest: 1,
     stress: 4,
-    productivity: 4,
+    productive: 4,
     prompt1: "work, and spent time just sitting today.",
     prompt2:
       "I was alone today, I felt waves of lonely come and go and ultimately felt at peace in the motions.",

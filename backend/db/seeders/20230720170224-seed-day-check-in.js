@@ -11,7 +11,7 @@ const entries = [
     userId: 1,
     sleep: 4,
     tyPrompt: 9,
-    moativation: 4,
+    motivation: 4,
     prompt1: "I want to be able to be someone my coworkers look up to.",
     prompt2: "My grandmother bought me a Purple seat cushion.",
     prepared: true,
@@ -22,7 +22,7 @@ const entries = [
     userId: 1,
     sleep: 4,
     tyPrompt: 8,
-    moativation: 4,
+    motivation: 4,
     prompt1:
       "her voice is an angelic song with sweet words that cure my ice cream craving and she has a beautiful mind.",
     prompt2: "I feel love, warmth, and content",
@@ -34,7 +34,7 @@ const entries = [
     userId: 1,
     sleep: 3,
     tyPrompt: 7,
-    moativation: 3,
+    motivation: 3,
     prompt1: "I enjoy both no real preference.",
     prompt2: "I can start!",
     prepared: false,
@@ -45,7 +45,7 @@ const entries = [
     userId: 1,
     sleep: 3,
     tyPrompt: 6,
-    moativation: 3,
+    motivation: 3,
     prompt1:
       "hey future me. right now the weight of the world is off our shoulders. love u",
     prompt2: "I enjoy making and eating good soups!",
@@ -57,7 +57,7 @@ const entries = [
     userId: 1,
     sleep: 3,
     tyPrompt: 5,
-    moativation: 3,
+    motivation: 3,
     prompt1: "it's about the journey!",
     prompt2:
       "movie nights, game nights, eating together, making food together, my kitty, home is home.",
@@ -69,7 +69,7 @@ const entries = [
     userId: 1,
     sleep: 2,
     tyPrompt: 4,
-    moativation: 2,
+    motivation: 2,
     prompt1: "rip ponyboy, he was my mate, now he's in my heart and mind.",
     prompt2:
       "give a wholehearted presence, smile, tell them your funniest joke and pay attention to them.",
@@ -81,7 +81,7 @@ const entries = [
     userId: 1,
     sleep: 2,
     tyPrompt: 3,
-    moativation: 2,
+    motivation: 2,
     prompt1: "I want to drift race down a mountain vs my queen.",
     prompt2: "I recently got a job. thanks pierre <3",
     prepared: false,
@@ -92,7 +92,7 @@ const entries = [
     userId: 1,
     sleep: 2,
     tyPrompt: 2,
-    moativation: 2,
+    motivation: 2,
     prompt1:
       "I can clean myself, cook myself some good meals, and allow myself to sleep tonight.",
     prompt2: "I think the cure is to live in the present.",
@@ -104,7 +104,7 @@ const entries = [
     userId: 1,
     sleep: 1,
     tyPrompt: 1,
-    moativation: 1,
+    motivation: 1,
     prompt1:
       "I am so busy with other interests. I often get only work out when I feel like it. I can start working out when it's time to work out and I can moderate my time spent on other interests.",
     prompt2:
@@ -117,7 +117,7 @@ const entries = [
     userId: 1,
     sleep: 1,
     tyPrompt: 0,
-    moativation: 1,
+    motivation: 1,
     prompt1:
       "it's hard to truly be alone. I would like to be alone for a few years maybe 6.",
     prompt2:
