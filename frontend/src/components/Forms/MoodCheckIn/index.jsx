@@ -32,7 +32,9 @@ function MoodCheckIn() {
   const disabledRight = useRef(!isEditing);
   const promptNum = useRef(Math.floor(Math.random() * 8));
 
-  const createdAt = useRef(new Date());
+  const createdAt = useRef(
+    state?.createdAt ? new Date(state.createdAt) : new Date()
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

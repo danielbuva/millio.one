@@ -18,6 +18,7 @@ import { week } from "../state";
 import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
+import PageNotFound from "../../PageNotFound";
 
 function EntryDetails() {
   const [show, setShow] = useState();
@@ -34,7 +35,7 @@ function EntryDetails() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  if (entry.entryType == null || days.length < 1) return null;
+  if (entry.entryType == null || days.length < 1) return <PageNotFound />;
 
   let entryIndex = state?.entryIndex;
 
@@ -67,7 +68,6 @@ function EntryDetails() {
       .catch((error) => {
         console.error("An error occurred:", error);
       });
-    // navigate("/journey");
   };
 
   let leftPageDayI;
@@ -419,7 +419,7 @@ function Body() {
 
 function Edit() {
   const entry = useSelector((s) => s.journey.entry);
-  const { id, type } = useParams();
+  const { type } = useParams();
 
   if (entry.entryType == null) return null;
   let state = {};
@@ -428,6 +428,7 @@ function Edit() {
     case 0:
       state = {
         id: entry.id,
+        createdAt: entry.createdAt,
         sleep: parseInt(entry.sleep),
         motivation: parseInt(entry.motivation),
         focus: entry.Origins.map((o) => o.value),
@@ -440,6 +441,7 @@ function Edit() {
     case 1:
       state = {
         id: entry.id,
+        createdAt: entry.createdAt,
         rest: parseInt(entry.rest),
         stress: parseInt(entry.stress),
         productive: parseInt(entry.productive),
@@ -452,6 +454,7 @@ function Edit() {
       break;
     case 2:
       state = {
+        createdAt: entry.createdAt,
         id: entry.id,
         feeling: parseInt(entry.feeling),
         description: entry.Descriptions.map((d) => d.value),
@@ -466,7 +469,7 @@ function Edit() {
   }
 
   return (
-    <Link className="nav-link" to={`/${type}/edit/${id}`} state={state}>
+    <Link className="nav-link" to={`/journey/${type}/edit`} state={state}>
       edit
     </Link>
   );

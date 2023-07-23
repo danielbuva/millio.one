@@ -35,7 +35,9 @@ function MorningCheckIn() {
 
   const [show, setShow] = useState();
 
-  const createdAt = useRef(new Date());
+  const createdAt = useRef(
+    state?.createdAt ? new Date(state.createdAt) : new Date()
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
