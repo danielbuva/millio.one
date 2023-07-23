@@ -48,7 +48,7 @@ const prompts = [
     version: 0,
   },
   {
-    prompt: `What would you add to your "couple's buclet list"?`,
+    prompt: `What would you add to your "couple's bucket list"?`,
     type: "partner",
     version: 0,
   },
