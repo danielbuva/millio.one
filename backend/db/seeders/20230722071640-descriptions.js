@@ -8,67 +8,67 @@ if (process.env.NODE_ENV === "production") {
 const origins = [
   {
     moodId: 1,
-    value: "friends",
+    value: "creative",
   },
   {
     moodId: 1,
-    value: "work",
+    value: "happy",
   },
   {
     moodId: 2,
-    value: "pet",
+    value: "love",
   },
   {
     moodId: 2,
-    value: "date",
+    value: "proud",
   },
   {
     moodId: 3,
-    value: "cleaning",
+    value: "satisfied",
   },
   {
     moodId: 3,
-    value: "music",
+    value: "relieved",
   },
   {
     moodId: 4,
-    value: "relaxing",
+    value: "motivated",
   },
   {
     moodId: 5,
-    value: "travel",
+    value: "busy",
   },
   {
     moodId: 6,
-    value: "work",
+    value: "nervous",
   },
   {
     moodId: 6,
-    value: "friends",
+    value: "lonely",
   },
   {
     moodId: 6,
-    value: "pet",
+    value: "let down",
   },
   {
     moodId: 7,
-    value: "partner",
+    value: "insecure",
   },
   {
     moodId: 8,
-    value: "work",
+    value: "annoyed",
   },
   {
     moodId: 8,
-    value: "self-care",
+    value: "lonely",
   },
   {
     moodId: 9,
-    value: "fitness",
+    value: "shameful",
   },
   {
     moodId: 10,
-    value: "time alone",
+    value: "rejected",
   },
   {
     nightId: 1,
