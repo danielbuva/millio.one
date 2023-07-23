@@ -70,11 +70,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  /* border: solid; */
 }
 
 .nav-link-active {
   color: #ffffff;
-  width: 100px;
+  width: 120px;
   height: 50px;
   display: flex;
   align-items: center;
