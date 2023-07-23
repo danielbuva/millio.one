@@ -1,6 +1,6 @@
 "use strict";
 
-let options = { tableName: "Origins" };
+let options = { tableName: "Descriptions" };
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
