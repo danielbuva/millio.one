@@ -13,12 +13,12 @@ import { useEffect, useState } from "react";
 import { secondsToMinutesAndSeconds, time } from "../../../utils";
 
 import { NavBar, PageWrapper } from "../../ClientWrapper/Layout";
+import PageNotFound from "../../PageNotFound";
 import { week } from "../state";
 
 import YesNo from "../../icons/YesNo";
 
 import "./EntryDetails.css";
-import PageNotFound from "../../PageNotFound";
 
 function EntryDetails() {
   const [show, setShow] = useState();
@@ -242,7 +242,7 @@ function EntryDetails() {
       )}
 
       <NavBar
-        left={<Edit />}
+        left={type === "breathe" ? <BreatheAgain /> : <Edit />}
         middle={
           <Link className="nav-link" to="/journey" replace>
             go back
@@ -480,6 +480,14 @@ function Delete({ setShow }) {
     <button className="delete-button" onClick={() => setShow(true)}>
       delete
     </button>
+  );
+}
+
+function BreatheAgain() {
+  return (
+    <Link className="nav-link" to="/breathe">
+      breathe again
+    </Link>
   );
 }
 
