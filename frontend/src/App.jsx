@@ -39,15 +39,19 @@ function App() {
           />
           <Route
             exact
-            path="/morning/edit/:id"
+            path="/journey/morning/edit"
             element={<MorningCheckIn />}
           />
           <Route
             exact
-            path="/evening/edit/:id"
+            path="/journey/evening/edit"
             element={<EveningCheckIn />}
           />
-          <Route exact path="/mood/edit/:id" element={<MoodCheckIn />} />
+          <Route
+            exact
+            path="/journey/mood/edit"
+            element={<MoodCheckIn />}
+          />
           <Route path="/morning/check-in" element={<MorningCheckIn />} />
           <Route path="/evening/check-in" element={<EveningCheckIn />} />
           <Route exact path="/mood/check-in" element={<MoodCheckIn />} />
