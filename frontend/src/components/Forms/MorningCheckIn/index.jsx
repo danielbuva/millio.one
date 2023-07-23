@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { createEntry } from "../../../store/journey";
 import { csrfFetch } from "../../../store/utils";
 
-import { origins } from "../utils";
+import { AVAILABLE_PROMPT_LENGTH, origins } from "../utils";
 
 import CheckInForm, { Selection } from "../CheckInForm";
 import ShouldntBeHere from "../ShouldntBeHere";
@@ -45,7 +45,9 @@ function MorningCheckIn() {
   const dispatch = useDispatch();
   const navigateBack = useNavigateBack();
 
-  const promptNum = useRef(Math.floor(Math.random() * 8));
+  const promptNum = useRef(
+    Math.floor(Math.random() * AVAILABLE_PROMPT_LENGTH)
+  );
 
   useEffect(() => {
     let show;

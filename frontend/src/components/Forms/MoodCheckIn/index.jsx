@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { origins } from "../utils";
+import { AVAILABLE_PROMPT_LENGTH, origins } from "../utils";
 
 import CheckInForm, { Descriptions, Selection } from "../CheckInForm";
 import ShouldntBeHere from "../ShouldntBeHere";
@@ -32,7 +32,9 @@ function MoodCheckIn() {
 
   const [pageIndex, setPageIndex] = useState(0);
   const disabledRight = useRef(!isEditing);
-  const promptNum = useRef(Math.floor(Math.random() * 8));
+  const promptNum = useRef(
+    Math.floor(Math.random() * AVAILABLE_PROMPT_LENGTH)
+  );
 
   const createdAt = useRef(
     state?.createdAt ? new Date(state.createdAt) : new Date()

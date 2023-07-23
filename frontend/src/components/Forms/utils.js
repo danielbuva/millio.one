@@ -114,3 +114,5 @@ export const origins = [
   { Icon: HelpingOthers, name: "helping others" },
   { Icon: Health, name: "health" },
 ];
+
+export const AVAILABLE_PROMPT_LENGTH = 22;
