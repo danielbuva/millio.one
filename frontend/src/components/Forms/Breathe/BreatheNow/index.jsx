@@ -35,7 +35,7 @@ function BreatheNow() {
         createEntry(
           {
             duration,
-            pace: +state.breathsPerMinute,
+            pace: +state?.breathsPerMinute,
           },
           "breathe"
         )
@@ -49,16 +49,16 @@ function BreatheNow() {
   useEffect(() => {
     let intervalBell;
     const interval = setInterval(() => {
-      if (state.intervalBell === "i") {
+      if (state?.intervalBell === "i") {
         intervalBell = new Audio(`/gong.wav`);
         intervalBell.volume = state.volume;
         intervalBell.play();
-      } else if (state.intervalBell && state.intervalBell !== "none") {
+      } else if (state?.intervalBell && state?.intervalBell !== "none") {
         intervalBell = new Audio(`/${state.intervalBell}.mp3`);
         intervalBell.volume = state.volume;
         intervalBell.play();
       }
-    }, state.seconds * 1000);
+    }, state?.seconds * 1000);
     if (finished) {
       clearInterval(interval);
       submit();
@@ -71,10 +71,10 @@ function BreatheNow() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    state.intervalBell,
-    state.volume,
+    state?.intervalBell,
+    state?.volume,
     finished,
-    state.seconds,
+    state?.seconds,
     dispatch,
   ]);
 
@@ -87,20 +87,20 @@ function BreatheNow() {
         }
         return s + 1;
       });
-    }, state.seconds * 1000);
+    }, state?.seconds * 1000);
 
     return () => clearInterval(interval);
-  }, [state.seconds]);
+  }, [state?.seconds]);
 
   useEffect(() => {
     let timeout;
-    if (state.duration) {
+    if (state?.duration) {
       timeout = setTimeout(() => {
         setFinished(true);
-      }, state.duration);
+      }, state?.duration);
     }
     return () => clearTimeout(timeout);
-  }, [state.duration]);
+  }, [state?.duration]);
 
   useEffect(() => {
     let interval;
@@ -124,7 +124,7 @@ function BreatheNow() {
     return () => clearInterval(interval);
   }, [finished]);
 
-  if (!state) return null;
+  if (!state) return navigate("/breathe");
 
   return (
     <div
@@ -158,6 +158,7 @@ function BreatheNow() {
               setFinished(true);
             }
             if (finished && submitted) {
+              console.log("entering");
               navigate("/journey");
             }
           }
