@@ -158,7 +158,6 @@ function BreatheNow() {
               setFinished(true);
             }
             if (finished && submitted) {
-              console.log("entering");
               navigate("/journey");
             }
           }
