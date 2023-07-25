@@ -35,13 +35,13 @@ function CheckInForm({
       onPageRight={handlePageRight}
       disabledRight={disabledRight}
     >
-      <div className="check-in-wrapper">
-        <div className="page-container">{page}</div>
-      </div>
       <PageIndicator
         currentPageIndex={currentPageIndex}
         numberOfPages={numberOfPages}
       />
+      <div className="check-in-wrapper">
+        <div className="page-container">{page}</div>
+      </div>
     </PageWrapper>
   );
 }
