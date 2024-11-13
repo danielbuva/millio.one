@@ -93,7 +93,7 @@ function Landing() {
       millio one.
       <br />
       <span>
-        Building better habits and take care of your mental well-being
+        Build better habits and take care of your mental well-being
       </span>
     </h1>
   );
